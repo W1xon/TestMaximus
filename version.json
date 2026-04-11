@@ -1,0 +1,12 @@
+{
+  "Version": "1.0.1",
+  "Mandatory": true,
+  "MinSupportedVersion": "1.0.1",
+  "ReleaseDate": "2026-04-11T00:00:00Z",
+  "Changelog": [
+    "Update system verification release.",
+    "Mandatory update flow test: skipping is disabled."
+  ],
+  "DownloadUrl": "https://github.com/W1xon/TestMaximus/releases/latest"
+}
+
