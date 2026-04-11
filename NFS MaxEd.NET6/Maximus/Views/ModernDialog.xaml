@@ -1,0 +1,105 @@
+﻿<Window
+    Height="450"
+    Title="ModernDialog"
+    Width="800"
+    mc:Ignorable="d"
+    x:Class="Maximus.Views.ModernDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Maximus.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border
+        Background="{StaticResource MainBg}"
+        BorderBrush="{StaticResource BorderBrush}"
+        BorderThickness="1"
+        CornerRadius="16">
+        <Border.Effect>
+            <DropShadowEffect
+                BlurRadius="24"
+                Color="Black"
+                Opacity="0.4"
+                ShadowDepth="0" />
+        </Border.Effect>
+
+        <Grid Margin="28,24,28,24" MinHeight="80">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!--  Header  -->
+                <RowDefinition Height="Auto" />
+                <!--  Message  -->
+                <RowDefinition Height="Auto" />
+                <!--  Buttons  -->
+            </Grid.RowDefinitions>
+
+            <!--  Header with Icon and Title  -->
+            <StackPanel
+                Grid.Row="0"
+                Margin="0,0,0,16"
+                Orientation="Horizontal">
+
+                <!--  Type Indicator  -->
+                <Ellipse
+                    Fill="{StaticResource AccentCyan}"
+                    Height="12"
+                    VerticalAlignment="Center"
+                    Width="12"
+                    x:Name="TypeAccent">
+                    <Ellipse.Effect>
+                        <DropShadowEffect
+                            BlurRadius="8"
+                            Color="#00FFFF"
+                            Opacity="0.7"
+                            ShadowDepth="0" />
+                    </Ellipse.Effect>
+                </Ellipse>
+
+                <!--  Dialog Title  -->
+                <TextBlock
+                    FontSize="{StaticResource FontSizeH2}"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource TextPrimary}"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    x:Name="TxtTitle" />
+            </StackPanel>
+
+            <!--  Message Content  -->
+            <TextBlock
+                FontSize="{StaticResource FontSizeBody}"
+                Foreground="{StaticResource TextSecondary}"
+                Grid.Row="1"
+                LineHeight="20"
+                Margin="0,0,0,24"
+                TextWrapping="Wrap"
+                x:Name="TxtMessage" />
+
+            <!--  Action Buttons  -->
+            <StackPanel
+                Grid.Row="2"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+
+                <Button
+                    Click="Cancel_Click"
+                    Content="Отмена"
+                    Height="36"
+                    Margin="0,0,8,0"
+                    Opacity="0.7"
+                    Style="{StaticResource LocalActionButtonStyle}"
+                    Visibility="Collapsed"
+                    Width="90"
+                    x:Name="BtnCancel" />
+
+                <Button
+                    Click="Ok_Click"
+                    Content="Закрыть"
+                    Height="36"
+                    Style="{StaticResource LocalActionButtonStyle}"
+                    Width="100"
+                    x:Name="BtnOk" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
