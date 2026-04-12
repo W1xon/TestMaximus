@@ -1,7 +1,11 @@
 ﻿<Window
-    Height="450"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Height="230"
+    ResizeMode="NoResize"
     Title="ModernDialog"
-    Width="800"
+    Width="520"
+    WindowStyle="None"
     mc:Ignorable="d"
     x:Class="Maximus.Views.ModernDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11,8 +15,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Border
-        Background="{StaticResource MainBg}"
-        BorderBrush="{StaticResource BorderBrush}"
+        Background="{StaticResource BackgroundDark}"
+        BorderBrush="{StaticResource BorderColor}"
         BorderThickness="1"
         CornerRadius="16">
         <Border.Effect>
@@ -23,7 +27,7 @@
                 ShadowDepth="0" />
         </Border.Effect>
 
-        <Grid Margin="28,24,28,24" MinHeight="80">
+        <Grid Margin="20,14,20,10" MinHeight="80">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <!--  Header  -->
@@ -36,12 +40,12 @@
             <!--  Header with Icon and Title  -->
             <StackPanel
                 Grid.Row="0"
-                Margin="0,0,0,16"
+                Margin="0,0,0,10"
                 Orientation="Horizontal">
 
                 <!--  Type Indicator  -->
                 <Ellipse
-                    Fill="{StaticResource AccentCyan}"
+                    Fill="{StaticResource AccentSecondary}"
                     Height="12"
                     VerticalAlignment="Center"
                     Width="12"
@@ -57,21 +61,21 @@
 
                 <!--  Dialog Title  -->
                 <TextBlock
-                    FontSize="{StaticResource FontSizeH2}"
                     FontWeight="SemiBold"
                     Foreground="{StaticResource TextPrimary}"
                     Margin="12,0,0,0"
+                    Style="{StaticResource H2Style}"
                     VerticalAlignment="Center"
                     x:Name="TxtTitle" />
             </StackPanel>
 
             <!--  Message Content  -->
             <TextBlock
-                FontSize="{StaticResource FontSizeBody}"
                 Foreground="{StaticResource TextSecondary}"
                 Grid.Row="1"
                 LineHeight="20"
-                Margin="0,0,0,24"
+                Margin="0,0,0,10"
+                Style="{StaticResource BodyStyle}"
                 TextWrapping="Wrap"
                 x:Name="TxtMessage" />
 
@@ -84,19 +88,21 @@
                 <Button
                     Click="Cancel_Click"
                     Content="Отмена"
-                    Height="36"
                     Margin="0,0,8,0"
+                    MinHeight="46"
                     Opacity="0.7"
-                    Style="{StaticResource LocalActionButtonStyle}"
+                    Padding="14,8"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Visibility="Collapsed"
-                    Width="90"
+                    Width="100"
                     x:Name="BtnCancel" />
 
                 <Button
                     Click="Ok_Click"
                     Content="Закрыть"
-                    Height="36"
-                    Style="{StaticResource LocalActionButtonStyle}"
+                    MinHeight="46"
+                    Padding="14,8"
+                    Style="{StaticResource ButtonStyle}"
                     Width="100"
                     x:Name="BtnOk" />
             </StackPanel>

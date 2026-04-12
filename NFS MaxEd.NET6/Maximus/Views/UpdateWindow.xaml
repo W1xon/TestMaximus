@@ -1,7 +1,11 @@
 ﻿<Window
-    Height="450"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Height="500"
+    ResizeMode="NoResize"
     Title="Обновление Maximus"
-    Width="800"
+    Width="860"
+    WindowStyle="None"
     mc:Ignorable="d"
     x:Class="Maximus.Views.UpdateWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11,8 +15,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Border
-        Background="{StaticResource MainBg}"
-        BorderBrush="{StaticResource BorderBrush}"
+        Background="{StaticResource BackgroundDark}"
+        BorderBrush="{StaticResource BorderColor}"
         BorderThickness="1"
         CornerRadius="16">
         <Border.Effect>
@@ -37,30 +41,53 @@
                 Grid.Row="0"
                 Height="40">
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
                 <TextBlock
-                    FontSize="{StaticResource FontSizeCaption}"
                     FontWeight="SemiBold"
                     Foreground="{StaticResource TextTertiary}"
                     IsHitTestVisible="False"
                     Margin="16,0"
+                    Style="{StaticResource CaptionStyle}"
                     Text="Обновление доступно"
                     VerticalAlignment="Center" />
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        Cursor="Help"
+                        Foreground="{StaticResource TextSecondary}"
+                        Margin="0,0,12,0"
+                        Text="?"
+                        ToolTipService.Placement="Bottom"
+                        VerticalAlignment="Center">
+                        <TextBlock.ToolTip>
+                            <TextBlock
+                                MaxWidth="280"
+                                Text="Обновление загрузит и установит новую версию. Во время процесса не закрывайте окно."
+                                TextWrapping="Wrap" />
+                        </TextBlock.ToolTip>
+                    </TextBlock>
 
                     <Button
                         Click="CloseBtn_Click"
-                        Content="?"
-                        Style="{StaticResource CloseButtonStyle}" />
+                        Content="×"
+                        Style="{StaticResource CloseWindowButtonStyle}" />
                 </StackPanel>
             </Grid>
 
             <!--  Content Area  -->
             <Border
-                Background="{StaticResource SecondaryBg}"
+                Background="{StaticResource BackgroundMedium}"
                 CornerRadius="0,0,15,15"
                 Grid.Row="1"
-                Padding="32,24,32,32">
+                Padding="24,20,24,20">
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -72,7 +99,7 @@
                         <!--  Warning  -->
                         <RowDefinition Height="*" />
                         <!--  Changelog  -->
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="88" />
                         <!--  Progress  -->
                         <RowDefinition Height="Auto" />
                         <!--  Buttons  -->
@@ -90,17 +117,17 @@
 
                     <!--  Release Date  -->
                     <TextBlock
-                        FontSize="{StaticResource FontSizeBody}"
                         Foreground="{StaticResource TextSecondary}"
                         Grid.Row="1"
                         Margin="0,0,0,20"
+                        Style="{StaticResource BodyStyle}"
                         Text="Выпуск: 2026-02-15"
                         x:Name="DateText" />
 
                     <!--  Mandatory Warning  -->
                     <Border
                         Background="#1AE81123"
-                        BorderBrush="{StaticResource ErrorRed}"
+                        BorderBrush="{StaticResource DeleteColor}"
                         BorderThickness="1"
                         CornerRadius="6"
                         Grid.Row="2"
@@ -116,18 +143,18 @@
 
                             <TextBlock
                                 FontSize="16"
-                                Foreground="{StaticResource ErrorRed}"
+                                Foreground="{StaticResource DeleteColor}"
                                 Grid.Column="0"
                                 Margin="0,2,10,0"
                                 Text="?"
                                 VerticalAlignment="Top" />
 
                             <TextBlock
-                                FontSize="{StaticResource FontSizeBody}"
                                 FontWeight="SemiBold"
-                                Foreground="{StaticResource ErrorRed}"
+                                Foreground="{StaticResource DeleteColor}"
                                 Grid.Column="1"
                                 LineHeight="20"
+                                Style="{StaticResource BodyStyle}"
                                 Text="Обязательное обновление — приложение не может работать без него"
                                 TextWrapping="Wrap"
                                 VerticalAlignment="Center"
@@ -137,8 +164,8 @@
 
                     <!--  Changelog  -->
                     <Border
-                        Background="{StaticResource TertiaryBg}"
-                        BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource BackgroundLight}"
+                        BorderBrush="{StaticResource BorderColor}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="3"
@@ -149,10 +176,10 @@
 
                             <StackPanel>
                                 <TextBlock
-                                    FontSize="{StaticResource FontSizeBody}"
                                     FontWeight="SemiBold"
-                                    Foreground="{StaticResource AccentCyan}"
+                                    Foreground="{StaticResource AccentSecondary}"
                                     Margin="0,0,0,12"
+                                    Style="{StaticResource BodyStyle}"
                                     Text="Что нового:" />
 
                                 <ItemsControl ItemsSource="{Binding}" x:Name="ChangelogList">
@@ -165,18 +192,18 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock
-                                                    FontSize="{StaticResource FontSizeBody}"
-                                                    Foreground="{StaticResource AccentCyan}"
+                                                    Foreground="{StaticResource AccentSecondary}"
                                                     Grid.Column="0"
                                                     Margin="0,0,8,0"
+                                                    Style="{StaticResource BodyStyle}"
                                                     Text="•"
                                                     VerticalAlignment="Top" />
 
                                                 <TextBlock
-                                                    FontSize="{StaticResource FontSizeBody}"
                                                     Foreground="{StaticResource TextSecondary}"
                                                     Grid.Column="1"
                                                     LineHeight="20"
+                                                    Style="{StaticResource BodyStyle}"
                                                     Text="{Binding}"
                                                     TextWrapping="Wrap" />
                                             </Grid>
@@ -189,8 +216,8 @@
 
                     <!--  Progress Bar  -->
                     <Border
-                        Background="{StaticResource TertiaryBg}"
-                        BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource BackgroundLight}"
+                        BorderBrush="{StaticResource BorderColor}"
                         BorderThickness="1"
                         CornerRadius="6"
                         Grid.Row="4"
@@ -201,18 +228,19 @@
                         x:Name="ProgressContainer">
                         <StackPanel>
                             <TextBlock
-                                FontSize="{StaticResource FontSizeBody}"
                                 Foreground="{StaticResource TextSecondary}"
                                 Margin="0,0,0,8"
+                                Style="{StaticResource BodyStyle}"
                                 Text="Загрузка обновления..."
                                 x:Name="ProgressText" />
 
                             <ProgressBar
-                                Background="{StaticResource SecondaryBg}"
+                                Background="{StaticResource BackgroundMedium}"
                                 BorderThickness="0"
                                 Foreground="#42A5F5"
                                 Height="8"
                                 IsIndeterminate="True"
+                                Style="{x:Null}"
                                 x:Name="DownloadProgress" />
                         </StackPanel>
                     </Border>
@@ -231,7 +259,7 @@
                             Height="40"
                             HorizontalAlignment="Left"
                             Opacity="0.7"
-                            Style="{StaticResource LocalActionButtonStyle}"
+                            Style="{StaticResource SecondaryButtonStyle}"
                             Width="120"
                             x:Name="SkipButton" />
 
@@ -240,7 +268,7 @@
                             Content="Обновить"
                             Grid.Column="1"
                             Height="40"
-                            Style="{StaticResource LocalActionButtonStyle}"
+                            Style="{StaticResource ButtonStyle}"
                             Width="140"
                             x:Name="UpdateButton" />
                     </Grid>

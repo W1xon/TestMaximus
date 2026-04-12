@@ -11,7 +11,7 @@ public partial class App : Application
 {
     
     public static string CurrentVersion => Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
-    public const string UpdateUrl = "https://raw.githubusercontent.com/W1xon/.../main/version.json";
+    public const string UpdateUrl = "https://raw.githubusercontent.com/W1xon/TestMaximus/main/version.json";
     protected override async void OnStartup(StartupEventArgs e)
     {
         if(await NetworkChecker.IsInternetAvailableAsync())

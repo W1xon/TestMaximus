@@ -156,7 +156,7 @@
                                         <Button
                                             Command="{Binding DataContext.Blacklist.RemoveBossRaceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
-                                            Content="?"
+                                            Content="×"
                                             Grid.Column="1"
                                             Margin="0,0,0,15"
                                             Style="{StaticResource DeleteButtonStyle}" />
@@ -201,7 +201,7 @@
                                         <Button
                                             Command="{Binding DataContext.Blacklist.RemoveChildCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
-                                            Content="?"
+                                            Content="×"
                                             Grid.Column="1"
                                             Margin="0,0,0,15"
                                             Style="{StaticResource DeleteButtonStyle}" />
@@ -243,7 +243,7 @@
                                         <Button
                                             Command="{Binding DataContext.Blacklist.RemoveWorldRaceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
-                                            Content="?"
+                                            Content="×"
                                             Grid.Column="1"
                                             Margin="0,0,0,15"
                                             Style="{StaticResource DeleteButtonStyle}" />
@@ -284,7 +284,7 @@
                                         <Button
                                             Command="{Binding DataContext.Blacklist.RemoveMilestoneCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
-                                            Content="?"
+                                            Content="×"
                                             Grid.Column="1"
                                             Margin="0,0,0,15"
                                             Style="{StaticResource DeleteButtonStyle}" />

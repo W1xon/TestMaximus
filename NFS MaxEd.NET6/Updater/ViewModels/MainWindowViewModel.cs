@@ -8,7 +8,7 @@ namespace Updater.ViewModels;
 
 public sealed class MainWindowViewModel : INotifyPropertyChanged
 {
-    private readonly IUpdateService _updateService;
+    private readonly UpdateService _updateService;
     private readonly UpdaterLaunchOptions _options;
 
     private bool _hasStarted;
@@ -18,7 +18,7 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     private string _statusText = "Подготовка...";
     private string? _lastError;
 
-    public MainWindowViewModel(IUpdateService updateService, UpdaterLaunchOptions options)
+    public MainWindowViewModel(UpdateService updateService, UpdaterLaunchOptions options)
     {
         _updateService = updateService;
         _options = options;
@@ -122,7 +122,7 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
         try
         {
             await _updateService.RunUpdateAsync(_options, progress, cancellationToken);
-            StatusText = "Обновление завершено. Запуск MaxEd...";
+            StatusText = "Обновление установлено. Завершение...";
             IsIndeterminate = false;
             ProgressValue = 100;
             return true;

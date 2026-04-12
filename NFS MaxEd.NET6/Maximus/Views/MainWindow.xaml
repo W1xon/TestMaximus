@@ -72,7 +72,7 @@
                             ToolTip="Maximize" />
                         <Button
                             Click="Close_Click"
-                            Content="✕"
+                            Content="×"
                             Style="{StaticResource CloseWindowButtonStyle}"
                             ToolTip="Close" />
                     </StackPanel>

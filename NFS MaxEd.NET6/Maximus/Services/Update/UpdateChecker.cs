@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
-using System.Diagnostics;
 using Maximus.Views;
 
 namespace Maximus.Services;
@@ -9,7 +8,8 @@ namespace Maximus.Services;
 public class UpdateChecker
 {
     public static string? LastCheckError { get; private set; }
-
+    public static bool HasChecked;
+    public static bool IsUpdateAvailable;
     private readonly string _currentVersion;
     private readonly string _updateUrl;
     private readonly TimeSpan _timeout;
@@ -30,7 +30,9 @@ public class UpdateChecker
         if (updateInfo != null)
         {
             ShowUpdateWindow(updateInfo);
+            IsUpdateAvailable = true;
         }
+        HasChecked = true;
     }
 
     private static void ShowUpdateWindow(RemoteVersionInfo info)
@@ -51,9 +53,9 @@ public class UpdateChecker
         try
         {
             using var client = new HttpClient { Timeout = _timeout };
-            
+           
             string json = await client.GetStringAsync(_updateUrl);
-            
+          
             var remoteInfo = JsonSerializer.Deserialize<RemoteVersionInfo>(
                 json,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -110,8 +112,6 @@ public class UpdateChecker
     private static void SetLastError(string message)
     {
         LastCheckError = message;
-        Debug.WriteLine(message);
-        Trace.WriteLine(message);
     }
     private bool IsLowerVersion(string current, string target)
     {

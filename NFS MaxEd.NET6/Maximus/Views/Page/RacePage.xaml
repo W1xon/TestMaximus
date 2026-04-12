@@ -356,7 +356,7 @@
                                                             <Button
                                                                 Command="{Binding DataContext.RemoveBarrierCommand, RelativeSource={RelativeSource AncestorType=Border}}"
                                                                 CommandParameter="{Binding .}"
-                                                                Content="?"
+                                                                Content="×"
                                                                 Grid.Column="1"
                                                                 Style="{StaticResource DeleteButtonStyle}" />
 
@@ -432,7 +432,7 @@
                                                                         <Button
                                                                             Command="{Binding DataContext.RemoveCheckpointCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                             CommandParameter="{Binding}"
-                                                                            Content="?"
+                                                                            Content="×"
                                                                             Grid.Column="1"
                                                                             Style="{StaticResource DeleteButtonStyle}" />
                                                                     </Grid>
@@ -624,7 +624,7 @@
                                                                         <Button
                                                                             Command="{Binding DataContext.RemoveShortcutCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                             CommandParameter="{Binding}"
-                                                                            Content="?"
+                                                                            Content="×"
                                                                             Grid.Column="1"
                                                                             Style="{StaticResource DeleteButtonStyle}" />
                                                                     </Grid>
@@ -813,7 +813,7 @@
                                                                         <Button
                                                                             Command="{Binding DataContext.RemoveSpeedtrapCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                             CommandParameter="{Binding}"
-                                                                            Content="?"
+                                                                            Content="×"
                                                                             Grid.Column="1"
                                                                             Style="{StaticResource DeleteButtonStyle}" />
                                                                     </Grid>
@@ -949,7 +949,7 @@
                                                                         <Button
                                                                             Command="{Binding DataContext.RemoveCharacterDrugCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                             CommandParameter="{Binding}"
-                                                                            Content="?"
+                                                                            Content="×"
                                                                             Grid.Column="1"
                                                                             Style="{StaticResource DeleteButtonStyle}" />
                                                                     </Grid>
@@ -978,7 +978,7 @@
                                                                                 MaxHeight="40"
                                                                                 SelectedItem="{Binding SelectedType}" />
                                                                             <Button
-                                                                                Content="? "
+                                                                                Content="?jjj"
                                                                                 Grid.Column="1"
                                                                                 Style="{StaticResource InfoButtonStyle}" />
                                                                         </Grid>
@@ -1053,7 +1053,7 @@
                                                                         <Button
                                                                             Command="{Binding DataContext.RemoveCharacterDrugCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                             CommandParameter="{Binding}"
-                                                                            Content="?"
+                                                                            Content="×"
                                                                             Grid.Column="1"
                                                                             Style="{StaticResource DeleteButtonStyle}" />
                                                                     </Grid>
@@ -1233,7 +1233,7 @@
                                                                         <Button
                                                                             Command="{Binding DataContext.RemoveOpponentSpawnCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                             CommandParameter="{Binding}"
-                                                                            Content="?"
+                                                                            Content="×"
                                                                             Grid.Column="1"
                                                                             Style="{StaticResource DeleteButtonStyle}" />
                                                                     </Grid>
@@ -1394,7 +1394,7 @@
                                                                                 <Button
                                                                                     Command="{Binding DataContext.RemoveMoneybag, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                                     CommandParameter="{Binding}"
-                                                                                    Content="?"
+                                                                                    Content="×"
                                                                                     Grid.Column="2"
                                                                                     Margin="5"
                                                                                     Style="{StaticResource DeleteButtonStyle}" />
@@ -1873,7 +1873,7 @@
                                                                             <Button
                                                                                 Command="{Binding DataContext.RemoveResetPlayerTriggerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                                                 CommandParameter="{Binding}"
-                                                                                Content="?"
+                                                                                Content="×"
                                                                                 Grid.Column="1"
                                                                                 Style="{StaticResource DeleteButtonStyle}" />
                                                                         </Grid>

@@ -1,9 +1,5 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
-using Microsoft.Win32;
-using Maximus.Models;
 using Maximus.Services;
 using Maximus.ViewModels;
 
@@ -21,18 +17,27 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         
-        if (FirstRunService.IsFirstRun())
-        {
-            ShowWelcomeWindow();
-        }
-
+        Loaded += MainWindow_Loaded;
         
         MainViewModel = MainViewModel.Instance;
         DataContext = MainViewModel;
-
         MainFrame.Navigated += MainFrame_Navigated;
-
         MainFrame.Content = new RacePage();
+        
+    }
+
+    private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (!FirstRunService.IsFirstRun()) return;
+        DateTime startTime = DateTime.UtcNow;
+        TimeSpan timer = TimeSpan.FromSeconds(10);
+        
+        while (!UpdateChecker.HasChecked || DateTime.UtcNow - startTime < timer)
+        {
+            await Task.Delay(100);
+        }
+        if(!UpdateChecker.IsUpdateAvailable)
+            ShowWelcomeWindow();
     }
 
     private void MainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)

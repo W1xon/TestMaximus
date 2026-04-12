@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:converters="clr-namespace:Maximus.Converters"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--  ==================== ЦВЕТОВАЯ ПАЛИТРА ====================  -->
     <!--  Фоны  -->
@@ -32,6 +35,7 @@
 
     <!--  Конвертеры  -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:ProgressBarWidthConverter x:Key="ProgressBarWidthConverter" />
 
     <!--  ==================== СТИЛИ ТЕКСТА ====================  -->
 

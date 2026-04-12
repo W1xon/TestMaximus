@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Windows;
 using Maximus.Services;
+using Shared;
 
 namespace Maximus.Views;
 
@@ -75,7 +76,7 @@ public partial class UpdateWindow : Window
             var result = ModernDialog.Show(
                 "Это обязательное обновление. Приложение не может работать без него.\n\nЗакрыть приложение?",
                 "Обязательное обновление",
-                ModernDialog.DialogType.Warning);
+                ModernDialog.DialogType.Confirm);
 
             if (result == true)
             {
@@ -90,17 +91,39 @@ public partial class UpdateWindow : Window
 
     private async Task DownloadAndUpdateAsync()
     {
-        using var client = new HttpClient
-        {
-            Timeout = TimeSpan.FromMinutes(5)
-        };
-
-        byte[] data = await client.GetByteArrayAsync(_info.DownloadUrl);
+        using var client = new HttpClient { Timeout = TimeSpan.FromMinutes(5) };
+        string downloadUrl = ResolveArchiveDownloadUrl(_info.DownloadUrl);
 
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        string updateZipPath = Path.Combine(baseDir, "Maximus_Update.zip");
+        string updateZipPath = UpdatePackageSettings.GetArchivePath(baseDir);
+        string tempZipPath = updateZipPath + ".download";
 
-        await File.WriteAllBytesAsync(updateZipPath, data);
+        try
+        {
+            using (var response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
+            {
+                response.EnsureSuccessStatusCode();
+
+                await using var sourceStream = await response.Content.ReadAsStreamAsync();
+                await using var targetStream = new FileStream(tempZipPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                await sourceStream.CopyToAsync(targetStream);
+                await targetStream.FlushAsync();
+            }
+
+            if (File.Exists(updateZipPath))
+            {
+                File.Delete(updateZipPath);
+            }
+
+            File.Move(tempZipPath, updateZipPath);
+        }
+        finally
+        {
+            if (File.Exists(tempZipPath))
+            {
+                File.Delete(tempZipPath);
+            }
+        }
 
         string updaterPath = Path.Combine(baseDir, "Updater.exe");
 
@@ -117,13 +140,46 @@ public partial class UpdateWindow : Window
         var startInfo = new ProcessStartInfo
         {
             FileName = updaterPath,
-            Arguments = $"--process \"{mainProcessName}\" --zip \"{updateZipPath}\" --target \"{baseDir}\" --restart \"{mainProcessName}.exe\"",
+            WorkingDirectory = baseDir,
             UseShellExecute = true,
             Verb = "runas"
         };
 
-        Process.Start(startInfo);
+        startInfo.ArgumentList.Add(mainProcessName);
+        startInfo.ArgumentList.Add(baseDir);
+        startInfo.ArgumentList.Add(mainProcessName + ".exe");
+
+        var updaterProcess = Process.Start(startInfo);
+        if (updaterProcess == null)
+        {
+            throw new InvalidOperationException("Updater process did not start.");
+        }
 
         Application.Current.Shutdown();
+    }
+
+
+    private static string ResolveArchiveDownloadUrl(string rawUrl)
+    {
+        if (!Uri.TryCreate(rawUrl, UriKind.Absolute, out var uri))
+        {
+            return rawUrl;
+        }
+
+        // If metadata points to GitHub latest page, convert it to direct asset URL.
+        if (uri.Host.Contains("github.com", StringComparison.OrdinalIgnoreCase) &&
+            uri.AbsolutePath.EndsWith("/releases/latest", StringComparison.OrdinalIgnoreCase))
+        {
+            string directPath = uri.AbsolutePath.TrimEnd('/') + "/download/" + UpdatePackageSettings.ArchiveFileName;
+            var builder = new UriBuilder(uri)
+            {
+                Path = directPath,
+                Query = string.Empty,
+                Fragment = string.Empty
+            };
+            return builder.Uri.ToString();
+        }
+
+        return rawUrl;
     }
 }

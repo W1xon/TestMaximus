@@ -6,6 +6,26 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <SelfContained>false</SelfContained>
+        <PublishSingleFile>false</PublishSingleFile>
+        <OutputPath>$(MSBuildThisFileDirectory)..\bin\SharedBuild\$(Configuration)\</OutputPath>
+        <PublishDir>$(MSBuildThisFileDirectory)..\bin\SharedBuild\$(Configuration)\</PublishDir>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="..\Shared\UpdatePackageSettings.cs" Link="Shared\UpdatePackageSettings.cs" />
+    </ItemGroup>
+
+    <Target Name="CleanPublishOutput" AfterTargets="Publish">
+        <ItemGroup>
+            <_PublishPdb Include="$(PublishDir)*.pdb;$(PublishDir)**\*.pdb" />
+            <_PublishExtraJson Include="$(PublishDir)*.json;$(PublishDir)**\*.json"
+                               Exclude="$(PublishDir)$(AssemblyName).deps.json;$(PublishDir)$(AssemblyName).runtimeconfig.json;$(PublishDir)Maximus.deps.json;$(PublishDir)Maximus.runtimeconfig.json" />
+        </ItemGroup>
+
+        <Delete Files="@(_PublishPdb)" />
+        <Delete Files="@(_PublishExtraJson)" />
+    </Target>
 
 </Project>

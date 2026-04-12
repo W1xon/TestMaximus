@@ -9,6 +9,19 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <PackageId>Maximus</PackageId>
+        <Version>1.0.1</Version>
+        <AssemblyVersion>1.0.1</AssemblyVersion>
+        <FileVersion>1.0.1</FileVersion>
+        <SelfContained>false</SelfContained>
+        <PublishSingleFile>false</PublishSingleFile>
+        <OutputPath>$(MSBuildThisFileDirectory)..\bin\SharedBuild\$(Configuration)\</OutputPath>
+        <PublishDir>$(MSBuildThisFileDirectory)..\bin\SharedBuild\$(Configuration)\</PublishDir>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
     </PropertyGroup>
 
     <ItemGroup>
@@ -58,14 +71,29 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Assets\app.ico" />
-      <Resource Include="Assets\app.ico" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="Services\Generation\Builders\RaceScriptBuilderCombine.cs">
         <DependentUpon>RaceScriptBuilder.cs</DependentUpon>
       </Compile>
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="..\Shared\UpdatePackageSettings.cs" Link="Shared\UpdatePackageSettings.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\app.ico" />
+      <Resource Include="Assets\app.ico" />
+    </ItemGroup>
+
+    <Target Name="CleanPublishOutput" AfterTargets="Publish">
+        <ItemGroup>
+            <_PublishPdb Include="$(PublishDir)**\*.pdb" />
+            <_PublishExtraJson Include="$(PublishDir)**\*.json"
+                              Exclude="$(PublishDir)$(AssemblyName).deps.json;$(PublishDir)$(AssemblyName).runtimeconfig.json;$(PublishDir)Updater.deps.json;$(PublishDir)Updater.runtimeconfig.json" />
+        </ItemGroup>
+
+        <Delete Files="@(_PublishPdb)" />
+        <Delete Files="@(_PublishExtraJson)" />
+    </Target>
 
 </Project>

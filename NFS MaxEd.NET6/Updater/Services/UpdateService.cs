@@ -5,13 +5,17 @@ using Updater.Models;
 
 namespace Updater.Services;
 
-public sealed class UpdateService : IUpdateService
+public sealed class UpdateService
 {
-    private const string UpdaterExecutableName = "Updater.exe";
     private const string MainExecutableName = "Maximus.exe";
 
     public async Task RunUpdateAsync(UpdaterLaunchOptions options, IProgress<UpdateProgressInfo>? progress, CancellationToken cancellationToken)
     {
+        if (Directory.Exists(options.UpdateZipPath))
+        {
+            throw new InvalidDataException("Update package path points to a directory, not a ZIP file.");
+        }
+
         if (!File.Exists(options.UpdateZipPath))
         {
             throw new FileNotFoundException("Update package was not found.", options.UpdateZipPath);
@@ -42,25 +46,31 @@ public sealed class UpdateService : IUpdateService
                 var relativePath = Path.GetRelativePath(tempDir, sourceFilePath);
                 var targetFilePath = Path.Combine(options.TargetDirectory, relativePath);
                 var fileName = Path.GetFileName(sourceFilePath);
+                var progressFileName = fileName;
 
-                if (fileName.Equals(UpdaterExecutableName, StringComparison.OrdinalIgnoreCase))
+                if (ShouldSkipUpdaterOwnedFile(relativePath))
                 {
-                    copiedFiles++;
-                    ReportCopyProgress(progress, copiedFiles, totalFiles, fileName + " (skipped)");
-                    continue;
+                    progressFileName += " (skipped)";
                 }
-
-                var targetFolder = Path.GetDirectoryName(targetFilePath);
-                if (!string.IsNullOrWhiteSpace(targetFolder))
+                else
                 {
-                    Directory.CreateDirectory(targetFolder);
-                }
+                    var targetFolder = Path.GetDirectoryName(targetFilePath);
+                    if (!string.IsNullOrWhiteSpace(targetFolder))
+                    {
+                        Directory.CreateDirectory(targetFolder);
+                    }
 
-                var verifyAsMain = fileName.Equals(MainExecutableName, StringComparison.OrdinalIgnoreCase);
-                await CopyFileWithRetryAsync(sourceFilePath, targetFilePath, verifyAsMain, cancellationToken);
+                    var verifyAsMain = fileName.Equals(MainExecutableName, StringComparison.OrdinalIgnoreCase);
+                    if (verifyAsMain && File.Exists(targetFilePath))
+                    {
+                        File.Delete(targetFilePath);
+                    }
+
+                    File.Copy(sourceFilePath, targetFilePath, true);
+                }
 
                 copiedFiles++;
-                ReportCopyProgress(progress, copiedFiles, totalFiles, fileName);
+                ReportCopyProgress(progress, copiedFiles, totalFiles, progressFileName);
             }
 
             Report(progress, "Cleaning temporary files...", 93, true);
@@ -94,73 +104,45 @@ public sealed class UpdateService : IUpdateService
     private static async Task WaitForProcessExitAsync(string processName, int timeoutSeconds, CancellationToken cancellationToken)
     {
         var normalizedName = Path.GetFileNameWithoutExtension(processName);
+        var timeout = TimeSpan.FromSeconds(timeoutSeconds);
 
-        await Task.Run(() =>
+        foreach (var process in Process.GetProcessesByName(normalizedName))
         {
-            var processes = Process.GetProcessesByName(normalizedName);
-            foreach (var process in processes)
-            {
-                try
-                {
-                    var elapsed = 0;
-                    while (!process.HasExited && elapsed < timeoutSeconds * 1000)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        Thread.Sleep(500);
-                        elapsed += 500;
-                    }
-
-                    if (!process.HasExited)
-                    {
-                        process.Kill();
-                        process.WaitForExit(2000);
-                    }
-                }
-                finally
-                {
-                    process.Dispose();
-                }
-            }
-        }, cancellationToken);
-    }
-
-    private static async Task CopyFileWithRetryAsync(string sourcePath, string targetPath, bool verifyMainFile, CancellationToken cancellationToken)
-    {
-        const int maxRetries = 5;
-
-        for (var attempt = 1; attempt <= maxRetries; attempt++)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
             try
             {
-                if (verifyMainFile && File.Exists(targetPath))
+                if (process.HasExited)
                 {
-                    File.Delete(targetPath);
+                    continue;
                 }
 
-                await Task.Run(() => File.Copy(sourcePath, targetPath, true), cancellationToken);
-
-                if (verifyMainFile)
+                var waitTask = process.WaitForExitAsync(cancellationToken);
+                var completedTask = await Task.WhenAny(waitTask, Task.Delay(timeout, cancellationToken));
+                if (completedTask != waitTask && !process.HasExited)
                 {
-                    var sourceSize = new FileInfo(sourcePath).Length;
-                    var targetSize = new FileInfo(targetPath).Length;
-                    if (sourceSize != targetSize)
-                    {
-                        throw new IOException($"File size mismatch: {sourceSize} vs {targetSize}");
-                    }
+                    process.Kill();
+                    process.WaitForExit(2000);
                 }
-
-                return;
             }
-            catch when (attempt < maxRetries)
+            finally
             {
-                await Task.Delay(500, cancellationToken);
+                process.Dispose();
             }
         }
-
-        throw new IOException($"Failed to copy file: {Path.GetFileName(sourcePath)}");
     }
+
+    private static bool ShouldSkipUpdaterOwnedFile(string relativePath)
+    {
+        string fileName = Path.GetFileName(relativePath);
+
+        if (fileName.StartsWith("Updater.", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        string normalizedRelativePath = relativePath.Replace('/', '\\');
+        return normalizedRelativePath.StartsWith("Updater\\", StringComparison.OrdinalIgnoreCase);
+    }
+
 
     private static void ReportCopyProgress(IProgress<UpdateProgressInfo>? progress, int copied, int total, string fileName)
     {
@@ -189,7 +171,6 @@ public sealed class UpdateService : IUpdateService
         }
         catch
         {
-            // Ignore temp cleanup issues.
         }
     }
 }
