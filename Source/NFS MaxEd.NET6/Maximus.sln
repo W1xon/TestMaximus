@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maximus", "Maximus\Maximus.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{7ECFA71A-6FBA-4921-90D7-1A1E8C70ABF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptTester", "ScriptTester\ScriptTester.csproj", "{5881305D-1A48-454C-B0AA-B545DBEE77F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{7ECFA71A-6FBA-4921-90D7-1A1E8C70ABF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ECFA71A-6FBA-4921-90D7-1A1E8C70ABF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ECFA71A-6FBA-4921-90D7-1A1E8C70ABF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5881305D-1A48-454C-B0AA-B545DBEE77F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5881305D-1A48-454C-B0AA-B545DBEE77F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5881305D-1A48-454C-B0AA-B545DBEE77F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5881305D-1A48-454C-B0AA-B545DBEE77F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
