@@ -49,6 +49,8 @@
 
     <ItemGroup>
       <Folder Include="Assets\" />
+      <Folder Include="Services\Generation\IR\Renderers\" />
+      <Folder Include="Services\Generation\Parsers\FromScript\" />
     </ItemGroup>
 
     <ItemGroup>
