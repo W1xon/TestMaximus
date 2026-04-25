@@ -6,6 +6,7 @@ public enum InstrucionType
     AddField,
     UpdateField,
     ChangeVault,
+    ResizeField,
 }
 
 public enum InstructionSection
@@ -16,7 +17,8 @@ public enum InstructionSection
     ScalarUpdate,
     ArrayResize,
     ChildNode,
-    ChildEntries
+    ChildEntrie,
+    ParentUpdate
 }
 public class ScriptInstrucion
 {

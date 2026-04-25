@@ -2,7 +2,7 @@
 
 namespace Maximus.Services;
 
-public partial  class RaceScriptBuilder
+public partial class RaceScriptBuilder
 {
     public RaceScriptBuilder(string path, RaceType nodeType)
     {

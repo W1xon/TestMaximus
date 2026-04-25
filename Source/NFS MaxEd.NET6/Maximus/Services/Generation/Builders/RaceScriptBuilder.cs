@@ -1,22 +1,14 @@
 ﻿using Maximus.Models;
+using Maximus.Services.IR.Renderers;
 
 namespace Maximus.Services;
 
     public partial class RaceScriptBuilder : ScriptBuilder
     {
         private readonly string _path;
-        private readonly RaceType _nodeType;
-        private bool _isInitChildren = false;
+        private bool _isInitChildren;
         
-        // Логические блоки команд
-        private readonly List<string> _nodeCreation = new();
-        private readonly List<string> _fieldDeclarations = new();
-        private readonly List<string> _arrayUpdates = new();
-        private readonly List<string> _scalarUpdates = new();
-        private readonly List<string> _arrayResizes = new();
-        private readonly List<string> _childNodes = new();
-        private readonly List<string> _parentUpdates = new();
-        private readonly List<string> _childrenEntries = new();
+        private readonly RaceRenderer _renderer = new();
 
         private int _childIndex = 0;
         private void AddMainNode(RaceType nodeType)
@@ -470,6 +462,7 @@ namespace Maximus.Services;
 
         public override string Build()
         {
+            /*
             // 1. Создание основного узла
             if (_nodeCreation.Any())
             {
@@ -531,7 +524,7 @@ namespace Maximus.Services;
                 _commands.AppendLine("// ---------- Parent Container Updates ----------");
                 _commands.AppendLine(string.Join("\n", _parentUpdates));
             }
-
-            return _commands.ToString().TrimEnd().Replace(",", ".");
+*/
+            return _renderer.Render(Doc).TrimEnd().Replace(",", ".");
         }
     }
