@@ -1,13 +1,12 @@
 {
   "Version": "1.0.2",
   "Mandatory": true,
-  "MinSupportedVersion": "1.0.1",
+  "MinSupportedVersion": "1.0.2",
   "ReleaseDate": "2026-04-24T00:00:00Z",
   "Changelog": [
     "Обновление кодогенерации",
     "Новый стиль UI",
     "Скрипты теперь можно импортировать двумя способами: перетаскиванием или через кнопку."
   ],
-  "DownloadUrl": "https://github.com/W1xon/TestMaximus/releases/latest"
+  "DownloadUrl": "https://github.com/W1xon/TestMaximus/releases/download/1.0.2/Maximus.zip"
 }
-
