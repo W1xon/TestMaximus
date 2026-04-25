@@ -43,6 +43,7 @@ public class RaceRenderer
                 : $"add_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
             InstrucionType.UpdateField => $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
             InstrucionType.ResizeField => $"resize_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
+            InstrucionType.ChangeVault => $"change_vault {i.Scope} {i.Path} {i.Subject}",
         };
     }
 }

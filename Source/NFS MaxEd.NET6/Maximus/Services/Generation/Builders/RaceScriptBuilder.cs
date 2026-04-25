@@ -1,4 +1,5 @@
 ﻿using Maximus.Models;
+using Maximus.Services.IR;
 using Maximus.Services.IR.Renderers;
 
 namespace Maximus.Services;
@@ -13,12 +14,23 @@ namespace Maximus.Services;
         private int _childIndex = 0;
         private void AddMainNode(RaceType nodeType)
         {
-            _nodeCreation.Add($"add_node gameplay {nodeType} {_path}");
+            Doc.AddInstruction(
+                InstrucionType.AddNode,
+                InstructionSection.NodeCreation,
+                _path,
+                nodeType.ToString()
+                );
+            //_nodeCreation.Add($"add_node gameplay {nodeType} {_path}");
         }
 
         public RaceScriptBuilder ChangeVault(string vault)
         {
-            _nodeCreation.Add($"change_vault gameplay {_path} {vault}");
+            Doc.AddInstruction(
+                InstrucionType.ChangeVault,
+                InstructionSection.NodeCreation,
+                _path,
+                vault);
+            //_nodeCreation.Add($"change_vault gameplay {_path} {vault}");
             return this;
         }
         
