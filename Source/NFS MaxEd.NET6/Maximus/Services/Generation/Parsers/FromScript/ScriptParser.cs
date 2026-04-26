@@ -33,7 +33,20 @@ public class ScriptParser
 
     private void HandleCheckpoint(RaceConfig config, ScriptInstrucion field)
     {
-        
+        string name = field.Path.Split('/').Last();
+        int index = ParseInt(name.Substring("checkpoint".Length));
+        CheckpointEntity checkpoint;
+        if(index >= config.Checkpoints.Count)
+        {
+            checkpoint = new CheckpointEntity(EntityType.checkpoint, name);
+            config.Checkpoints.Add(checkpoint);
+        }
+
+        if (index == config.Checkpoints.Count)
+        {
+            checkpoint = config.Checkpoints[index - 1];
+            HandlePoint(checkpoint.Point, field);
+        }
     }
     private void HandleBarrier(RaceConfig config, ScriptInstrucion field)
     {
