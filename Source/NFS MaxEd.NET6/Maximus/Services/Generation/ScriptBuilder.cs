@@ -8,5 +8,5 @@ public abstract class ScriptBuilder
 {
     protected ScriptDoc Doc = new();
     protected BaseRenderer Renderer;
-    public string Build() => Renderer.Render(Doc).TrimEnd().Replace(",", ".");
+    public string Build() => Renderer.Render(Doc).Trim().Replace(",", ".");
 }

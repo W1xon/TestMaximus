@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Maximus.Services.IR;
 public enum InstrucionType
 {
@@ -9,15 +11,31 @@ public enum InstrucionType
     ResizeField,
 }
 
+
 public enum InstructionSection
 {
+    [Description("========== Main Circuit Node ==========")]
     NodeCreation,
+
+    [Description("---------- Field Declarations ----------")]
     FieldDeclaration,
+
+    [Description("---------- Array Field Updates ----------")]
     ArrayUpdate,
+
+    [Description("---------- Scalar Field Updates ----------")]
     ScalarUpdate,
+
+    [Description("---------- Array Resizing ----------")]
     ArrayResize,
+
+    [Description("========== Child Nodes ==========")]
     ChildNode,
+
+    [Description("========== Children Entries ==========")]
     ChildEntrie,
+
+    [Description("---------- Parent Container Updates ----------")]
     ParentUpdate
 }
 public class ScriptInstrucion
@@ -30,7 +48,7 @@ public class ScriptInstrucion
     public string? SubField { get; set; }
     public string? Value { get; set; }
     
-    public ScriptInstrucion(InstrucionType type, InstructionSection section)
+    public ScriptInstrucion(InstrucionType type, InstructionSection section = InstructionSection.NodeCreation)
     {
         Type = type;
         Section = section;

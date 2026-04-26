@@ -1,4 +1,5 @@
 using System.Text;
+using Maximus.Extensions;
 
 namespace Maximus.Services.IR.Renderers;
 
@@ -26,6 +27,10 @@ public class RaceRenderer : BaseRenderer
 
         foreach (var group in groupByCall)
         {
+            string header = group.Key.GetDescription().Contains("=")
+                ? group.Key.GetDescription().ToUpper()
+                : group.Key.GetDescription();
+            Sb.AppendLine($"\n// {header}");
             foreach (var instruction in group)
             {
                 Sb.AppendLine(HandleInstruction(instruction));
