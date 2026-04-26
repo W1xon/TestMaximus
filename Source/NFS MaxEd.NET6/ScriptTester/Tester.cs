@@ -1,49 +1,41 @@
+using System.Windows.Media;
 using Microsoft.Win32;
 
 namespace ScriptTester;
 
 public class Tester
 {
-    private OpenFileDialog _openFileDialog;
-
-    public Tester()
+    public ComparisonResult Check(string goldenScript, string testScript)
     {
-        _openFileDialog = new OpenFileDialog();
-    }
+        var result = new ComparisonResult();
+        var gLines = goldenScript.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+        var tLines = testScript.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
-    public string Check(string goldenScript, string testScript)
-    {
-        if (string.IsNullOrWhiteSpace(goldenScript) || string.IsNullOrWhiteSpace(testScript))
-            return "Ошибка ввода: оба скрипта должны быть непустыми.";
+        int maxLines = Math.Max(gLines.Length, tLines.Length);
 
-        string[] goldenLines = goldenScript.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        string[] testLines = testScript.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        
-        bool isMatchLength = goldenLines.Length == testLines.Length;
-        
-        for (int i = 0; i < Math.Min(goldenLines.Length, testLines.Length); i++)
+        for (int i = 0; i < maxLines; i++)
         {
-            if (!string.Equals(goldenLines[i].Trim(), testLines[i].Trim(), StringComparison.Ordinal))
-            {
-                string lengthMismatch = isMatchLength ? "" : $" (Количество строк не совпадает: ожидалось {goldenLines.Length}, получено {testLines.Length})";
-                return $"{lengthMismatch}\nСодержимое отличается в строке {i + 1}:\nОжидалось: {goldenLines[i]}\nПолучено: {testLines[i]}";
-            }
+            string gLine = i < gLines.Length ? gLines[i] : null;
+            string tLine = i < tLines.Length ? tLines[i] : null;
+
+            bool match = string.Equals(gLine?.Trim(), tLine?.Trim(), StringComparison.Ordinal);
+            
+            if (!match) result.IsFullMatch = false;
+
+            result.Rows.Add(new ComparisonRow(i + 1, gLine ?? "[MISSING]", tLine ?? "[MISSING]", match));
         }
 
-        if (!isMatchLength)
-        {
-            return $"Содержимое совпадает частично, но количество строк разное: ожидалось {goldenLines.Length}, получено {testLines.Length}.";
-        }
-
-        return "Скрипты полностью совпадают.";
+        result.Summary = result.IsFullMatch ? "Scripts match!" : "Differences found.";
+        return result;
     }
-
-    public string[] OpenFile()
-    {
-        if (_openFileDialog.ShowDialog() == true)
-        {
-            return _openFileDialog.FileNames;
-        }
-        return Array.Empty<string>();
-    }
+}
+public class ScriptPair
+{
+    public string FileName { get; set; }
+    public string GoldenPath { get; set; }
+    public string TestPath { get; set; }
+    public bool? IsMatch { get; set; } // null - не проверено, true/false - результат
+    
+    public string StatusIcon => IsMatch == true ? "✔" : "❌";
+    public Brush StatusColor => IsMatch == true ? Brushes.LightGreen : Brushes.Tomato;
 }
