@@ -1,6 +1,6 @@
 using Maximus.Services.IR;
 
-namespace Maximus.Services.Parsers.FromScript;
+namespace Maximus.Services.Parsers;
 
 public class ScriptInstructionParser
 {
@@ -12,8 +12,8 @@ public class ScriptInstructionParser
         {
             if(string.IsNullOrWhiteSpace(line) || line.Contains("//"))
                 continue;
+            HandleLine(line.Trim());
         }
-
         return _doc;
     }
 

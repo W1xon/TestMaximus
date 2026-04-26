@@ -177,14 +177,23 @@
                                 Height="45"
                                 Style="{StaticResource ButtonStyle}">
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        FontSize="20"
-                                        Margin="0,0,10,0"
-                                        Text="Save"
-                                        VerticalAlignment="Center" />
+
                                     <TextBlock
                                         FontWeight="Bold"
                                         Text="Save Project"
+                                        VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button
+                                Click="OpenScript_Click"
+                                Height="45"
+                                Style="{StaticResource ButtonStyle}">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+                                    <TextBlock
+                                        FontWeight="Bold"
+                                        Text="Open"
                                         VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>

@@ -1,7 +1,10 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using Maximus.Services;
+using Maximus.Services.Parsers;
 using Maximus.ViewModels;
+using Microsoft.Win32;
 
 namespace Maximus.Views;
 
@@ -124,5 +127,16 @@ public partial class MainWindow : Window
         var welcomeWindow = new WelcomeWindow();
         
         welcomeWindow.ShowDialog();
+    }
+
+    private void OpenScript_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new OpenFileDialog { Title = "Выберите скрипт для открытия", Filter = "NFSMS Files (*.nfsms)|*.nfsms" };
+        if (dialog.ShowDialog() != true) return;
+        string filePath = dialog.FileName;
+
+        string content = File.ReadAllText(filePath);
+        ScriptInstructionParser scriptParser = new ScriptInstructionParser();
+        var scriptData = scriptParser.Parse(content);
     }
 }
