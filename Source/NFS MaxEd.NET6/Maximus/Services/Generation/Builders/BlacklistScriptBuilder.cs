@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Maximus.Services.IR;
 
 namespace Maximus.Services;
 
@@ -13,45 +14,83 @@ public class BlacklistScriptBuilder : ScriptBuilder
 
     public BlacklistScriptBuilder AddRequiredBounty(int bounty)
     {
-        _commands.AppendLine($"update_field gameplay {_raceBin} RequiredBounty {bounty}");
+        Doc.AddInstruction(
+            InstrucionType.UpdateField,
+            path: _raceBin,
+            subject: "RequiredBounty",
+            value: bounty.ToString()
+            );
+        
+        //_commands.AppendLine($"update_field gameplay {_raceBin} RequiredBounty {bounty}");
         return this;
     }
 
     public BlacklistScriptBuilder AddRequiredChallenges(int challenges)
     {
-        _commands.AppendLine($"update_field gameplay {_raceBin} RequiredChallenges {challenges}");
+        Doc.AddInstruction(
+            InstrucionType.UpdateField,
+            path: _raceBin,
+            subject: "RequiredChallenges",
+            value: challenges.ToString());
+        //_commands.AppendLine($"update_field gameplay {_raceBin} RequiredChallenges {challenges}");
         return this;
     }
 
     public BlacklistScriptBuilder AddRequiredRaceWon(int races)
     {
-        _commands.AppendLine($"update_field gameplay {_raceBin} RequiredRacesWon {races}");
+        Doc.AddInstruction(
+            InstrucionType.UpdateField,
+            path: _raceBin,
+            subject: "RequiredRacesWon",
+            value: races.ToString());
+        //_commands.AppendLine($"update_field gameplay {_raceBin} RequiredRacesWon {races}");
         return this;
     }
 
     public BlacklistScriptBuilder AddResizeField(string field, int newSize)
     {
-        _commands.AppendLine($"resize_field gameplay {_raceBin} {field} {newSize}");
+        Doc.AddInstruction(
+            InstrucionType.ResizeField,
+            path: _raceBin,
+            subject: field,
+            value: newSize.ToString());
+        //_commands.AppendLine($"resize_field gameplay {_raceBin} {field} {newSize}");
         return this;
     }
 
     public BlacklistScriptBuilder AddUpdateField(string field, int index, string value)
     {
-        _commands.AppendLine($"update_field gameplay {_raceBin} {field}[{index}] {_raceBin}/{value}");
+        Doc.AddInstruction(
+            InstrucionType.UpdateField,
+            path: _raceBin,
+            subject: $"{field}[{index}]",
+            value: value);
+        //_commands.AppendLine($"update_field gameplay {_raceBin} {field}[{index}] {_raceBin}/{value}");
         return this;
     }
     public BlacklistScriptBuilder AddResizeMilestoneField(int newSize)
     {
         string bin = _raceBin.Replace("race_","");
-        _commands.AppendLine($"resize_field gameplay milestones/{bin} Children {newSize}");
+        Doc.AddInstruction(
+            InstrucionType.ResizeField,
+            path: $"milestones/{bin}",
+            subject: "Children",
+            value: newSize.ToString());
+        
+        //_commands.AppendLine($"resize_field gameplay milestones/{bin} Children {newSize}");
         return this;
     }
 
     public BlacklistScriptBuilder AddUpdateMilestoneField(int index, string value)
     {
         string bin = _raceBin.Replace("race_","");
-        _commands.AppendLine($"update_field gameplay milestones/{bin} Children[{index}] {value}");
+        Doc.AddInstruction(
+            InstrucionType.UpdateField,
+            path: $"milestones/{bin}",
+            subject: $"Children[{index}]",
+            value: value);
+        
+        //_commands.AppendLine($"update_field gameplay milestones/{bin} Children[{index}] {value}");
         return this;
     }
-    public override string Build() => _commands.ToString();
 }
