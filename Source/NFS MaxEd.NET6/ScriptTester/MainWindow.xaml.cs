@@ -81,19 +81,19 @@ public partial class MainWindow : Window
     }
     private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
     {
-        this.WindowState = WindowState.Minimized;
+        WindowState = WindowState.Minimized;
     }
 
     private void MaximizeBtn_Click(object sender, RoutedEventArgs e)
     {
-        if (this.WindowState == WindowState.Maximized)
-            this.WindowState = WindowState.Normal;
+        if (WindowState == WindowState.Maximized)
+            WindowState = WindowState.Normal;
         else
-            this.WindowState = WindowState.Maximized;
+            WindowState = WindowState.Maximized;
     }
 
     private void CloseBtn_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 }
