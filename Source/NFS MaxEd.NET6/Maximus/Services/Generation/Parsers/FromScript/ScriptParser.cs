@@ -1,3 +1,4 @@
+using Maximus.Converters;
 using Maximus.Models;
 using Maximus.Services.IR;
 using Barrier = Maximus.Models.Barrier;
@@ -25,14 +26,37 @@ public class ScriptParser
         foreach (var field in barrierFields)
             HandleBarrier(config, field);
         
-        
+        var checkpointFields = updateFields.Where(i => i.Path.Contains("checkpoint")).ToList();
+        foreach(var field in checkpointFields)
+            HandleCheckpoint(config, field);
     }
 
+    private void HandleCheckpoint(RaceConfig config, ScriptInstrucion field)
+    {
+        
+    }
     private void HandleBarrier(RaceConfig config, ScriptInstrucion field)
     {
         config.Barriers.Add(new Barrier(field.Value.Replace("BARRIER_SPLINE_","")));
     }
+    private void HandlePoint(PointEntity point, ScriptInstrucion field)
+    {
+        if (field.Subject == "Position")
+        {
+            float value = ParseFloat(field.Value);
+            if (field.SubField == "X")
+                point.PositionX = value;
+            else if (field.SubField == "Y")
+                point.PositionY = value;
+            else if (field.SubField == "Z")
+                point.PositionZ = value;
+        }
 
+        if (field.Subject == "Rotation")
+        {
+            point.RotationHEX = RotationConverter.DegreesToHex(ParseFloat(field.Value));
+        }
+    }
     private void HandleScalarField(RaceConfig config, ScriptInstrucion i)
     {
         if (i.Value is null) return;

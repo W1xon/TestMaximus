@@ -12,12 +12,12 @@ public class PointEntity : BaseEntity
         : base(initialName)
     {
         EntityType = entityType;
-        RotationHEX = "0x0";
+        RotationHEX = "0x0000";
     }
     public PointEntity( string initialName = "") 
         : base(initialName)
     {
-        RotationHEX = "0x0";
+        RotationHEX = "0x0000";
     }
     public float PositionX { get => _positionX; 
         set => Set(ref _positionX, value); }
