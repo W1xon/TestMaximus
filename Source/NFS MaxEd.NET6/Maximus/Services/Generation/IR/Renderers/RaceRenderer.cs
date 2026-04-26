@@ -2,21 +2,24 @@ using System.Text;
 
 namespace Maximus.Services.IR.Renderers;
 
-public class RaceRenderer
+public class RaceRenderer : BaseRenderer
 {
-    private readonly List<InstructionSection> _call = new ()
+    private readonly List<InstructionSection> _call;
+    public RaceRenderer()
     {
-        InstructionSection.NodeCreation,
-        InstructionSection.FieldDeclaration,
-        InstructionSection.ArrayUpdate,
-        InstructionSection.ArrayResize,
-        InstructionSection.ScalarUpdate,
-        InstructionSection.ChildEntrie,
-        InstructionSection.ChildNode,
-        InstructionSection.ParentUpdate,
-    };
-    private readonly StringBuilder _sb = new();
-    public string Render(ScriptDoc doc)
+        _call =  new ()
+        {
+            InstructionSection.NodeCreation,
+            InstructionSection.FieldDeclaration,
+            InstructionSection.ArrayUpdate,
+            InstructionSection.ArrayResize,
+            InstructionSection.ScalarUpdate,
+            InstructionSection.ChildEntrie,
+            InstructionSection.ChildNode,
+            InstructionSection.ParentUpdate,
+        };
+    }
+    public override string Render(ScriptDoc doc)
     {
         var groupByCall = doc.Instructions.GroupBy(i => i.Section)
             .OrderBy(g => _call.IndexOf(g.Key));
@@ -25,14 +28,14 @@ public class RaceRenderer
         {
             foreach (var instruction in group)
             {
-                _sb.AppendLine(HandleInstruction(instruction));
+                Sb.AppendLine(HandleInstruction(instruction));
             }
         }
 
-        return _sb.ToString();
+        return Sb.ToString();
     }
 
-    private string HandleInstruction(ScriptInstrucion i)
+    protected override string HandleInstruction(ScriptInstrucion i)
     {
         return i.Type switch
         {
@@ -41,7 +44,9 @@ public class RaceRenderer
             InstrucionType.AddField => i.Value is null 
                 ? $"add_field {i.Scope} {i.Path} {i.Subject}"
                 : $"add_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
-            InstrucionType.UpdateField => $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
+            InstrucionType.UpdateField => i.SubField is null
+                ? $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}"
+                : $"update_field {i.Scope} {i.Path} {i.Subject} {i.SubField} {i.Value}",
             InstrucionType.ResizeField => $"resize_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
             InstrucionType.ChangeVault => $"change_vault {i.Scope} {i.Path} {i.Subject}",
         };
