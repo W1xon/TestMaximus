@@ -9,8 +9,6 @@ namespace Maximus.Services;
         private readonly string _path;
         private bool _isInitChildren;
         
-        private readonly RaceRenderer _renderer = new();
-
         private int _childIndex = 0;
         private void AddMainNode(RaceType nodeType)
         {
@@ -470,9 +468,8 @@ namespace Maximus.Services;
             ResizeArray("CashRewards", count);
             return this;
         }
-
-
-        public override string Build()
+        
+        /*public override string Build()
         {
             /*
             // 1. Создание основного узла
@@ -536,7 +533,7 @@ namespace Maximus.Services;
                 _commands.AppendLine("// ---------- Parent Container Updates ----------");
                 _commands.AppendLine(string.Join("\n", _parentUpdates));
             }
-*/
-            return _renderer.Render(Doc).TrimEnd().Replace(",", ".");
-        }
+
+            return ;
+        }*/
     }

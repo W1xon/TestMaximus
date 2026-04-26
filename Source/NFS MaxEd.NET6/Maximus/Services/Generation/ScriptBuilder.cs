@@ -1,10 +1,12 @@
 ﻿using System.Text;
 using Maximus.Services.IR;
+using Maximus.Services.IR.Renderers;
 
 namespace Maximus.Services;
 
 public abstract class ScriptBuilder
 {
     protected ScriptDoc Doc = new();
-    public abstract string Build();
+    protected BaseRenderer Renderer;
+    public string Build() => Renderer.Render(Doc).TrimEnd().Replace(",", ".");
 }
