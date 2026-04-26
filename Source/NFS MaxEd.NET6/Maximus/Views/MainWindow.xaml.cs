@@ -136,7 +136,7 @@ public partial class MainWindow : Window
         string filePath = dialog.FileName;
 
         string content = File.ReadAllText(filePath);
-        ScriptInstructionParser scriptParser = new ScriptInstructionParser();
-        var scriptData = scriptParser.Parse(content);
+        ScriptParser parser = new();
+        parser.Parse(MainViewModel.Config, content);
     }
 }
