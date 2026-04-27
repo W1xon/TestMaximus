@@ -20,6 +20,8 @@ public class ScriptParser
         var addNodes = doc.Instructions.Where(i => i.Type == InstrucionType.AddNode).ToList();
 
         SetRaceType(config, addNodes[0]);
+        config.GameplayVault = addNodes[0].Path.Split('/')[1];
+        config.RaceBin = addNodes[0].Path.Split('/')[0];
         var updateFields = doc.Instructions.Where(i => i.Type == InstrucionType.UpdateField).ToList();
 
         HandleStartAndFinish(config, updateFields);
@@ -38,8 +40,34 @@ public class ScriptParser
         var wrongwayFields = updateFields.Where(i => i.Path.Contains("wrongway")).ToList();
         foreach(var field in wrongwayFields)
             HandleWrongway(config, field);
-    }
+        
+        var timeBonusCheckpointFields = updateFields.Where(i => i.Path.Contains("time_bonus_checkpoint")).ToList();
+        foreach(var field in timeBonusCheckpointFields)
+            HandleTimeBonusCheckpoint(config, field);
 
+        SortCheckpoints(config);
+    }
+    
+    private void SortCheckpoints(RaceConfig config)
+    {
+        var ordered = config.Checkpoints
+            .OrderBy(c => ExtractIndex(c.Name))
+            .ToList();
+
+        for (int i = 0; i < ordered.Count; i++)
+        {
+            var correctItem = ordered[i];
+            var currentIndex = config.Checkpoints.IndexOf(correctItem);
+
+            if (currentIndex != i)
+                config.Checkpoints.Move(currentIndex, i);
+        }
+    }
+    private int ExtractIndex(string name)
+    {
+        var digits = new string(name.Where(char.IsDigit).ToArray());
+        return int.TryParse(digits, out var value) ? value : int.MaxValue;
+    }
     private void SetRaceType(RaceConfig config, ScriptInstrucion field)
     {
         config.NodeType = ParseRaceType(field.Subject);
@@ -64,6 +92,7 @@ public class ScriptParser
                 break;
         }
     }
+    
     private void HandleStartAndFinish(RaceConfig config, List<ScriptInstrucion> updateFields)
     {
         var startGridFields = updateFields.Where(i => i.Path.Contains("startgrid")).ToList();
@@ -74,16 +103,41 @@ public class ScriptParser
             HandlePoint(config.FinishLine, finishLineFields[i]);
         }
     }
+    private void HandleTimeBonusCheckpoint(RaceConfig config, ScriptInstrucion field)
+    {
+        List<CheckpointEntity> timeBonusCheckpoints = config.Checkpoints.Where(c => c.EntityType == EntityType.timebonuscheckpoint).ToList();
+        string name = field.Path.Split('/').Last().Split("_").Last();
+        int index = ParseInt(name.Substring("checkpoint".Length));
+        CheckpointEntity? timeBonusCheckpoint = null;
+        if(index > timeBonusCheckpoints.Count)
+        {
+            timeBonusCheckpoint = new CheckpointEntity(EntityType.timebonuscheckpoint, $"/{name}");
+            config.Checkpoints.Add(timeBonusCheckpoint);
+        }
+        if (index == timeBonusCheckpoints.Count)
+        {
+            timeBonusCheckpoint = timeBonusCheckpoints[index - 1];
+            HandlePoint(timeBonusCheckpoint.Point, field);
+        }
 
+        if (timeBonusCheckpoint is null) return;
+            if(field.Subject == "TimeBonus")
+                timeBonusCheckpoint.TimeBonus = ParseInt(field.Value);
+    }
+    
     private void HandleWrongway(RaceConfig config, ScriptInstrucion field)
     {
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("wrongway".Length));
         PointEntity wrongway;
-        if(index >= config.ResetPlayerTrigers.Count)
+        if(index > config.ResetPlayerTrigers.Count)
         {
             wrongway = new PointEntity(EntityType.resetplayertrigger, name);
             config.ResetPlayerTrigers.Add(wrongway);
+        }
+        if(index == config.ResetPlayerTrigers.Count)
+        {
+            wrongway = config.ResetPlayerTrigers[index - 1];
             HandlePoint(wrongway, field);
         }
     }
@@ -92,7 +146,7 @@ public class ScriptParser
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("shortcut".Length));
         ShortcutEntity? shortcut = null;
-        if (index >= config.Shortcuts.Count)
+        if (index > config.Shortcuts.Count)
         {
             shortcut = new ShortcutEntity(name);
             config.Shortcuts.Add(shortcut);
@@ -116,7 +170,7 @@ public class ScriptParser
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("checkpoint".Length));
         CheckpointEntity checkpoint;
-        if(index >= config.Checkpoints.Count)
+        if(index > config.Checkpoints.Count)
         {
             checkpoint = new CheckpointEntity(EntityType.checkpoint, name);
             config.Checkpoints.Add(checkpoint);
@@ -218,6 +272,9 @@ public class ScriptParser
                 break;
             case "reputation":
                 config.Reputation = ParseInt(i.Value);
+                break;
+            case "raceLength":
+                config.RaceLength = ParseInt(i.Value);
                 break;
     
             // Числовые (double/float)
