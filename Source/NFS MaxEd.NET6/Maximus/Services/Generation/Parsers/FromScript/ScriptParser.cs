@@ -11,10 +11,10 @@ public class ScriptParser
 {
     public void Parse(RaceConfig config, string script)
     {    
-        config.Reset();
         var parser = new ScriptInstructionParser();
         var doc = parser.Parse(script);
         
+        config.Reset();
         var addNodes = doc.Instructions.Where(i => i.Type == InstrucionType.AddNode).ToList();
         SetRaceType(config, addNodes[0]);
         MainViewModel.Instance.UpdateVisibility();
