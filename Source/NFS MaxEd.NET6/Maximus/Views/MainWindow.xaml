@@ -2,6 +2,7 @@
     AllowsTransparency="True"
     Background="Transparent"
     Height="720"
+    PreviewKeyDown="MainWindow_OnPreviewKeyDown"
     Title="Maximus"
     Width="1250"
     WindowStartupLocation="CenterScreen"
@@ -186,15 +187,35 @@
                             </Button>
 
                             <Button
+                                AllowDrop="True"
                                 Click="OpenScript_Click"
-                                Height="45"
-                                Style="{StaticResource ButtonStyle}">
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                DragEnter="DropZone_DragEnter"
+                                DragLeave="DropZone_DragLeave"
+                                Drop="UIElement_OnDrop"
+                                Height="120"
+                                Margin="10"
+                                Style="{StaticResource DropZoneButtonStyle}">
+
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock
+                                        FontSize="32"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,0,0,8"
+                                        Opacity="0.5"
+                                        Text="📂" />
 
                                     <TextBlock
                                         FontWeight="Bold"
-                                        Text="Open"
-                                        VerticalAlignment="Center" />
+                                        Foreground="White"
+                                        HorizontalAlignment="Center"
+                                        Text="Drop .nfsms script here" />
+
+                                    <TextBlock
+                                        FontSize="10"
+                                        Foreground="Gray"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,4,0,0"
+                                        Text="or click to browse files" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>

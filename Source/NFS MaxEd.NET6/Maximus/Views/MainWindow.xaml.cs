@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Maximus.Services;
 using Maximus.Services.Parsers;
 using Maximus.ViewModels;
@@ -128,6 +129,26 @@ public partial class MainWindow : Window
         
         welcomeWindow.ShowDialog();
     }
+    private void DropZone_DragEnter(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            if (sender is Button btn)
+            {
+                btn.BorderBrush = (Brush)FindResource("AccentColor");
+                btn.Background = new SolidColorBrush(Color.FromArgb(40, 0, 255, 0)); 
+            }
+        }
+    }
+
+    private void DropZone_DragLeave(object sender, DragEventArgs e)
+    {
+        if (sender is Button btn)
+        {
+            btn.BorderBrush = (Brush)FindResource("BorderColor");
+            btn.Background = new SolidColorBrush(Color.FromRgb(30, 30, 30));
+        }
+    }
 
     private void OpenScript_Click(object sender, RoutedEventArgs e)
     {
@@ -135,7 +156,64 @@ public partial class MainWindow : Window
         if (dialog.ShowDialog() != true) return;
         string filePath = dialog.FileName;
 
-        string content = File.ReadAllText(filePath);
+        Parse(filePath: filePath);
+    }
+
+    private void UIElement_OnDrop(object sender, DragEventArgs e)
+    {
+        if (sender is Button btn)
+        {
+            btn.BorderBrush = (Brush)FindResource("BorderColor");
+            btn.Background = new SolidColorBrush(Color.FromRgb(30, 30, 30));
+        }
+        if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+        
+        string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+        if (files.Length == 0) return;
+        
+        string filePath = files[0];
+        
+        Parse(filePath: filePath);
+        
+    }
+
+    private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        bool isTargetCombo = e.Key == Key.V && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
+
+        if (!isTargetCombo) return;
+
+        e.Handled = true;
+
+        if (!Clipboard.ContainsText()) return;
+    
+        string clipboardText = Clipboard.GetText();
+        if (string.IsNullOrWhiteSpace(clipboardText)) return;
+
+        try
+        {
+            Parse(content: clipboardText);
+        }
+        catch (Exception ex)
+        {
+            string message = 
+                "ОШИБКА ПАРСИНГА\n" +
+                "_________________________________\n\n" +
+                "Не удалось обработать скрипт из буфера.\n\n" +
+                "Причина:\n" + 
+                $"• {ex.Message}\n" +
+                "_________________________________";
+
+            MessageBox.Show(message, "Уведомление", MessageBoxButton.OK, MessageBoxImage.Stop);
+        }
+    }
+
+    private void Parse(string filePath = null, string content = null)
+    {
+        if(filePath is not null)
+            content = File.ReadAllText(filePath);
+        if (string.IsNullOrWhiteSpace(content)) return;
+        
         ScriptParser parser = new();
         parser.Parse(MainViewModel.Config, content);
     }

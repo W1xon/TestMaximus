@@ -4,35 +4,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--  ==================== ЦВЕТОВАЯ ПАЛИТРА ====================  -->
-    <!--  Фоны  -->
-    <SolidColorBrush Color="#0F0F0F" x:Key="BackgroundDark" />
-    <SolidColorBrush Color="#1A1A1A" x:Key="BackgroundMedium" />
-    <SolidColorBrush Color="#2A2A2A" x:Key="BackgroundLight" />
-
-    <!--  Границы и разделители  -->
-    <SolidColorBrush Color="#3A3A3A" x:Key="BorderColor" />
-    <SolidColorBrush Color="#4A4A4A" x:Key="BorderHover" />
-
-    <!--  Акценты  -->
-    <SolidColorBrush Color="#6A4C93" x:Key="AccentColor" />
-    <SolidColorBrush Color="#8B6AAF" x:Key="AccentHover" />
-    <SolidColorBrush Color="#5A3C83" x:Key="AccentPressed" />
-
-    <!--  Вторичный акцент  -->
-    <SolidColorBrush Color="#00D4FF" x:Key="AccentSecondary" />
-    <SolidColorBrush Color="#33DDFF" x:Key="AccentSecondaryHover" />
-
-    <!--  Текст  -->
-    <SolidColorBrush Color="#FFFFFF" x:Key="TextPrimary" />
-    <SolidColorBrush Color="#E0E0E0" x:Key="TextSecondary" />
-    <SolidColorBrush Color="#B0B0B0" x:Key="TextTertiary" />
-    <SolidColorBrush Color="#808080" x:Key="TextDisabled" />
-
-    <!--  Состояния  -->
-    <SolidColorBrush Color="#FF6B6B" x:Key="DeleteColor" />
-    <SolidColorBrush Color="#E81123" x:Key="DeleteHover" />
-    <SolidColorBrush Color="#C50F1F" x:Key="DeletePressed" />
-
+    <SolidColorBrush Color="#1D2021" x:Key="BackgroundDark" />
+    <SolidColorBrush Color="#282828" x:Key="BackgroundMedium" />
+    <SolidColorBrush Color="#3C3836" x:Key="BackgroundLight" />
+    <SolidColorBrush Color="#504945" x:Key="BorderColor" />
+    <SolidColorBrush Color="#665C54" x:Key="BorderHover" />
+    <SolidColorBrush Color="#FE8019" x:Key="AccentColor" />
+    <SolidColorBrush Color="#FABD2F" x:Key="AccentHover" />
+    <SolidColorBrush Color="#D65D0E" x:Key="AccentPressed" />
+    <SolidColorBrush Color="#8EC07C" x:Key="AccentSecondary" />
+    <SolidColorBrush Color="#B8BB26" x:Key="AccentSecondaryHover" />
+    <SolidColorBrush Color="#FBF1C7" x:Key="TextPrimary" />
+    <SolidColorBrush Color="#EBDBB2" x:Key="TextSecondary" />
+    <SolidColorBrush Color="#BDAE93" x:Key="TextTertiary" />
+    <SolidColorBrush Color="#928374" x:Key="TextDisabled" />
+    <SolidColorBrush Color="#FB4934" x:Key="DeleteColor" />
+    <SolidColorBrush Color="#CC241D" x:Key="DeleteHover" />
+    <SolidColorBrush Color="#9D0006" x:Key="DeletePressed" />
     <!--  Конвертеры  -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:ProgressBarWidthConverter x:Key="ProgressBarWidthConverter" />
@@ -991,6 +979,50 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Text" TargetName="Icon" Value="▶" />
                             <Setter Property="Background" TargetName="Border" Value="{StaticResource BackgroundLight}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="DropZoneButtonStyle">
+        <Setter Property="Background" Value="{StaticResource BackgroundMedium}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="8"
+                        SnapsToDevicePixels="true"
+                        x:Name="border">
+                        <Grid>
+                            <Rectangle
+                                Margin="5"
+                                RadiusX="4"
+                                RadiusY="4"
+                                Stroke="{TemplateBinding BorderBrush}"
+                                StrokeDashArray="4 2"
+                                StrokeThickness="1"
+                                x:Name="DashBorder" />
+
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource BackgroundLight}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource AccentColor}" />
+                            <Setter Property="Stroke" TargetName="DashBorder" Value="{StaticResource AccentColor}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" Value="{StaticResource AccentPressed}" />
+                            <Setter Property="Opacity" Value="0.9" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
