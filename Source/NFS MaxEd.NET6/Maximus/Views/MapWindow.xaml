@@ -2,8 +2,6 @@
     AllowsTransparency="True"
     Background="Transparent"
     Height="720"
-    ResizeMode="CanResize"
-    ShowInTaskbar="False"
     Title="Map Viewer"
     Width="1280"
     WindowStartupLocation="CenterOwner"
@@ -26,26 +24,19 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--  Header with controls  -->
             <Border
                 Background="{StaticResource BackgroundMedium}"
-                BorderBrush="{StaticResource BorderColor}"
-                BorderThickness="0,0,0,1"
                 CornerRadius="8,8,0,0"
                 Grid.Row="0"
                 MouseLeftButtonDown="DragWindow">
                 <Grid>
-                    <!--  Title  -->
                     <TextBlock
                         FontSize="16"
                         FontWeight="SemiBold"
                         Foreground="{StaticResource AccentSecondary}"
-                        HorizontalAlignment="Left"
-                        Margin="20,0,0,0"
+                        Margin="20,0"
                         Text="Map Viewer"
                         VerticalAlignment="Center" />
-
-                    <!--  Window control buttons  -->
                     <StackPanel
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
@@ -53,124 +44,81 @@
                         <Button
                             Click="Minimize_Click"
                             Content="-"
-                            Style="{StaticResource WindowButtonStyle}"
-                            ToolTip="Minimize" />
+                            Style="{StaticResource WindowButtonStyle}" />
                         <Button
                             Click="Close_Click"
                             Content="×"
-                            Style="{StaticResource CloseWindowButtonStyle}"
-                            ToolTip="Close" />
+                            Style="{StaticResource CloseWindowButtonStyle}" />
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!--  Main content area  -->
             <Grid Grid.Row="1">
-                <!--  Map canvas  -->
                 <Border
                     BorderBrush="{StaticResource BorderColor}"
                     BorderThickness="1"
                     ClipToBounds="True"
                     CornerRadius="6"
                     Margin="10">
-                    <Canvas
+                    <ScrollViewer
                         Background="{StaticResource BackgroundDark}"
-                        ClipToBounds="True"
-                        MouseLeftButtonDown="MapCanvas_MouseLeftButtonDown"
-                        MouseLeftButtonUp="MapCanvas_MouseLeftButtonUp"
-                        MouseMove="MapCanvas_MouseMove"
-                        MouseWheel="MapCanvas_MouseWheel"
-                        x:Name="MapCanvas">
-                        <Image
-                            Canvas.Left="0"
-                            Canvas.Top="0"
-                            Source="/Assets/map.png"
-                            x:Name="MapImage">
-                            <Image.RenderTransform>
-                                <TransformGroup>
+                        HorizontalScrollBarVisibility="Auto"
+                        PreviewMouseWheel="MapCanvas_MouseWheel"
+                        VerticalScrollBarVisibility="Auto"
+                        x:Name="MapScrollViewer">
+
+                        <Grid
+                            Background="Transparent"
+                            MouseLeftButtonDown="MapCanvas_MouseLeftButtonDown"
+                            MouseLeftButtonUp="MapCanvas_MouseLeftButtonUp"
+                            MouseMove="MapCanvas_MouseMove"
+                            x:Name="ContentGrid">
+                            <Image
+                                RenderOptions.BitmapScalingMode="HighQuality"
+                                Source="/Assets/map.png"
+                                Stretch="None"
+                                x:Name="MapImage">
+                                <Image.LayoutTransform>
                                     <ScaleTransform x:Name="ScaleTransform" />
-                                    <TranslateTransform x:Name="TranslateTransform" />
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                    </Canvas>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </Grid>
+                    </ScrollViewer>
                 </Border>
 
-                <!--  Control panel (bottom right)  -->
                 <StackPanel
                     HorizontalAlignment="Right"
                     Margin="20"
-                    Orientation="Vertical"
-                    VerticalAlignment="Bottom"
-                    x:Name="ControlPanel">
+                    VerticalAlignment="Bottom">
                     <Border Style="{StaticResource PanelStyle}">
                         <StackPanel>
-                            <!--  Zoom in  -->
                             <Button
                                 Click="ZoomIn_Click"
                                 Content="+"
                                 FontSize="20"
-                                FontWeight="Bold"
-                                Style="{StaticResource ControlButtonStyle}"
-                                ToolTip="Zoom In" />
-
-                            <!--  Zoom out  -->
+                                Style="{StaticResource ControlButtonStyle}" />
                             <Button
                                 Click="ZoomOut_Click"
                                 Content="-"
                                 FontSize="20"
-                                FontWeight="Bold"
-                                Style="{StaticResource ControlButtonStyle}"
-                                ToolTip="Zoom Out" />
-
-                            <!--  Reset view  -->
+                                Style="{StaticResource ControlButtonStyle}" />
                             <Button
                                 Click="ResetZoom_Click"
                                 Content="Reset"
-                                FontSize="18"
-                                Style="{StaticResource ControlButtonStyle}"
-                                ToolTip="Reset View" />
+                                Style="{StaticResource ControlButtonStyle}" />
                         </StackPanel>
                     </Border>
-
-                    <!--  Zoom label  -->
                     <Border
                         Margin="0,10,0,0"
                         Padding="12,8"
                         Style="{StaticResource PanelStyle}">
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Margin="0"
                             Style="{StaticResource CaptionStyle}"
                             Text="Zoom: 100%"
                             x:Name="ZoomLabel" />
                     </Border>
                 </StackPanel>
-
-                <!--  Usage hints  -->
-                <Border
-                    HorizontalAlignment="Left"
-                    Margin="20"
-                    Opacity="0.9"
-                    Style="{StaticResource PanelStyle}"
-                    VerticalAlignment="Top">
-                    <StackPanel>
-                        <TextBlock
-                            FontSize="12"
-                            FontWeight="Bold"
-                            Foreground="{StaticResource AccentSecondary}"
-                            Margin="0,0,0,8"
-                            Text="Controls:" />
-                        <TextBlock
-                            Margin="0,0,0,3"
-                            Style="{StaticResource CaptionStyle}"
-                            Text="- Mouse Wheel: Zoom" />
-                        <TextBlock
-                            Margin="0"
-                            Style="{StaticResource CaptionStyle}"
-                            Text="- Left Click + Drag: Pan" />
-                    </StackPanel>
-                </Border>
             </Grid>
         </Grid>
     </Border>

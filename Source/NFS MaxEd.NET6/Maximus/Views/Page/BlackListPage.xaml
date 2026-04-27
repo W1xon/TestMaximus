@@ -16,41 +16,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!--  Top Panel with rounded corners  -->
-        <Border
-            CornerRadius="15"
-            SnapsToDevicePixels="True"
-            Style="{StaticResource CardStyle}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
 
-                <!--  Header and Page Title  -->
-                <StackPanel
-                    Grid.Column="0"
-                    Orientation="Vertical"
-                    VerticalAlignment="Center">
-                    <TextBlock
-                        FontSize="24"
-                        FontWeight="Bold"
-                        Foreground="White"
-                        Margin="0,5,0,0"
-                        Text="BlackList Configuration" />
-                </StackPanel>
-
-                <!--  Buttons  -->
-                <StackPanel
-                    Grid.Column="1"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Center" />
-            </Grid>
-        </Border>
+        <TextBlock
+            FontSize="60"
+            FontWeight="Bold"
+            Foreground="White"
+            HorizontalAlignment="Center"
+            Margin="0,5,0,0"
+            Text="BlackList Configuration" />
 
 
         <!--  Required Parameters Section  -->

@@ -15,23 +15,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border
-            Background="{StaticResource BackgroundMedium}"
-            BorderBrush="{StaticResource BorderColor}"
-            Effect="{DynamicResource DropShadowEffect}"
-            Padding="20"
-            SnapsToDevicePixels="True">
-
-            <Grid>
-                <TextBlock
-                    FontSize="60"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    HorizontalAlignment="Center"
-                    Margin="0,5,0,0"
-                    Text="Races Configuration" />
-            </Grid>
-        </Border>
+        <TextBlock
+            FontSize="60"
+            FontWeight="Bold"
+            Foreground="White"
+            HorizontalAlignment="Center"
+            Margin="0,5,0,0"
+            Text="Races Configuration" />
 
 
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden">
@@ -93,14 +83,14 @@
                             Background="{StaticResource BackgroundDark}"
                             BorderBrush="{StaticResource BorderColor}"
                             Click="OpenMap_Click"
-                            Content="Open Map"
+                            Content="🗺️"
+                            FontSize="32"
                             Foreground="{StaticResource TextPrimary}"
                             Grid.Column="1"
                             HorizontalAlignment="Right"
                             Margin="0,0,10,0"
-                            Padding="20,12"
                             Style="{StaticResource ButtonStyle}"
-                            Width="120" />
+                            Width="80" />
                     </Grid>
                 </Border>
 

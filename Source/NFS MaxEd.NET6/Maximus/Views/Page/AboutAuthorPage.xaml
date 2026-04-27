@@ -227,7 +227,7 @@
                     <TextBlock
                         Margin="0,20,0,40"
                         Style="{StaticResource TitleStyle}"
-                        Text="About the MaxEd Developer" />
+                        Text="About the Maximus Developer" />
 
                     <!--  Logo badge  -->
                     <Border
@@ -240,7 +240,7 @@
                         <TextBlock
                             FontSize="50"
                             HorizontalAlignment="Center"
-                            Text="MAX"
+                            Text="M"
                             VerticalAlignment="Center" />
                     </Border>
 
