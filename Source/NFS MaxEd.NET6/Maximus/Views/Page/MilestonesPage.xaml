@@ -21,7 +21,6 @@
             FontWeight="Bold"
             Foreground="White"
             HorizontalAlignment="Center"
-            Margin="0,5,0,0"
             Text="Milestones Configuration" />
 
         <!--  Main Content  -->

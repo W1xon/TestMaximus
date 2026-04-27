@@ -22,8 +22,8 @@
             FontWeight="Bold"
             Foreground="White"
             HorizontalAlignment="Center"
-            Margin="0,5,0,0"
-            Text="BlackList Configuration" />
+            Text="BlackList Configuration"
+            VerticalAlignment="Center" />
 
 
         <!--  Required Parameters Section  -->
