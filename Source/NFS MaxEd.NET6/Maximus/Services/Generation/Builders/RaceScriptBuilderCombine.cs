@@ -238,7 +238,7 @@ public partial class RaceScriptBuilder
             InstrucionType.ChangeVault,
             InstructionSection.ChildNode,
             nodePath,
-            value: vault);
+            vault);
         //_childNodes.Add($"change_vault gameplay {nodePath} {vault}");
         return this;
     }

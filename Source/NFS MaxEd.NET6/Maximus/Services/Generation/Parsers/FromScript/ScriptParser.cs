@@ -1,6 +1,8 @@
+using System.Globalization;
 using Maximus.Converters;
 using Maximus.Models;
 using Maximus.Services.IR;
+using Maximus.ViewModels;
 using Barrier = Maximus.Models.Barrier;
 
 namespace Maximus.Services.Parsers;
@@ -12,19 +14,21 @@ public class ScriptParser
         config.Reset();
         var parser = new ScriptInstructionParser();
         var doc = parser.Parse(script);
+        
+        var addNodes = doc.Instructions.Where(i => i.Type == InstrucionType.AddNode).ToList();
+        SetRaceType(config, addNodes[0]);
+        MainViewModel.Instance.UpdateVisibility();
+        config.GameplayVault = addNodes[0].Path.Split('/')[1];
+        config.RaceBin = addNodes[0].Path.Split('/')[0];
+        
         foreach (var instrucion in doc.Instructions)
         {
             HandleScalarField(config, instrucion);
         }
-        var addFields = doc.Instructions.Where(i => i.Type == InstrucionType.AddField).ToList();
-        var addNodes = doc.Instructions.Where(i => i.Type == InstrucionType.AddNode).ToList();
-
-        SetRaceType(config, addNodes[0]);
-        config.GameplayVault = addNodes[0].Path.Split('/')[1];
-        config.RaceBin = addNodes[0].Path.Split('/')[0];
+        
         var updateFields = doc.Instructions.Where(i => i.Type == InstrucionType.UpdateField).ToList();
-
         HandleStartAndFinish(config, updateFields);
+        
         var barrierFields = updateFields.Where(i => i.Subject.Contains("Barriers")).ToList();
         foreach (var field in barrierFields)
             HandleBarrier(config, field);
@@ -97,10 +101,22 @@ public class ScriptParser
     {
         var startGridFields = updateFields.Where(i => i.Path.Contains("startgrid")).ToList();
         var finishLineFields = updateFields.Where(i => i.Path.Contains("finishline")).ToList();
-        for(int i  = 0; i < startGridFields.Count; i++)
+        foreach (var t in startGridFields)
+            HandlePoint(config.StartGrid, t);
+
+        foreach (var t in finishLineFields)
         {
-            HandlePoint(config.StartGrid, startGridFields[i]);
-            HandlePoint(config.FinishLine, finishLineFields[i]);
+            HandlePoint(config.FinishLine, t);
+            
+            if (t.Subject == "Dimensions")
+            {
+                if(t.SubField == "X")
+                    config.FinishLine.DimensionsX = ParseFloat(t.Value);
+                else if(t.SubField == "Y")
+                    config.FinishLine.DimensionsY = ParseFloat(t.Value);
+                else if(t.SubField == "Z")
+                    config.FinishLine.DimensionsZ = ParseFloat(t.Value);
+            }
         }
     }
     private void HandleTimeBonusCheckpoint(RaceConfig config, ScriptInstrucion field)
@@ -273,9 +289,6 @@ public class ScriptParser
             case "reputation":
                 config.Reputation = ParseInt(i.Value);
                 break;
-            case "raceLength":
-                config.RaceLength = ParseInt(i.Value);
-                break;
     
             // Числовые (double/float)
             case "rivalbesttime":
@@ -316,8 +329,9 @@ public class ScriptParser
     }
     private float ParseFloat(string value)
     {
-        if (float.TryParse(value, out var result))
+        if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var result))
             return result;
-        return 0;
+
+        return 0f;
     }
 }

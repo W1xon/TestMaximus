@@ -1,4 +1,6 @@
-﻿namespace Maximus.Converters;
+﻿using System.Globalization;
+
+namespace Maximus.Converters;
 
 /// <summary>
 /// Provides conversion between Hexadecimal direction values and degrees.
@@ -10,35 +12,37 @@
 /// </remarks>
 public static class RotationConverter
 {
-    private const double HexRange = 65536.0;
-    private const double DegreeRange = 360.0;
+    private const float HexRange = 65536f;
+    private const float DegreeRange = 360f;
 
     public static float HexToDegrees(string hex)
     {
         if (string.IsNullOrWhiteSpace(hex))
             return 0f;
 
-        string cleanHex = hex.StartsWith("0x", StringComparison.OrdinalIgnoreCase) 
-            ? hex[2..] 
+        string cleanHex = hex.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
+            ? hex[2..]
             : hex;
 
-        if (!uint.TryParse(cleanHex, System.Globalization.NumberStyles.HexNumber, null, out uint value))
+        if (!uint.TryParse(cleanHex,
+                NumberStyles.HexNumber,
+                CultureInfo.InvariantCulture,
+                out uint value))
+        {
             throw new FormatException($"Invalid hex rotation value: {hex}");
+        }
 
         double angle = (value / HexRange) * DegreeRange;
 
-        return (float)Math.Round(angle, 4, MidpointRounding.AwayFromZero);
+        return (float)Math.Round(angle, 4);
     }
-
     public static string DegreesToHex(float degrees)
     {
-        double normalizedDegrees = degrees % DegreeRange;
-        if (normalizedDegrees < 0) normalizedDegrees += DegreeRange;
+        double normalized = degrees % DegreeRange;
+        if (normalized < 0)
+            normalized += DegreeRange;
 
-        uint value = (uint)Math.Round((normalizedDegrees * HexRange) / DegreeRange);
-
-        value %= 65536; 
-
+        uint value = (uint)Math.Round((normalized / DegreeRange) * HexRange);
         return $"0x{value:X4}";
     }
 }
