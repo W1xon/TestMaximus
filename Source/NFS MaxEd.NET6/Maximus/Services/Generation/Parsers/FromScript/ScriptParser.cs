@@ -18,10 +18,11 @@ public class ScriptParser
         }
         var addFields = doc.Instructions.Where(i => i.Type == InstrucionType.AddField).ToList();
         var addNodes = doc.Instructions.Where(i => i.Type == InstrucionType.AddNode).ToList();
-        
-        config.NodeType = ParseRaceType(addNodes[0].Subject);
+
+        SetRaceType(config, addNodes[0]);
         var updateFields = doc.Instructions.Where(i => i.Type == InstrucionType.UpdateField).ToList();
 
+        HandleStartAndFinish(config, updateFields);
         var barrierFields = updateFields.Where(i => i.Subject.Contains("Barriers")).ToList();
         foreach (var field in barrierFields)
             HandleBarrier(config, field);
@@ -29,8 +30,87 @@ public class ScriptParser
         var checkpointFields = updateFields.Where(i => i.Path.Contains("checkpoint")).ToList();
         foreach(var field in checkpointFields)
             HandleCheckpoint(config, field);
+        
+        var shortcutFields = updateFields.Where(i => i.Path.Contains("shortcut")).ToList();
+        foreach(var field in shortcutFields)
+            HandleShortcut(config, field);
+        
+        var wrongwayFields = updateFields.Where(i => i.Path.Contains("wrongway")).ToList();
+        foreach(var field in wrongwayFields)
+            HandleWrongway(config, field);
     }
 
+    private void SetRaceType(RaceConfig config, ScriptInstrucion field)
+    {
+        config.NodeType = ParseRaceType(field.Subject);
+
+        switch (config.NodeType)
+        {
+            case RaceType.lapknockout:
+            case RaceType.circuit:
+                config.IsCircuitOrKnockout = true;
+                break;
+            case RaceType.tollboothrace:
+                config.IsTollbooth = true;
+                break;
+            case RaceType.speedtraprace:
+                config.IsSpeedtrap = true;
+                break;
+            case RaceType.cashgrab:
+                config.IsCashgrab = true;
+                break;
+            case RaceType.drag:
+                config.IsDrag = true;
+                break;
+        }
+    }
+    private void HandleStartAndFinish(RaceConfig config, List<ScriptInstrucion> updateFields)
+    {
+        var startGridFields = updateFields.Where(i => i.Path.Contains("startgrid")).ToList();
+        var finishLineFields = updateFields.Where(i => i.Path.Contains("finishline")).ToList();
+        for(int i  = 0; i < startGridFields.Count; i++)
+        {
+            HandlePoint(config.StartGrid, startGridFields[i]);
+            HandlePoint(config.FinishLine, finishLineFields[i]);
+        }
+    }
+
+    private void HandleWrongway(RaceConfig config, ScriptInstrucion field)
+    {
+        string name = field.Path.Split('/').Last();
+        int index = ParseInt(name.Substring("wrongway".Length));
+        PointEntity wrongway;
+        if(index >= config.ResetPlayerTrigers.Count)
+        {
+            wrongway = new PointEntity(EntityType.resetplayertrigger, name);
+            config.ResetPlayerTrigers.Add(wrongway);
+            HandlePoint(wrongway, field);
+        }
+    }
+    private void HandleShortcut(RaceConfig config, ScriptInstrucion field)
+    {
+        string name = field.Path.Split('/').Last();
+        int index = ParseInt(name.Substring("shortcut".Length));
+        ShortcutEntity? shortcut = null;
+        if (index >= config.Shortcuts.Count)
+        {
+            shortcut = new ShortcutEntity(name);
+            config.Shortcuts.Add(shortcut);
+        }
+
+        if (index == config.Shortcuts.Count)
+        {
+            shortcut = config.Shortcuts[index - 1];
+            HandlePoint(shortcut.Point, field);
+        }
+
+        if (shortcut is null) return;
+        
+        if(field.Subject == "ShortcutMaxChance")
+            shortcut.MaxChance = ParseFloat(field.Value);
+        else if(field.Subject == "ShortcutMinChance")
+            shortcut.MinChance = ParseFloat(field.Value);
+    }
     private void HandleCheckpoint(RaceConfig config, ScriptInstrucion field)
     {
         string name = field.Path.Split('/').Last();
