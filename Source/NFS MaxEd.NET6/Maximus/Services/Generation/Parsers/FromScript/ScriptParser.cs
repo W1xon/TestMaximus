@@ -264,6 +264,9 @@ public class ScriptParser
             case "template":
                 config.Template = i.Value;
                 break;
+            case"postraceactivity":
+                config.PostRaceActivity = i.Value;
+                break;
     
             // Числовые параметры (int)
             case "opponents": // В скрипте Opponents, в коде Opponent
