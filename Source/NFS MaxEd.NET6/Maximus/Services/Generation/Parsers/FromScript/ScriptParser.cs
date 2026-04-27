@@ -129,6 +129,7 @@ public class ScriptParser
         {
             timeBonusCheckpoint = new CheckpointEntity(EntityType.timebonuscheckpoint, $"/{name}");
             config.Checkpoints.Add(timeBonusCheckpoint);
+            timeBonusCheckpoints.Add(timeBonusCheckpoint);
         }
         if (index == timeBonusCheckpoints.Count)
         {
