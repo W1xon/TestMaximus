@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Maximus.Models;
 using Maximus.Services;
 using Maximus.ViewModels;
+using System.Windows.Media;
 
 namespace Maximus.Views;
 
@@ -56,5 +56,40 @@ public partial class RacePage : Page, IGeneratable
         };
 
         infoWindow.ShowDialog();
+    }
+    private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
+        if (sender is not ScrollViewer scrollViewer) return;
+        var hitElement = e.OriginalSource as DependencyObject;
+    
+        if (IsInsideVerticalScrollViewer(hitElement))
+        {
+            return; 
+        }
+    
+        if (e.Delta > 0)
+        {
+            scrollViewer.LineLeft();
+        }
+        else
+        {
+            scrollViewer.LineRight();
+        }
+    
+        e.Handled = true;
+    }
+    
+    private bool IsInsideVerticalScrollViewer(DependencyObject element)
+    {
+        while (element != null && element != SettingsScrollViewer)
+        {
+            if (element is ScrollViewer sv && sv.VerticalScrollBarVisibility != ScrollBarVisibility.Disabled)
+            {
+                if (sv.ScrollableHeight > 0)
+                    return true;
+            }
+            element = VisualTreeHelper.GetParent(element);
+        }
+        return false;
     }
 }
