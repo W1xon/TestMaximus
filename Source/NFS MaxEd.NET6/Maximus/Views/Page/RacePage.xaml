@@ -109,113 +109,123 @@
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
 
-                        <Border
-                            Margin="0,0,15,0"
-                            Style="{StaticResource AuthorCardStyle}"
-                            Width="380">
-                            <StackPanel>
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource AccentColor}"
-                                    Margin="0,0,0,15"
-                                    Text="HEAT SETTINGS" />
+                        <StackPanel Orientation="Horizontal">
+                            <!--  1. IDENTIFICATION & LOCATION (4 поля)  -->
+                            <Border
+                                Margin="0,0,15,0"
+                                Style="{StaticResource AuthorCardStyle}"
+                                Width="380">
+                                <StackPanel>
+                                    <TextBlock
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource AccentColor}"
+                                        Margin="0,0,0,15"
+                                        Text="IDENTIFICATION" />
 
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Force Heat Level" />
-                                <TextBox
-                                    IsEnabled="{Binding EnableCops}"
-                                    Margin="0,0,0,10"
-                                    Text="{Binding ForceHeatLevel}" />
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Event ID" />
+                                    <TextBox Margin="0,0,0,10" Text="{Binding EventId}" />
 
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Max Heat Level" />
-                                <TextBox
-                                    IsEnabled="{Binding EnableCops}"
-                                    Margin="0,0,0,10"
-                                    Text="{Binding MaxHeatLevel}" />
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Gameplay Vault" />
+                                    <TextBox Margin="0,0,0,10" Text="{Binding GameplayVault}" />
 
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Event ID" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding EventId}" />
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Race Bin" />
+                                    <ComboBox
+                                        ItemsSource="{Binding RaceBins}"
+                                        Margin="0,0,0,10"
+                                        SelectedItem="{Binding RaceBin}" />
 
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Chance of Rain" />
-                                <TextBox IsEnabled="{Binding IsChanceOfRain}" Text="{Binding ChanceOfRain}" />
-                            </StackPanel>
-                        </Border>
-
-                        <Border
-                            Margin="0,0,15,0"
-                            Style="{StaticResource AuthorCardStyle}"
-                            Width="380">
-                            <StackPanel>
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource AccentColor}"
-                                    Margin="0,0,0,15"
-                                    Text="LOCATION SETTINGS" />
-
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Race Bin" />
-                                <ComboBox
-                                    ItemsSource="{Binding RaceBins}"
-                                    Margin="0,0,0,10"
-                                    SelectedItem="{Binding RaceBin}" />
-
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Region" />
-                                <ComboBox
-                                    ItemsSource="{Binding Regions}"
-                                    Margin="0,0,0,10"
-                                    SelectedItem="{Binding Region}" />
-
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Intro NIS" />
-                                <ComboBox ItemsSource="{Binding IntroNisList}" SelectedItem="{Binding IntroNis}" />
-                            </StackPanel>
-                        </Border>
-
-                        <Border
-                            Margin="0,0,15,0"
-                            Style="{StaticResource AuthorCardStyle}"
-                            Width="380">
-                            <StackPanel>
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource AccentColor}"
-                                    Margin="0,0,0,15"
-                                    Text="RACE PARAMETERS" />
-
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Cash Value" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding CashValue}" />
-
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Traffic Level" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding TrafficLevel}" />
-
-                                <TextBlock Style="{StaticResource LabelStyle}" Text="Race Length" />
-                                <TextBox Text="{Binding RaceLength}" />
-                            </StackPanel>
-                        </Border>
-
-                        <Border
-                            Margin="0,0,15,0"
-                            Style="{StaticResource AuthorCardStyle}"
-                            Width="380">
-                            <StackPanel>
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource AccentColor}"
-                                    Margin="0,0,0,15"
-                                    Text="SPECIAL MODES" />
-
-                                <StackPanel Visibility="{Binding IsCircuitOrKnockout, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Number of Laps" />
-                                    <TextBox Margin="0,0,0,10" Text="{Binding NumLaps}" />
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Region" />
+                                    <ComboBox ItemsSource="{Binding Regions}" SelectedItem="{Binding Region}" />
                                 </StackPanel>
+                            </Border>
 
-                                <StackPanel Visibility="{Binding IsSpeedtrap, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Reputation" />
-                                    <TextBox Text="{Binding Reputation}" />
+                            <!--  2. VISUALS & REWARDS (4 поля)  -->
+                            <Border
+                                Margin="0,0,15,0"
+                                Style="{StaticResource AuthorCardStyle}"
+                                Width="380">
+                                <StackPanel>
+                                    <TextBlock
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource AccentColor}"
+                                        Margin="0,0,0,15"
+                                        Text="PRESENTATION" />
+
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Intro NIS" />
+                                    <ComboBox
+                                        ItemsSource="{Binding IntroNisList}"
+                                        Margin="0,0,0,10"
+                                        SelectedItem="{Binding IntroNis}" />
+
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Finish Camera" />
+                                    <TextBox Margin="0,0,0,10" Text="{Binding FinishCamera}" />
+
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Cash Value" />
+                                    <TextBox Margin="0,0,0,10" Text="{Binding CashValue}" />
+
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Race Length" />
+                                    <TextBox Text="{Binding RaceLength}" />
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                            </Border>
+
+                            <!--  3. GAMEPLAY & EXTRA (Остальное)  -->
+                            <Border
+                                Margin="0,0,15,0"
+                                Style="{StaticResource AuthorCardStyle}"
+                                Width="380">
+                                <StackPanel>
+                                    <TextBlock
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource AccentColor}"
+                                        Margin="0,0,0,15"
+                                        Text="GAMEPLAY SETTINGS" />
+
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Style="{StaticResource LabelStyle}" Text="Force Heat" />
+                                            <TextBox IsEnabled="{Binding EnableCops}" Text="{Binding ForceHeatLevel}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Style="{StaticResource LabelStyle}" Text="Max Heat" />
+                                            <TextBox IsEnabled="{Binding EnableCops}" Text="{Binding MaxHeatLevel}" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Traffic Level" />
+                                    <TextBox Margin="0,0,0,10" Text="{Binding TrafficLevel}" />
+
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="Chance of Rain" />
+                                    <TextBox
+                                        IsEnabled="{Binding IsChanceOfRain}"
+                                        Margin="0,0,0,10"
+                                        Text="{Binding ChanceOfRain}" />
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Style="{StaticResource LabelStyle}" Text="Laps" />
+                                            <TextBox Text="{Binding NumLaps}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Style="{StaticResource LabelStyle}" Text="Reputation" />
+                                            <TextBox Text="{Binding Reputation}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
 
                             <StackPanel Margin="10,0">
