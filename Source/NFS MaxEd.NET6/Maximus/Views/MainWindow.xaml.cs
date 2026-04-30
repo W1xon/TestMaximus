@@ -103,15 +103,7 @@ public partial class MainWindow : Window
     
     private void OnGenerateClick(object sender, RoutedEventArgs e)
     {
-        if (MainFrame.Content is not IGeneratable page)
-        {
-            MessageBox.Show("Эта страница не поддерживает генерацию скрипта.",
-                "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-            return;
-        }
-
-        CodeInfo codeInfo = page.GenerateCode();
-        FileService.SaveNFSMS(codeInfo.Line, codeInfo.Name);
+        Generate();
     }
 
     private void TogglePanel_Click(object sender, RoutedEventArgs e)
@@ -179,35 +171,53 @@ public partial class MainWindow : Window
 
     private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
     {
-        bool isTargetCombo = e.Key == Key.V && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
-
-        if (!isTargetCombo) return;
-
-        e.Handled = true;
-
-        if (!Clipboard.ContainsText()) return;
-    
-        string clipboardText = Clipboard.GetText();
-        if (string.IsNullOrWhiteSpace(clipboardText)) return;
-
-        try
+        bool isPasteCombo = e.Key == Key.V && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
+        bool isSaveCombo = e.Key == Key.S && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
+        if (isPasteCombo)
         {
-            Parse(content: clipboardText);
+
+            e.Handled = true;
+
+            if (!Clipboard.ContainsText()) return;
+
+            string clipboardText = Clipboard.GetText();
+            if (string.IsNullOrWhiteSpace(clipboardText)) return;
+
+            try
+            {
+                Parse(content: clipboardText);
+            }
+            catch (Exception ex)
+            {
+                string message =
+                    "ОШИБКА ПАРСИНГА\n" +
+                    "_________________________________\n\n" +
+                    "Не удалось обработать скрипт из буфера.\n\n" +
+                    "Причина:\n" +
+                    $"• {ex.Message}\n" +
+                    "_________________________________";
+
+                MessageBox.Show(message, "Уведомление", MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
         }
-        catch (Exception ex)
+        else if(isSaveCombo)
         {
-            string message = 
-                "ОШИБКА ПАРСИНГА\n" +
-                "_________________________________\n\n" +
-                "Не удалось обработать скрипт из буфера.\n\n" +
-                "Причина:\n" + 
-                $"• {ex.Message}\n" +
-                "_________________________________";
-
-            MessageBox.Show(message, "Уведомление", MessageBoxButton.OK, MessageBoxImage.Stop);
+            Generate();
         }
     }
 
+    private void Generate()
+    {
+        if (MainFrame.Content is not IGeneratable page)
+        {
+            MessageBox.Show("Эта страница не поддерживает генерацию скрипта.",
+                "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        CodeInfo codeInfo = page.GenerateCode();
+        FileService.SaveNFSMS(codeInfo.Line, codeInfo.Name);
+    }
     private void Parse(string filePath = null, string content = null)
     {
         if(filePath is not null)
