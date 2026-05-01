@@ -44,7 +44,7 @@
                                 Margin="0,0,0,5"
                                 Style="{StaticResource LabelStyle}"
                                 Text="Milestone Type" />
-                            <ComboBox ItemsSource="{Binding MilestoneTypes}" SelectedItem="{Binding MilestoneType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <ComboBox ItemsSource="{Binding MilestoneConfig.MilestoneTypes}" SelectedItem="{Binding MilestoneConfig.MilestoneType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                         <!--  Spawn Point  -->
@@ -53,7 +53,7 @@
                                 Margin="0,0,0,5"
                                 Style="{StaticResource LabelStyle}"
                                 Text="Spawn Point" />
-                            <ComboBox ItemsSource="{Binding SpawnPoints}" SelectedItem="{Binding SelectedSpawnPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <ComboBox ItemsSource="{Binding MilestoneConfig.SpawnPoints}" SelectedItem="{Binding MilestoneConfig.SelectedSpawnPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                         <!--  Bin Index  -->
                         <StackPanel Grid.Column="2">
@@ -61,7 +61,7 @@
                                 Margin="0,0,0,5"
                                 Style="{StaticResource LabelStyle}"
                                 Text="Bin Index" />
-                            <ComboBox ItemsSource="{Binding BinIndices}" SelectedItem="{Binding SelectedBinIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <ComboBox ItemsSource="{Binding MilestoneConfig.BinIndices}" SelectedItem="{Binding MilestoneConfig.SelectedBinIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -69,8 +69,6 @@
 
             <!--  Numeric Values Section  -->
             <Border Grid.Row="1" Style="{StaticResource CardStyle}">
-
-
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -93,22 +91,22 @@
 
                         <StackPanel Grid.Column="0" Margin="0,0,15,0">
                             <TextBlock Style="{StaticResource LabelStyle}" Text="Bounty" />
-                            <TextBox Text="{Binding Bounty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding MilestoneConfig.Bounty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Margin="0,0,15,0">
                             <TextBlock Style="{StaticResource LabelStyle}" Text="Goal Add Prev Best" />
-                            <TextBox Text="{Binding GoalAddPrevBest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding MilestoneConfig.GoalAddPrevBest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="2" Margin="0,0,15,0">
                             <TextBlock Style="{StaticResource LabelStyle}" Text="Goal Easy" />
-                            <TextBox Text="{Binding GoalEasy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding MilestoneConfig.GoalEasy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="3" Margin="0,0,15,0">
                             <TextBlock Style="{StaticResource LabelStyle}" Text="Goal Hard" />
-                            <TextBox Text="{Binding GoalHard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding MilestoneConfig.GoalHard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                     </Grid>
