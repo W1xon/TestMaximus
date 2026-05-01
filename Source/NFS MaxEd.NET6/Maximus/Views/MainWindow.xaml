@@ -233,9 +233,9 @@
                                         </StackPanel>
                                     </Button>
 
-                                    <!--  Blacklist Icon Button  -->
+                                    <!--  Leaders Icon Button  -->
                                     <Button
-                                        Click="OnBlacklistClick"
+                                        Click="OnLeadersClick"
                                         Height="90"
                                         Style="{StaticResource NavButtonStyle}"
                                         Width="90">

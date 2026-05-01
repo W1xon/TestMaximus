@@ -65,14 +65,22 @@
                         Background="{StaticResource BackgroundDark}"
                         BorderBrush="{StaticResource BorderColor}"
                         Click="OpenMap_Click"
-                        Content="🗺️"
                         FontSize="32"
                         Foreground="{StaticResource TextPrimary}"
                         Grid.Column="2"
                         HorizontalAlignment="Center"
                         Style="{StaticResource ButtonStyle}"
                         VerticalAlignment="Center"
-                        Width="80" />
+                        Width="80">
+                        <Image
+                            Height="48"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,5"
+                            Source="pack://application:,,,/Assets/Map_Icon.png"
+                            Stretch="Uniform"
+                            VerticalAlignment="Center"
+                            Width="48" />
+                    </Button>
                 </Grid>
             </Border>
 

@@ -101,6 +101,10 @@ public partial class MainWindow : Window
         MainFrame.Navigate(new AboutAuthorPage());
     }
 
+    private void OnLeadersClick(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new LeadersPage());
+    }
     
     private void OnGenerateClick(object sender, RoutedEventArgs e)
     {
@@ -221,4 +225,5 @@ public partial class MainWindow : Window
         ScriptParser parser = new();
         parser.Parse(MainViewModel.Config, content);
     }
+
 }
