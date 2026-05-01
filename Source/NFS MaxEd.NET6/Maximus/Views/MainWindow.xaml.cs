@@ -171,6 +171,7 @@ public partial class MainWindow : Window
     {
         bool isPasteCombo = e.Key == Key.V && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
         bool isSaveCombo = e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control;
+        bool isOpenCombo = e.Key == Key.O && Keyboard.Modifiers == ModifierKeys.Control;
         if (isPasteCombo)
         {
 
@@ -201,6 +202,10 @@ public partial class MainWindow : Window
         else if(isSaveCombo)
         {
             Generate();
+        }
+        else if (isOpenCombo)
+        {
+            OpenScript_Click(sender, e);
         }
     }
 

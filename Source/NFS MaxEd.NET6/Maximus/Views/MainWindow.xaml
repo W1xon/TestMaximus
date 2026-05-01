@@ -105,7 +105,6 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
@@ -260,30 +259,38 @@
                         </ScrollViewer>
 
                         <!--  Нижняя секция с кнопками действий  -->
-                        <StackPanel Grid.Row="2" Margin="15,0,15,20">
-                            <!--  Разделитель  -->
-                            <Separator Margin="0,0,0,15" />
+                        <StackPanel
+                            Grid.Row="1"
+                            Margin="15,40,15,20"
+                            VerticalAlignment="Bottom">
+                            <Separator
+                                Background="{StaticResource BorderColor}"
+                                Height="2"
+                                Margin="0,10,0,10" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!--  About Author  -->
+                                <Button
+                                    Click="OnAboutAuthorClick"
+                                    Content="About Author"
+                                    Grid.Column="0"
+                                    Height="80"
+                                    Style="{StaticResource ButtonStyle}"
+                                    Width="80" />
 
-                            <!--  About Author  -->
-                            <Button
-                                Click="OnAboutAuthorClick"
-                                Content="About"
-                                Margin="0,0,0,12"
-                                Style="{StaticResource NavButtonStyle}" />
+                                <!--  Кнопка Save  -->
+                                <Button
+                                    Click="OnGenerateClick"
+                                    Content="Save"
+                                    Grid.Column="1"
+                                    Height="80"
+                                    Style="{StaticResource ButtonStyle}"
+                                    Width="80" />
+                            </Grid>
 
-                            <!--  Кнопка Save  -->
-                            <Button
-                                Click="OnGenerateClick"
-                                Height="45"
-                                Style="{StaticResource ButtonStyle}">
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-
-                                    <TextBlock
-                                        FontWeight="Bold"
-                                        Text="Save Project"
-                                        VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Button>
 
                             <StackPanel>
                                 <Button
@@ -346,6 +353,34 @@
                                             Text="to paste from clipboard"
                                             VerticalAlignment="Center" />
                                     </StackPanel>
+                                    <!--  Подсказка Open  -->
+                                    <StackPanel
+                                        HorizontalAlignment="Center"
+                                        Margin="0,4,0,0"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{StaticResource TextTertiary}"
+                                            Text="Press"
+                                            VerticalAlignment="Center" />
+                                        <Border
+                                            Background="{StaticResource BackgroundLight}"
+                                            CornerRadius="3"
+                                            Margin="4,0"
+                                            Padding="4,1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                FontSize="9"
+                                                FontWeight="Bold"
+                                                Foreground="{StaticResource AccentColor}"
+                                                Text="Ctrl + O" />
+                                        </Border>
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{StaticResource TextTertiary}"
+                                            Text="to open script"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
 
                                     <!--  Подсказка Save  -->
                                     <StackPanel
@@ -375,6 +410,8 @@
                                             Text="to save script"
                                             VerticalAlignment="Center" />
                                     </StackPanel>
+
+
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
