@@ -8,6 +8,14 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <OutputPath>$(MSBuildThisFileDirectory)..\bin\SharedBuild\$(Configuration)\</OutputPath>
+        <PublishDir>$(MSBuildThisFileDirectory)..\bin\SharedBuild\$(Configuration)\</PublishDir>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <SelfContained>false</SelfContained>
+        <PublishSingleFile>false</PublishSingleFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\Maximus\Maximus.csproj" />
     </ItemGroup>
