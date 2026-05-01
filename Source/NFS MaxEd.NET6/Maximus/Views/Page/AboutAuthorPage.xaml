@@ -1,5 +1,5 @@
 ﻿<Page
-    Background="{StaticResource BackgroundDark}"
+    Background="Transparent"
     Title="About Maximus"
     mc:Ignorable="d"
     x:Class="Maximus.Views.AboutAuthorPage"

@@ -9,6 +9,7 @@
     WindowStyle="None"
     x:Class="Maximus.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:views="clr-namespace:Maximus.Views"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--  Основная граница окна  -->
@@ -362,8 +363,11 @@
                     </Grid>
                 </Border>
 
-                <!--  Область контента  -->
-                <Grid Background="{StaticResource BackgroundDark}" Grid.Column="1">
+                <Grid
+                    Background="{StaticResource BackgroundDark}"
+                    ClipToBounds="True"
+                    Grid.Column="1">
+                    <views:DynamicBackground />
                     <Frame
                         Background="Transparent"
                         NavigationUIVisibility="Hidden"

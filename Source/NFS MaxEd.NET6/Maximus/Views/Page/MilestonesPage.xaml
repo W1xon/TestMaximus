@@ -1,5 +1,5 @@
 ﻿<Page
-    Background="#1a1a1a"
+    Background="Transparent"
     Title="MilestonesPage"
     mc:Ignorable="d"
     x:Class="Maximus.Views.MilestonesPage"
