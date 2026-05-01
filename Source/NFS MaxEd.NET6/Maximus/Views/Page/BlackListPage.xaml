@@ -11,23 +11,11 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--  Top Panel with rounded corners  -->
-
-        <TextBlock
-            FontSize="60"
-            FontWeight="Bold"
-            Foreground="White"
-            HorizontalAlignment="Center"
-            Text="BlackList Configuration"
-            VerticalAlignment="Center" />
-
 
         <!--  Required Parameters Section  -->
-        <Border Grid.Row="2" Style="{StaticResource CardStyle}">
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}">
             <StackPanel>
                 <TextBlock
                     FontSize="18"
@@ -39,65 +27,61 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="20" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <!--  Required Race Won  -->
-                    <StackPanel Grid.Column="0">
+                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
                         <TextBlock Style="{StaticResource LabelStyle}" Text="Required Race Won" />
                         <TextBox Text="{Binding Blacklist.RequiredRaceWon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                     <!--  Required Challenges  -->
-                    <StackPanel Grid.Column="2">
+                    <StackPanel Grid.Column="1" Margin="0,0,20,0">
                         <TextBlock
                             Margin="0,0,0,5"
                             Style="{StaticResource LabelStyle}"
                             Text="Required Challenges" />
                         <TextBox Text="{Binding Blacklist.RequiredChallenges, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
+
                     <!--  Required Bounty  -->
-                    <StackPanel Grid.Column="4">
+                    <StackPanel Grid.Column="2" Margin="0,0,20,0">
                         <TextBlock
                             Margin="0,0,0,5"
                             Style="{StaticResource LabelStyle}"
                             Text="Required Bounty" />
                         <TextBox Text="{Binding Blacklist.RequiredBounty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
-                </Grid>
 
-                <!--  Race Bin  -->
-                <StackPanel Margin="0,20,0,0">
-                    <TextBlock
-                        Margin="0,0,0,5"
-                        Style="{StaticResource LabelStyle}"
-                        Text="Race Bin" />
-                    <ComboBox
-                        HorizontalAlignment="Left"
-                        ItemsSource="{Binding Blacklist.RaceBins}"
-                        MaxWidth="300"
-                        SelectedItem="{Binding Blacklist.RaceBin, Mode=TwoWay}" />
-                </StackPanel>
+                    <!--  Race Bin  -->
+                    <StackPanel Grid.Column="3" Margin="0,0,20,0">
+                        <TextBlock Style="{StaticResource LabelStyle}" Text="Race Bin" />
+                        <ComboBox
+                            HorizontalAlignment="Left"
+                            ItemsSource="{Binding Blacklist.RaceBins}"
+                            SelectedItem="{Binding Blacklist.RaceBin, Mode=TwoWay}" />
+                    </StackPanel>
+                </Grid>
             </StackPanel>
         </Border>
 
         <!--  Lists Section  -->
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!--  Boss Races  -->
-            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+            <Border
+                Grid.Column="0"
+                Margin="0,20,20,0"
+                Style="{StaticResource CardStyle}">
                 <DockPanel>
                     <TextBlock
                         DockPanel.Dock="Top"
@@ -142,7 +126,10 @@
             </Border>
 
             <!--  Children  -->
-            <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+            <Border
+                Grid.Column="1"
+                Margin="0,20,20,0"
+                Style="{StaticResource CardStyle}">
                 <DockPanel>
                     <TextBlock
                         DockPanel.Dock="Top"
@@ -187,7 +174,10 @@
             </Border>
 
             <!--  World Races  -->
-            <Border Grid.Column="4" Style="{StaticResource CardStyle}">
+            <Border
+                Grid.Column="2"
+                Margin="0,20,20,0"
+                Style="{StaticResource CardStyle}">
                 <DockPanel>
                     <TextBlock
                         DockPanel.Dock="Top"
@@ -228,7 +218,10 @@
                 </DockPanel>
             </Border>
             <!--  Milestones  -->
-            <Border Grid.Column="6" Style="{StaticResource CardStyle}">
+            <Border
+                Grid.Column="3"
+                Margin="0,20,0,0"
+                Style="{StaticResource CardStyle}">
                 <DockPanel>
                     <TextBlock
                         DockPanel.Dock="Top"
