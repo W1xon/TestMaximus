@@ -106,14 +106,6 @@ public partial class MainWindow : Window
         Generate();
     }
 
-    private void TogglePanel_Click(object sender, RoutedEventArgs e)
-    {
-        bool isCollapsed = LeftPanel.Visibility == Visibility.Collapsed;
-
-        LeftPanel.Visibility = isCollapsed ? Visibility.Visible : Visibility.Collapsed;
-
-        TogglePanelButton.ToolTip = isCollapsed ? "Hide Panel" : "Show Panel";
-    }
     
     private void ShowWelcomeWindow()
     {
@@ -128,7 +120,9 @@ public partial class MainWindow : Window
             if (sender is Button btn)
             {
                 btn.BorderBrush = (Brush)FindResource("AccentColor");
-                btn.Background = new SolidColorBrush(Color.FromArgb(40, 0, 255, 0)); 
+            
+                var accentColor = ((SolidColorBrush)FindResource("AccentColor")).Color;
+                btn.Background = new SolidColorBrush(Color.FromArgb(40, accentColor.R, accentColor.G, accentColor.B));
             }
         }
     }
@@ -138,7 +132,24 @@ public partial class MainWindow : Window
         if (sender is Button btn)
         {
             btn.BorderBrush = (Brush)FindResource("BorderColor");
-            btn.Background = new SolidColorBrush(Color.FromRgb(30, 30, 30));
+            btn.Background = (Brush)FindResource("BackgroundLight"); 
+        }
+    }
+
+    private void UIElement_OnDrop(object sender, DragEventArgs e)
+    {
+        if (sender is Button btn)
+        {
+            btn.BorderBrush = (Brush)FindResource("BorderColor");
+            btn.Background = (Brush)FindResource("BackgroundLight");
+        }
+
+        if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+    
+        string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+        if (files?.Length > 0)
+        {
+            Parse(filePath: files[0]);
         }
     }
 
@@ -151,28 +162,10 @@ public partial class MainWindow : Window
         Parse(filePath: filePath);
     }
 
-    private void UIElement_OnDrop(object sender, DragEventArgs e)
-    {
-        if (sender is Button btn)
-        {
-            btn.BorderBrush = (Brush)FindResource("BorderColor");
-            btn.Background = new SolidColorBrush(Color.FromRgb(30, 30, 30));
-        }
-        if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-        
-        string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-        if (files.Length == 0) return;
-        
-        string filePath = files[0];
-        
-        Parse(filePath: filePath);
-        
-    }
-
     private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
     {
         bool isPasteCombo = e.Key == Key.V && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
-        bool isSaveCombo = e.Key == Key.S && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
+        bool isSaveCombo = e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control;
         if (isPasteCombo)
         {
 

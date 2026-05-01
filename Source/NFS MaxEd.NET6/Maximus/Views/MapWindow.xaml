@@ -75,7 +75,7 @@
                             x:Name="ContentGrid">
                             <Image
                                 RenderOptions.BitmapScalingMode="HighQuality"
-                                Source="/Assets/map.png"
+                                Source="pack://application:,,,/Maximus;component/Assets/map.png"
                                 Stretch="None"
                                 x:Name="MapImage">
                                 <Image.LayoutTransform>

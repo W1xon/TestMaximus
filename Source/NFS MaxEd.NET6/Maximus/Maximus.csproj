@@ -53,21 +53,37 @@
 
     <ItemGroup>
       <None Remove="Assets\Map.png" />
-      <Content Include="Assets\Map.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <Resource Include="Assets\Map.png" />
       <None Remove="Assets\MAIN_ICON_TOP_15.png" />
-      <Content Include="Assets\blacklist.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <Resource Include="Assets\blacklist.png" />
       <None Remove="Assets\MILESTONE_INFRACTIONS.png" />
-      <Content Include="Assets\milestones.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <Resource Include="Assets\milestones.png" />
       <None Remove="Assets\RIVAL_RACE.png" />
-      <Content Include="Assets\races.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <Resource Include="Assets\races.png" />
+      <None Remove="Assets\ENGAGE.png" />
+      <Resource Include="Assets\ENGAGE.png" />
+      <None Remove="Assets\LEADERBOARD.png" />
+      <Resource Include="Assets\LEADERBOARD.png" />
+      <None Remove="Assets\LOCK.png" />
+      <Resource Include="Assets\LOCK.png" />
+      <None Remove="Assets\Map_Icon.png" />
+      <Resource Include="Assets\Map_Icon.png" />
+      <None Remove="Assets\MILESTONE.png" />
+      <Resource Include="Assets\MILESTONE.png" />
+      <None Remove="Assets\POLICE_PARAMETRS.png" />
+      <Resource Include="Assets\POLICE_PARAMETRS.png" />
+      <None Remove="Assets\RACE.png" />
+      <Resource Include="Assets\RACE.png" />
+      <None Remove="Assets\RACE_OPTIONS_CHALLENGE_SERIES_RACE.png" />
+      <Resource Include="Assets\RACE_OPTIONS_CHALLENGE_SERIES_RACE.png" />
+      <None Remove="Assets\RACE_OPTIONS_COPS_IN_RACE.png" />
+      <Resource Include="Assets\RACE_OPTIONS_COPS_IN_RACE.png" />
+      <None Remove="Assets\RACE_OPTIONS_PROLOGUE_RACE.png" />
+      <Resource Include="Assets\RACE_OPTIONS_PROLOGUE_RACE.png" />
+      <None Remove="Assets\RACE_OPTIONS_QUICK_RACE.png" />
+      <Resource Include="Assets\RACE_OPTIONS_QUICK_RACE.png" />
+      <None Remove="Assets\STRELKA.png" />
+      <Resource Include="Assets\STRELKA.png" />
     </ItemGroup>
 
     <ItemGroup>
@@ -83,6 +99,8 @@
     <ItemGroup>
       <None Remove="Assets\app.ico" />
       <Resource Include="Assets\app.ico" />
+      <None Remove="Assets\ANGLES.png" />
+      <Resource Include="Assets\ANGLES.png" />
     </ItemGroup>
 
     <Target Name="CleanPublishOutput" AfterTargets="Publish">
