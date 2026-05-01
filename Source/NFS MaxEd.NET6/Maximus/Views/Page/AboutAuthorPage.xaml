@@ -48,7 +48,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid Margin="30">
+    <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220" />
             <ColumnDefinition Width="*" />

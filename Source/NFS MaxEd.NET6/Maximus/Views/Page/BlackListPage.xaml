@@ -40,19 +40,13 @@
 
                     <!--  Required Challenges  -->
                     <StackPanel Grid.Column="1" Margin="0,0,20,0">
-                        <TextBlock
-                            Margin="0,0,0,5"
-                            Style="{StaticResource LabelStyle}"
-                            Text="Required Challenges" />
+                        <TextBlock Style="{StaticResource LabelStyle}" Text="Required Challenges" />
                         <TextBox Text="{Binding Blacklist.RequiredChallenges, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                     <!--  Required Bounty  -->
                     <StackPanel Grid.Column="2" Margin="0,0,20,0">
-                        <TextBlock
-                            Margin="0,0,0,5"
-                            Style="{StaticResource LabelStyle}"
-                            Text="Required Bounty" />
+                        <TextBlock Style="{StaticResource LabelStyle}" Text="Required Bounty" />
                         <TextBox Text="{Binding Blacklist.RequiredBounty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
