@@ -103,12 +103,6 @@
                             Style="{StaticResource AuthorCardStyle}"
                             Width="380">
                             <StackPanel>
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource AccentColor}"
-                                    Margin="0,0,0,15"
-                                    Text="IDENTIFICATION" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Event ID" />
                                 <TextBox Margin="0,0,0,10" Text="{Binding EventId}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Gameplay Vault" />
@@ -129,13 +123,8 @@
                             Style="{StaticResource AuthorCardStyle}"
                             Width="380">
                             <StackPanel>
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource AccentColor}"
-                                    Margin="0,0,0,15"
-                                    Text="PRESENTATION" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Intro NIS" />
+
                                 <ComboBox
                                     ItemsSource="{Binding IntroNisList}"
                                     Margin="0,0,0,10"
@@ -156,12 +145,6 @@
                             Style="{StaticResource AuthorCardStyle}"
                             Width="380">
                             <StackPanel>
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource AccentColor}"
-                                    Margin="0,0,0,15"
-                                    Text="GAMEPLAY SETTINGS" />
                                 <Grid Margin="0,0,0,10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -177,6 +160,7 @@
                                         <TextBox IsEnabled="{Binding EnableCops}" Text="{Binding MaxHeatLevel}" />
                                     </StackPanel>
                                 </Grid>
+
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Traffic Level" />
                                 <TextBox Margin="0,0,0,10" Text="{Binding TrafficLevel}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Chance of Rain" />

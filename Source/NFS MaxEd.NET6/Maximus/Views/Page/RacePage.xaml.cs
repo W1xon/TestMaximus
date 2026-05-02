@@ -15,7 +15,11 @@ public partial class RacePage : Page, IGeneratable
 
     private void OpenMap_Click(object sender, RoutedEventArgs e)
     {
-        var mapWindow = new MapWindow();
+        var mapWindow = new MapWindow()
+        {
+            Owner = Window.GetWindow(this),
+            WindowStartupLocation = WindowStartupLocation.CenterOwner
+        };
         mapWindow.Show();
     }
 

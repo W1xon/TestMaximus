@@ -17,12 +17,6 @@
         <!--  Required Parameters Section  -->
         <Border Grid.Row="0" Style="{StaticResource CardStyle}">
             <StackPanel>
-                <TextBlock
-                    FontSize="18"
-                    FontWeight="Bold"
-                    Margin="0,0,0,15"
-                    Style="{StaticResource LabelStyle}"
-                    Text="Required Parameters" />
 
                 <Grid>
                     <Grid.ColumnDefinitions>

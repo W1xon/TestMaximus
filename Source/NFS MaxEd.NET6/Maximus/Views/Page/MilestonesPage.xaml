@@ -24,12 +24,6 @@
             <!--  Basic Information Section  -->
             <Border Grid.Row="0" Style="{StaticResource CardStyle}">
                 <StackPanel>
-                    <TextBlock
-                        FontSize="18"
-                        FontWeight="Bold"
-                        Margin="0,0,0,15"
-                        Style="{StaticResource LabelStyle}"
-                        Text="Basic Information" />
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -75,15 +69,8 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock
-                        FontSize="18"
-                        FontWeight="Bold"
-                        Margin="0,0,0,15"
-                        Style="{StaticResource LabelStyle}"
-                        Text="Numeric Parameters" />
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -94,17 +81,13 @@
                             <TextBox Text="{Binding MilestoneConfig.Bounty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Margin="0,0,15,0">
-                            <TextBlock Style="{StaticResource LabelStyle}" Text="Goal Add Prev Best" />
-                            <TextBox Text="{Binding MilestoneConfig.GoalAddPrevBest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
 
-                        <StackPanel Grid.Column="2" Margin="0,0,15,0">
+                        <StackPanel Grid.Column="1" Margin="0,0,15,0">
                             <TextBlock Style="{StaticResource LabelStyle}" Text="Goal Easy" />
                             <TextBox Text="{Binding MilestoneConfig.GoalEasy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Column="3" Margin="0,0,15,0">
+                        <StackPanel Grid.Column="2" Margin="0,0,15,0">
                             <TextBlock Style="{StaticResource LabelStyle}" Text="Goal Hard" />
                             <TextBox Text="{Binding MilestoneConfig.GoalHard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
