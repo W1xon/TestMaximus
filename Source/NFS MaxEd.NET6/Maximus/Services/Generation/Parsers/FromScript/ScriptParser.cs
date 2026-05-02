@@ -63,6 +63,17 @@ public class ScriptParser
             HandlePoint(config.StartMarker, field);
         foreach(var field in finishMarkerFields)
             HandlePoint(config.FinishMarker, field);
+        
+        var moneybagFields = updateFields.Where(i => i.Path.Contains("moneybag")).ToList();
+        foreach (var field in moneybagFields)
+        {
+            if(field.Path.Contains("moneybag_small"))
+                HandleMoneybag(config, field, "moneybag_small");
+            else if(field.Path.Contains("moneybag_middle"))
+                HandleMoneybag(config, field, "moneybag_middle");
+            else if(field.Path.Contains("moneybag_big"))
+                HandleMoneybag(config, field, "moneybag_big");
+        }
         SortCheckpoints(config);
     }
     
@@ -131,6 +142,31 @@ public class ScriptParser
                 else if(t.SubField == "Z")
                     config.FinishLine.DimensionsZ = ParseFloat(t.Value);
             }
+        }
+    }
+    private void HandleMoneybag(RaceConfig config, ScriptInstrucion field, string namePrefix)
+    {
+        string name = field.Path.Split('/').Last();
+        int index = ParseInt(name.Substring(namePrefix.Length));
+        EntityType entityType = namePrefix switch
+        {
+            "moneybag_small" => EntityType.moneybag_small,
+            "moneybag_middle" => EntityType.moneybag_middle,
+            "moneybag_big" => EntityType.moneybag_big,
+            _ => throw new FormatException($"Invalid moneybag type with prefix {namePrefix}")
+        };
+        List<Moneybag> moneybags = config.Moneybags.Where(m => m.SelectedType == entityType).ToList();
+        Moneybag? moneybag;
+        if(index > moneybags.Count)
+        {
+            moneybag = new Moneybag(entityType, name);
+            config.Moneybags.Add(moneybag);
+            moneybags.Add(moneybag);
+        }
+        if(index == moneybags.Count)
+        {
+            moneybag = moneybags[index - 1];
+            HandlePoint(moneybag.Point, field);
         }
     }
     private void HandleTrafficSpawnCharacter(RaceConfig config, ScriptInstrucion field)
