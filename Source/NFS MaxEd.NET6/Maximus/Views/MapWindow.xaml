@@ -1,9 +1,9 @@
 ﻿<Window
     AllowsTransparency="True"
     Background="Transparent"
-    Height="720"
+    Height="520"
     Title="Map Viewer"
-    Width="1280"
+    Width="1080"
     WindowStartupLocation="CenterOwner"
     WindowStyle="None"
     mc:Ignorable="d"
