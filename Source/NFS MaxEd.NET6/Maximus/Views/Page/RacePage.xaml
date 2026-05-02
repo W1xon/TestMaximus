@@ -554,7 +554,7 @@
                                                                     FontSize="11"
                                                                     Foreground="{StaticResource TextPrimary}"
                                                                     ItemsSource="{Binding CarTypes}"
-                                                                    SelectedItem="{Binding SelectedType}" />
+                                                                    SelectedItem="{Binding SelectedCarType, Mode=TwoWay}" />
                                                                 <Button
                                                                     Content="?"
                                                                     Grid.Column="1"

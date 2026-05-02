@@ -2,7 +2,7 @@
 
 public class CharacterDrug : BaseEntity
 {
-    private string[] _carTypes = new string[] { "trafpizza", "trafficcoup", "trafsuva" };
+    private string[] _carTypes = { "trafpizza", "trafficcoup", "trafsuva" };
     private bool _fecompressionstoggle = true;
     private string _selectedCarType;
 

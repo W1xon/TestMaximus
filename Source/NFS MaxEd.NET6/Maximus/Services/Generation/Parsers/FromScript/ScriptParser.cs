@@ -57,6 +57,12 @@ public class ScriptParser
         foreach(var field in trafficSpawnCharacterFields)
             HandleTrafficSpawnCharacter(config, field);
         
+        var startMarkerFields = updateFields.Where(i => i.Path.Contains("start_marker")).ToList();
+        var finishMarkerFields = updateFields.Where(i => i.Path.Contains("finish_marker")).ToList();
+        foreach(var field in startMarkerFields)
+            HandlePoint(config.StartMarker, field);
+        foreach(var field in finishMarkerFields)
+            HandlePoint(config.FinishMarker, field);
         SortCheckpoints(config);
     }
     
