@@ -48,7 +48,15 @@ public class ScriptParser
         var timeBonusCheckpointFields = updateFields.Where(i => i.Path.Contains("time_bonus_checkpoint")).ToList();
         foreach(var field in timeBonusCheckpointFields)
             HandleTimeBonusCheckpoint(config, field);
-
+        
+        var trafficSpawnTriggerFields = updateFields.Where(i => i.Path.Contains("trafficspawntrigger") && !i.Path.Contains("character")).ToList();
+        foreach(var field in trafficSpawnTriggerFields)
+            HandleTrafficSpawnTrigger(config, field);
+        
+        var trafficSpawnCharacterFields = updateFields.Where(i => i.Path.Contains("trafficspawntrigger") && i.Path.Contains("character")).ToList();
+        foreach(var field in trafficSpawnCharacterFields)
+            HandleTrafficSpawnCharacter(config, field);
+        
         SortCheckpoints(config);
     }
     
@@ -118,6 +126,49 @@ public class ScriptParser
                     config.FinishLine.DimensionsZ = ParseFloat(t.Value);
             }
         }
+    }
+    private void HandleTrafficSpawnCharacter(RaceConfig config, ScriptInstrucion field)
+    {
+        string name = field.Path.Split('/').Last();
+        int index = ParseInt(name.Substring("character".Length));
+        CharacterDrug? characterDrug = null;
+        if(index > config.CharacterDrugs.Count)
+        {
+            characterDrug = new CharacterDrug();
+            characterDrug.Name = name;
+            config.CharacterDrugs.Add(characterDrug);
+        }
+        if(index == config.CharacterDrugs.Count)
+            characterDrug = config.CharacterDrugs[index - 1];
+
+        if (characterDrug == null) return;
+        
+        if(field.Subject == "CarType")
+            characterDrug.SelectedCarType = field.Value;
+    }
+    private void HandleTrafficSpawnTrigger(RaceConfig config, ScriptInstrucion field)
+    {
+        string name = field.Path.Split('/').Last();
+        int index = ParseInt(name.Substring("trafficspawntrigger".Length));
+        TrafficSpawnTrigger? trafficSpawnTrigger = null;
+        if(index > config.TrafficSpawnTriggers.Count)
+        {
+            trafficSpawnTrigger = new TrafficSpawnTrigger();
+            trafficSpawnTrigger.Name = name;
+            config.TrafficSpawnTriggers.Add(trafficSpawnTrigger);
+        }
+        if(index == config.TrafficSpawnTriggers.Count)
+        {
+            trafficSpawnTrigger = config.TrafficSpawnTriggers[index - 1];
+            HandlePoint(trafficSpawnTrigger.Point, field);
+        }
+
+        if (trafficSpawnTrigger == null) return;
+        
+        if(field.Subject == "InitialSpeed" && config.InitialSpeed == 0)
+            config.InitialSpeed = ParseInt(field.Value);
+        if(field.Subject == "Radius")
+            trafficSpawnTrigger.Radius = ParseFloat(field.Value);
     }
     private void HandleTimeBonusCheckpoint(RaceConfig config, ScriptInstrucion field)
     {
