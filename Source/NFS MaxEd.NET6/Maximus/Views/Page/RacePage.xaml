@@ -141,7 +141,8 @@
                                     Margin="0,0,0,10"
                                     SelectedItem="{Binding IntroNis}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Finish Camera" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding FinishCamera}" />
+
+                                <ComboBox ItemsSource="{Binding FinishCameraList}" SelectedItem="{Binding FinishCamera, Mode=TwoWay}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Cash Value" />
                                 <TextBox Margin="0,0,0,10" Text="{Binding CashValue}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Race Length" />
