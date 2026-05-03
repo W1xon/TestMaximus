@@ -104,9 +104,9 @@
                             Width="380">
                             <StackPanel>
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Event ID" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding EventId}" />
+                                <TextBox Margin="0,0,0,10" Text="{Binding EventId, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Gameplay Vault" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding GameplayVault}" />
+                                <TextBox Margin="0,0,0,10" Text="{Binding GameplayVault, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Race Bin" />
                                 <ComboBox
                                     ItemsSource="{Binding RaceBins}"
@@ -133,9 +133,9 @@
 
                                 <ComboBox ItemsSource="{Binding FinishCameraList}" SelectedItem="{Binding FinishCamera, Mode=TwoWay}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Cash Value" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding CashValue}" />
+                                <TextBox Margin="0,0,0,10" Text="{Binding CashValue, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Race Length" />
-                                <TextBox Text="{Binding RaceLength}" />
+                                <TextBox Text="{Binding RaceLength, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </Border>
 
@@ -153,21 +153,21 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0">
                                         <TextBlock Style="{StaticResource LabelStyle}" Text="Force Heat" />
-                                        <TextBox IsEnabled="{Binding EnableCops}" Text="{Binding ForceHeatLevel}" />
+                                        <TextBox IsEnabled="{Binding EnableCops}" Text="{Binding ForceHeatLevel, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
                                         <TextBlock Style="{StaticResource LabelStyle}" Text="Max Heat" />
-                                        <TextBox IsEnabled="{Binding EnableCops}" Text="{Binding MaxHeatLevel}" />
+                                        <TextBox IsEnabled="{Binding EnableCops}" Text="{Binding MaxHeatLevel, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </Grid>
 
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Traffic Level" />
-                                <TextBox Margin="0,0,0,10" Text="{Binding TrafficLevel}" />
+                                <TextBox Margin="0,0,0,10" Text="{Binding TrafficLevel, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="Chance of Rain" />
                                 <TextBox
                                     IsEnabled="{Binding IsChanceOfRain}"
                                     Margin="0,0,0,10"
-                                    Text="{Binding ChanceOfRain}" />
+                                    Text="{Binding ChanceOfRain, UpdateSourceTrigger=PropertyChanged}" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -176,11 +176,11 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0">
                                         <TextBlock Style="{StaticResource LabelStyle}" Text="Laps" />
-                                        <TextBox Text="{Binding NumLaps}" />
+                                        <TextBox Text="{Binding NumLaps, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
                                         <TextBlock Style="{StaticResource LabelStyle}" Text="Reputation" />
-                                        <TextBox Text="{Binding Reputation}" />
+                                        <TextBox Text="{Binding Reputation, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </Grid>
                             </StackPanel>

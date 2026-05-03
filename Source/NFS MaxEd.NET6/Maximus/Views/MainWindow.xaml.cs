@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Maximus.Services;
@@ -195,6 +197,7 @@ public partial class MainWindow : Window
         bool isPasteCombo = e.Key == Key.V && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift);
         bool isSaveCombo = e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control;
         bool isOpenCombo = e.Key == Key.O && Keyboard.Modifiers == ModifierKeys.Control;
+        bool isPreviewCombo = e.Key == Key.P && Keyboard.Modifiers == ModifierKeys.Control;
         if (isPasteCombo)
         {
 
@@ -229,6 +232,11 @@ public partial class MainWindow : Window
         else if (isOpenCombo)
         {
             OpenScript_Click(sender, e);
+        }
+        else if (isPreviewCombo)
+        {
+            e.Handled = true;
+            TogglePreviewPanel();
         }
     }
 
@@ -274,5 +282,109 @@ public partial class MainWindow : Window
             BlackListScriptParser parser = new(MainViewModel.BlacklistConfig);
             parser.Parse(content);
         }
+    }
+
+    private double _navPanelNormalWidth;
+
+    private void TogglePreviewPanel()
+    {
+        if (double.IsNaN(NavigationPanel.Width))
+        {
+            _navPanelNormalWidth = NavigationPanel.ActualWidth;
+        }
+
+        var navAnimation = new System.Windows.Media.Animation.DoubleAnimation();
+        navAnimation.Duration = TimeSpan.FromMilliseconds(250);
+        navAnimation.EasingFunction = new System.Windows.Media.Animation.CubicEase() { EasingMode = System.Windows.Media.Animation.EasingMode.EaseOut };
+
+        var previewAnimation = new System.Windows.Media.Animation.DoubleAnimation();
+        previewAnimation.Duration = TimeSpan.FromMilliseconds(250);
+        previewAnimation.EasingFunction = new System.Windows.Media.Animation.CubicEase() { EasingMode = System.Windows.Media.Animation.EasingMode.EaseOut };
+        
+        if (PreviewBorder.Width == 0)
+        {
+            NavigationPanel.Width = NavigationPanel.ActualWidth;
+            navAnimation.To = 0;
+            previewAnimation.To = 500;
+            UpdatePreviewContent();
+        }
+        else
+        {
+            navAnimation.To = _navPanelNormalWidth;
+            previewAnimation.To = 0;
+
+            navAnimation.Completed += (s, e) =>
+            {
+                NavigationPanel.BeginAnimation(FrameworkElement.WidthProperty, null);
+                NavigationPanel.Width = double.NaN;
+            };
+        }
+        
+        NavigationPanel.BeginAnimation(FrameworkElement.WidthProperty, navAnimation);
+        PreviewBorder.BeginAnimation(FrameworkElement.WidthProperty, previewAnimation);
+    }
+
+    private void UpdatePreviewContent()
+    {
+        if (MainFrame.Content is not IGeneratable page) return;
+        CodeInfo? codeInfo = null;
+        try
+        { 
+            codeInfo = page.GenerateCode();
+        }
+        catch (Exception e)
+        {
+            codeInfo = new CodeInfo()
+            {
+                Line = $"// Не удалось сгенерировать код для предпросмотра\n// Причина:\n// {e.Message}",
+                Name = "Error"
+            };
+        }
+        if (string.IsNullOrWhiteSpace(codeInfo.Line)) return;
+
+        FlowDocument document = new FlowDocument();
+        Paragraph paragraph = new Paragraph();
+
+        string code = codeInfo.Line;
+        
+        string pattern = @"(?<comment>//[^\r\n]*)|(?<string>""[^""]*"")|(?<keyword>\b(add_node|add_field|update_field|resize_field|change_vault|gameplay|True|False|true|false)\b)";
+        
+        int lastIndex = 0;
+        foreach (Match match in Regex.Matches(code, pattern))
+        {
+            if (match.Index > lastIndex)
+            {
+                paragraph.Inlines.Add(new Run(code.Substring(lastIndex, match.Index - lastIndex)) { Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D4D4D4")) });
+            }
+
+            Brush colorBrush;
+            if (match.Groups["comment"].Success)
+            {
+                colorBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
+            }
+            else if (match.Groups["string"].Success)
+            {
+                colorBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#6A8759"));
+            }
+            else if (match.Groups["keyword"].Success)
+            {
+                colorBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CC7832"));
+            }
+            else
+            {
+                colorBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D4D4D4"));
+            }
+
+            paragraph.Inlines.Add(new Run(match.Value) { Foreground = colorBrush });
+            lastIndex = match.Index + match.Length;
+        }
+
+        if (lastIndex < code.Length)
+        {
+            paragraph.Inlines.Add(new Run(code.Substring(lastIndex)) { Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D4D4D4")) });
+        }
+
+        document.Blocks.Add(paragraph);
+        PreviewRichTextBox.Document = document;
     }
 }

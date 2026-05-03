@@ -256,14 +256,13 @@
                                             Text="Leaders" />
                                     </StackPanel>
                                 </Button>
-
                             </StackPanel>
                         </Grid>
 
                         <!--  Нижняя секция с кнопками действий  -->
                         <StackPanel
                             Grid.Row="1"
-                            Margin="15,35,15,0"
+                            Margin="15,20,15,0"
                             VerticalAlignment="Bottom">
                             <Separator
                                 Background="{StaticResource BorderColor}"
@@ -356,6 +355,35 @@
                                             Text="to paste from clipboard"
                                             VerticalAlignment="Center" />
                                     </StackPanel>
+
+                                    <!--  Подсказка Preview  -->
+                                    <StackPanel
+                                        HorizontalAlignment="Center"
+                                        Margin="0,4,0,0"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{StaticResource TextTertiary}"
+                                            Text="Press"
+                                            VerticalAlignment="Center" />
+                                        <Border
+                                            Background="{StaticResource BackgroundLight}"
+                                            CornerRadius="3"
+                                            Margin="4,0"
+                                            Padding="4,1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                FontSize="9"
+                                                FontWeight="Bold"
+                                                Foreground="{StaticResource AccentColor}"
+                                                Text="Ctrl + P" />
+                                        </Border>
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{StaticResource TextTertiary}"
+                                            Text="to toggle focus mode"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
                                     <!--  Подсказка Open  -->
                                     <StackPanel
                                         HorizontalAlignment="Center"
@@ -425,51 +453,77 @@
                     Background="{StaticResource BackgroundDark}"
                     ClipToBounds="True"
                     Grid.Column="1">
-                    <!--  Blueprint сетка  -->
-                    <Rectangle>
-                        <Rectangle.Fill>
-                            <DrawingBrush
-                                Opacity="0.06"
-                                TileMode="Tile"
-                                Viewport="0,0,80,80"
-                                ViewportUnits="Absolute">
-                                <DrawingBrush.Drawing>
-                                    <DrawingGroup>
-                                        <GeometryDrawing>
-                                            <GeometryDrawing.Pen>
-                                                <Pen Brush="White" Thickness="0.35" />
-                                            </GeometryDrawing.Pen>
-                                            <GeometryDrawing.Geometry>
-                                                <GeometryGroup>
-                                                    <LineGeometry EndPoint="20,80" StartPoint="20,0" />
-                                                    <LineGeometry EndPoint="40,80" StartPoint="40,0" />
-                                                    <LineGeometry EndPoint="60,80" StartPoint="60,0" />
-                                                    <LineGeometry EndPoint="80,20" StartPoint="0,20" />
-                                                    <LineGeometry EndPoint="80,40" StartPoint="0,40" />
-                                                    <LineGeometry EndPoint="80,60" StartPoint="0,60" />
-                                                </GeometryGroup>
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing>
-                                            <GeometryDrawing.Pen>
-                                                <Pen Brush="White" Thickness="0.9" />
-                                            </GeometryDrawing.Pen>
-                                            <GeometryDrawing.Geometry>
-                                                <GeometryGroup>
-                                                    <LineGeometry EndPoint="80,0" StartPoint="0,0" />
-                                                    <LineGeometry EndPoint="0,80" StartPoint="0,0" />
-                                                </GeometryGroup>
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                    </DrawingGroup>
-                                </DrawingBrush.Drawing>
-                            </DrawingBrush>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <Frame
-                        Background="Transparent"
-                        NavigationUIVisibility="Hidden"
-                        x:Name="MainFrame" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <!--  Blueprint сетка  -->
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <DrawingBrush
+                                    Opacity="0.06"
+                                    TileMode="Tile"
+                                    Viewport="0,0,80,80"
+                                    ViewportUnits="Absolute">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="White" Thickness="0.35" />
+                                                </GeometryDrawing.Pen>
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <LineGeometry EndPoint="20,80" StartPoint="20,0" />
+                                                        <LineGeometry EndPoint="40,80" StartPoint="40,0" />
+                                                        <LineGeometry EndPoint="60,80" StartPoint="60,0" />
+                                                        <LineGeometry EndPoint="80,20" StartPoint="0,20" />
+                                                        <LineGeometry EndPoint="80,40" StartPoint="0,40" />
+                                                        <LineGeometry EndPoint="80,60" StartPoint="0,60" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="White" Thickness="0.9" />
+                                                </GeometryDrawing.Pen>
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <LineGeometry EndPoint="80,0" StartPoint="0,0" />
+                                                        <LineGeometry EndPoint="0,80" StartPoint="0,0" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Frame
+                            Background="Transparent"
+                            NavigationUIVisibility="Hidden"
+                            x:Name="MainFrame" />
+                    </Grid>
+
+                    <Border
+                        Background="#1E1E1E"
+                        BorderBrush="{StaticResource BorderColor}"
+                        BorderThickness="1,0,0,0"
+                        Grid.Column="1"
+                        Width="0"
+                        x:Name="PreviewBorder">
+                        <RichTextBox
+                            Background="Transparent"
+                            BorderThickness="0"
+                            FontFamily="Consolas"
+                            FontSize="11"
+                            Foreground="#D4D4D4"
+                            IsReadOnly="True"
+                            Padding="15"
+                            VerticalScrollBarVisibility="Auto"
+                            x:Name="PreviewRichTextBox" />
+                    </Border>
                 </Grid>
             </Grid>
         </Grid>
