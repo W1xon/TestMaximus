@@ -101,7 +101,7 @@
                     BorderBrush="{StaticResource BorderColor}"
                     BorderThickness="0,0,1,0"
                     Grid.Column="0"
-                    x:Name="LeftPanel">
+                    x:Name="NavigationPanel">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -109,159 +109,161 @@
                         </Grid.RowDefinitions>
 
                         <!--  Navigation (Квадратные кнопки-иконки)  -->
-                        <ScrollViewer
-                            Grid.Row="0"
-                            HorizontalScrollBarVisibility="Disabled"
-                            VerticalScrollBarVisibility="Auto">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Margin="10,15,5,15">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel Margin="10,15,5,15">
 
-                                    <!--  Races Icon Button  -->
-                                    <Button
-                                        Click="OnRacesClick"
-                                        Height="90"
-                                        Margin="0,0,0,10"
-                                        Style="{StaticResource NavButtonStyle}"
-                                        Width="90">
-                                        <StackPanel>
-                                            <Image
-                                                Height="48"
-                                                Margin="0,0,0,5"
-                                                Source="pack://application:,,,/Assets/RACE.png"
-                                                Stretch="Uniform"
-                                                Width="48" />
-                                            <TextBlock
-                                                FontSize="11"
-                                                FontWeight="SemiBold"
-                                                HorizontalAlignment="Center"
-                                                Text="Races" />
-                                        </StackPanel>
-                                    </Button>
+                                <!--  Races Icon Button  -->
+                                <Button
+                                    Click="OnRacesClick"
+                                    Height="90"
+                                    Margin="0,0,0,10"
+                                    Style="{StaticResource NavButtonStyle}"
+                                    Width="90"
+                                    x:Name="RacesButton">
+                                    <StackPanel>
+                                        <Image
+                                            Height="48"
+                                            Margin="0,0,0,5"
+                                            Source="pack://application:,,,/Assets/RACE.png"
+                                            Stretch="Uniform"
+                                            Width="48" />
+                                        <TextBlock
+                                            FontSize="11"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Center"
+                                            Text="Races" />
+                                    </StackPanel>
+                                </Button>
 
-                                    <!--  Milestones Icon Button  -->
-                                    <Button
-                                        Click="OnMilestonesClick"
-                                        Height="90"
-                                        Margin="0,0,0,10"
-                                        Style="{StaticResource NavButtonStyle}"
-                                        Width="90">
-                                        <StackPanel>
-                                            <Image
-                                                Height="48"
-                                                Margin="0,0,0,5"
-                                                Source="pack://application:,,,/Assets/MILESTONE.png"
-                                                Stretch="Uniform"
-                                                Width="48" />
-                                            <TextBlock
-                                                FontSize="11"
-                                                FontWeight="SemiBold"
-                                                HorizontalAlignment="Center"
-                                                Text="Milestones" />
-                                        </StackPanel>
-                                    </Button>
+                                <!--  Milestones Icon Button  -->
+                                <Button
+                                    Click="OnMilestonesClick"
+                                    Height="90"
+                                    Margin="0,0,0,10"
+                                    Style="{StaticResource NavButtonStyle}"
+                                    Width="90"
+                                    x:Name="MilestonesButton">
+                                    <StackPanel>
+                                        <Image
+                                            Height="48"
+                                            Margin="0,0,0,5"
+                                            Source="pack://application:,,,/Assets/MILESTONE.png"
+                                            Stretch="Uniform"
+                                            Width="48" />
+                                        <TextBlock
+                                            FontSize="11"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Center"
+                                            Text="Milestones" />
+                                    </StackPanel>
+                                </Button>
 
-                                    <!--  Blacklist Icon Button  -->
-                                    <Button
-                                        Click="OnBlacklistClick"
-                                        Height="90"
-                                        Style="{StaticResource NavButtonStyle}"
-                                        Width="90">
-                                        <StackPanel>
-                                            <Image
-                                                Height="48"
-                                                Margin="0,0,0,5"
-                                                Source="pack://application:,,,/Assets/BLACKLIST.png"
-                                                Stretch="Uniform"
-                                                Width="48" />
-                                            <TextBlock
-                                                FontSize="11"
-                                                FontWeight="SemiBold"
-                                                HorizontalAlignment="Center"
-                                                Text="Blacklist" />
-                                        </StackPanel>
-                                    </Button>
+                                <!--  Blacklist Icon Button  -->
+                                <Button
+                                    Click="OnBlacklistClick"
+                                    Height="90"
+                                    Style="{StaticResource NavButtonStyle}"
+                                    Width="90"
+                                    x:Name="BlacklistButton">
+                                    <StackPanel>
+                                        <Image
+                                            Height="48"
+                                            Margin="0,0,0,5"
+                                            Source="pack://application:,,,/Assets/BLACKLIST.png"
+                                            Stretch="Uniform"
+                                            Width="48" />
+                                        <TextBlock
+                                            FontSize="11"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Center"
+                                            Text="Blacklist" />
+                                    </StackPanel>
+                                </Button>
 
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Margin="5,15,10,15">
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,15,10,15">
 
-                                    <!--  Races Icon Button  -->
-                                    <Button
-                                        Click="OnRacesClick"
-                                        Height="90"
-                                        Margin="0,0,0,10"
-                                        Style="{StaticResource NavButtonStyle}"
-                                        Width="90">
-                                        <StackPanel>
-                                            <Image
-                                                Height="48"
-                                                Margin="0,0,0,5"
-                                                Source="pack://application:,,,/Assets/POLICE_PARAMETRS.png"
-                                                Stretch="Uniform"
-                                                Width="48" />
-                                            <TextBlock
-                                                FontSize="11"
-                                                FontWeight="SemiBold"
-                                                HorizontalAlignment="Center"
-                                                Text="Police" />
-                                        </StackPanel>
-                                    </Button>
+                                <!--  Races Icon Button  -->
+                                <Button
+                                    Click="OnRacesClick"
+                                    Height="90"
+                                    Margin="0,0,0,10"
+                                    Style="{StaticResource NavButtonStyle}"
+                                    Width="90">
+                                    <StackPanel>
+                                        <Image
+                                            Height="48"
+                                            Margin="0,0,0,5"
+                                            Source="pack://application:,,,/Assets/POLICE_PARAMETRS.png"
+                                            Stretch="Uniform"
+                                            Width="48" />
+                                        <TextBlock
+                                            FontSize="11"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Center"
+                                            Text="Police" />
+                                    </StackPanel>
+                                </Button>
 
-                                    <!--  Milestones Icon Button  -->
-                                    <Button
-                                        Click="OnMilestonesClick"
-                                        Height="90"
-                                        Margin="0,0,0,10"
-                                        Style="{StaticResource NavButtonStyle}"
-                                        Width="90">
-                                        <StackPanel>
-                                            <Image
-                                                Height="48"
-                                                Margin="0,0,0,5"
-                                                Source="pack://application:,,,/Assets/ENGAGE.png"
-                                                Stretch="Uniform"
-                                                Width="48" />
-                                            <TextBlock
-                                                FontSize="11"
-                                                FontWeight="SemiBold"
-                                                HorizontalAlignment="Center"
-                                                Text="ENGAGE" />
-                                        </StackPanel>
-                                    </Button>
+                                <!--  Milestones Icon Button  -->
+                                <Button
+                                    Click="OnMilestonesClick"
+                                    Height="90"
+                                    Margin="0,0,0,10"
+                                    Style="{StaticResource NavButtonStyle}"
+                                    Width="90">
+                                    <StackPanel>
+                                        <Image
+                                            Height="48"
+                                            Margin="0,0,0,5"
+                                            Source="pack://application:,,,/Assets/ENGAGE.png"
+                                            Stretch="Uniform"
+                                            Width="48" />
+                                        <TextBlock
+                                            FontSize="11"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Center"
+                                            Text="ENGAGE" />
+                                    </StackPanel>
+                                </Button>
 
-                                    <!--  Leaders Icon Button  -->
-                                    <Button
-                                        Click="OnLeadersClick"
-                                        Height="90"
-                                        Style="{StaticResource NavButtonStyle}"
-                                        Width="90">
-                                        <StackPanel>
-                                            <Image
-                                                Height="48"
-                                                Margin="0,0,0,5"
-                                                Source="pack://application:,,,/Assets/LEADERBOARD.png"
-                                                Stretch="Uniform"
-                                                Width="48" />
-                                            <TextBlock
-                                                FontSize="11"
-                                                FontWeight="SemiBold"
-                                                HorizontalAlignment="Center"
-                                                Text="Leaders" />
-                                        </StackPanel>
-                                    </Button>
+                                <!--  Leaders Icon Button  -->
+                                <Button
+                                    Click="OnLeadersClick"
+                                    Height="90"
+                                    Style="{StaticResource NavButtonStyle}"
+                                    Width="90"
+                                    x:Name="LeadersButton">
+                                    <StackPanel>
+                                        <Image
+                                            Height="48"
+                                            Margin="0,0,0,5"
+                                            Source="pack://application:,,,/Assets/LEADERBOARD.png"
+                                            Stretch="Uniform"
+                                            Width="48" />
+                                        <TextBlock
+                                            FontSize="11"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Center"
+                                            Text="Leaders" />
+                                    </StackPanel>
+                                </Button>
 
-                                </StackPanel>
-                            </Grid>
-
-                        </ScrollViewer>
+                            </StackPanel>
+                        </Grid>
 
                         <!--  Нижняя секция с кнопками действий  -->
                         <StackPanel
                             Grid.Row="1"
-                            Margin="15,40,15,20"
+                            Margin="15,35,15,0"
                             VerticalAlignment="Bottom">
                             <Separator
                                 Background="{StaticResource BorderColor}"
@@ -288,7 +290,8 @@
                                     Grid.Column="1"
                                     Height="80"
                                     Style="{StaticResource ButtonStyle}"
-                                    Width="80" />
+                                    Width="80"
+                                    x:Name="SaveButton" />
                             </Grid>
 
 

@@ -28,7 +28,7 @@ public partial class MainWindow : Window
         DataContext = MainViewModel;
         MainFrame.Navigated += MainFrame_Navigated;
         MainFrame.Content = new RacePage();
-        
+        ColoringButton("RacesButton");
     }
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -83,26 +83,35 @@ public partial class MainWindow : Window
 
     private void OnRacesClick(object sender, RoutedEventArgs e)
     {
+        ColoringButton("RacesButton");
+        SaveButton.IsEnabled = true;
         MainFrame.Navigate(new RacePage());
     }
 
     private void OnMilestonesClick(object sender, RoutedEventArgs e)
     {
+        ColoringButton("MilestonesButton");
+        SaveButton.IsEnabled = true;
         MainFrame.Navigate(new MilestonesPage());
     }
 
     private void OnBlacklistClick(object sender, RoutedEventArgs e)
     {
+        ColoringButton("BlacklistButton");
+        SaveButton.IsEnabled = true;
         MainFrame.Navigate(new BlackListPage());
     }
 
     private void OnAboutAuthorClick(object sender, RoutedEventArgs e)
     {
+        SaveButton.IsEnabled = false;
         MainFrame.Navigate(new AboutAuthorPage());
     }
 
     private void OnLeadersClick(object sender, RoutedEventArgs e)
     {
+        ColoringButton("LeadersButton");
+        SaveButton.IsEnabled = true;
         MainFrame.Navigate(new LeadersPage());
     }
     
@@ -110,8 +119,22 @@ public partial class MainWindow : Window
     {
         Generate();
     }
-
     
+   private void ColoringButton(string buttonName)
+   {
+       var names = new[] { "RacesButton", "MilestonesButton", "BlacklistButton", "LeadersButton" };
+       var backgroundMedium = TryFindResource("BackgroundMedium") as Brush ?? Brushes.Transparent;
+       var accent = TryFindResource("AccentColor") as Brush ?? Brushes.Transparent;
+   
+       foreach (var name in names)
+       {
+           if (FindName(name) is Button buttonOther)
+               buttonOther.Background = backgroundMedium;
+       }
+   
+       if (FindName(buttonName) is Button button)
+           button.Background = accent;
+   }
     private void ShowWelcomeWindow()
     {
         var welcomeWindow = new WelcomeWindow();

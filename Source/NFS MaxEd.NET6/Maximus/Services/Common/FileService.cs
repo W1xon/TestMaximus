@@ -11,7 +11,7 @@ public class FileService
         SaveFileDialog saveFileDialog = new SaveFileDialog
         {
             Filter = "NFS Files (*.nfsms)|*.nfsms",
-            FileName = $"MaxEd-race_{articleName}.nfsms",
+            FileName = $"Maximus_{articleName}.nfsms",
             Title = "Сохранить код"
         };
 
