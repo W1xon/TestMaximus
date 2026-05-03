@@ -74,6 +74,10 @@ public class ScriptParser
             else if(field.Path.Contains("moneybag_big"))
                 HandleMoneybag(config, field, "moneybag_big");
         }
+        
+        var speedtrapFields = updateFields.Where((i => i.Path.Contains("speedtrap"))).ToList();
+        foreach(var field in speedtrapFields)
+            HandleSpeedtrap(config, field);
         SortCheckpoints(config);
     }
     
@@ -121,7 +125,6 @@ public class ScriptParser
                 break;
         }
     }
-    
     private void HandleStartAndFinish(RaceConfig config, List<ScriptInstrucion> updateFields)
     {
         var startGridFields = updateFields.Where(i => i.Path.Contains("startgrid")).ToList();
@@ -144,6 +147,25 @@ public class ScriptParser
             }
         }
     }
+
+    private void HandleSpeedtrap(RaceConfig config, ScriptInstrucion field)
+    {
+        string name = field.Path.Split("/").Last();
+        int index = ParseInt(name.Substring("speedtrap".Length));
+        SpeedtrapEntity speedtrapEntity;
+        if (index > config.Speedtraps.Count)
+        {
+            speedtrapEntity = new SpeedtrapEntity();
+            speedtrapEntity.Name = name;
+            config.Speedtraps.Add(speedtrapEntity);
+        }
+        if(index == config.Speedtraps.Count)
+        {
+            speedtrapEntity = config.Speedtraps[index - 1];
+            HandlePoint(speedtrapEntity.Point, field);
+        }
+    }
+
     private void HandleMoneybag(RaceConfig config, ScriptInstrucion field, string namePrefix)
     {
         string name = field.Path.Split('/').Last();
