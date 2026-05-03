@@ -16,11 +16,11 @@ public class MainViewModel : ObservableObject
        set => Set(ref _config, value);
    }
    
-   private BlacklistConfig _blacklist = new();
-   public BlacklistConfig Blacklist
+   private BlacklistConfig _blacklistConfig = new();
+   public BlacklistConfig BlacklistConfig
    {
-       get => _blacklist;
-       set => Set(ref _blacklist, value);
+       get => _blacklistConfig;
+       set => Set(ref _blacklistConfig, value);
    }
    
    private MilestoneConfig _milestoneConfig = new();
@@ -43,7 +43,7 @@ public class MainViewModel : ObservableObject
    public void ResetConfigs()
    {
        Config.Reset();
-       Blacklist.Reset();
+       BlacklistConfig.Reset();
        MilestoneConfig.Reset();
    }
    private MainViewModel()
@@ -185,16 +185,16 @@ public class MainViewModel : ObservableObject
    #endregion
    private void InitializeBlacklistCommands()
    {
-       Blacklist.AddBossRaceCommand = CreateAddCommand(Blacklist.BossRaces);
-       Blacklist.RemoveBossRaceCommand = CreateRemoveCommand(Blacklist.BossRaces);
+       BlacklistConfig.AddBossRaceCommand = CreateAddCommand(BlacklistConfig.BossRaces);
+       BlacklistConfig.RemoveBossRaceCommand = CreateRemoveCommand(BlacklistConfig.BossRaces);
        
-       Blacklist.AddChildCommand = CreateAddCommand(Blacklist.Children);
-       Blacklist.RemoveChildCommand = CreateRemoveCommand(Blacklist.Children);
+       BlacklistConfig.AddChildCommand = CreateAddCommand(BlacklistConfig.Children);
+       BlacklistConfig.RemoveChildCommand = CreateRemoveCommand(BlacklistConfig.Children);
        
-       Blacklist.AddWorldRaceCommand = CreateAddCommand(Blacklist.WorldRaces);
-       Blacklist.RemoveWorldRaceCommand = CreateRemoveCommand(Blacklist.WorldRaces);
-       Blacklist.AddMilestoneCommand = CreateAddCommand(Blacklist.Milestones);
-       Blacklist.RemoveMilestoneCommand = CreateRemoveCommand(Blacklist.Milestones);
+       BlacklistConfig.AddWorldRaceCommand = CreateAddCommand(BlacklistConfig.WorldRaces);
+       BlacklistConfig.RemoveWorldRaceCommand = CreateRemoveCommand(BlacklistConfig.WorldRaces);
+       BlacklistConfig.AddMilestoneCommand = CreateAddCommand(BlacklistConfig.Milestones);
+       BlacklistConfig.RemoveMilestoneCommand = CreateRemoveCommand(BlacklistConfig.Milestones);
    }
    
    private RelayCommand CreateAddCommand<T>(IList<T> collection, Func<T> factory, EntityType baseName = default) where T : BaseEntity

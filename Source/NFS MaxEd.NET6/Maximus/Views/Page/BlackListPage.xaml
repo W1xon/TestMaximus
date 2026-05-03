@@ -29,19 +29,19 @@
                     <!--  Required Race Won  -->
                     <StackPanel Grid.Column="0" Margin="0,0,20,0">
                         <TextBlock Style="{StaticResource LabelStyle}" Text="Required Race Won" />
-                        <TextBox Text="{Binding Blacklist.RequiredRaceWon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Text="{Binding BlacklistConfig.RequiredRaceWon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                     <!--  Required Challenges  -->
                     <StackPanel Grid.Column="1" Margin="0,0,20,0">
                         <TextBlock Style="{StaticResource LabelStyle}" Text="Required Challenges" />
-                        <TextBox Text="{Binding Blacklist.RequiredChallenges, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Text="{Binding BlacklistConfig.RequiredChallenges, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                     <!--  Required Bounty  -->
                     <StackPanel Grid.Column="2" Margin="0,0,20,0">
                         <TextBlock Style="{StaticResource LabelStyle}" Text="Required Bounty" />
-                        <TextBox Text="{Binding Blacklist.RequiredBounty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Text="{Binding BlacklistConfig.RequiredBounty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                     <!--  Race Bin  -->
@@ -49,8 +49,8 @@
                         <TextBlock Style="{StaticResource LabelStyle}" Text="Race Bin" />
                         <ComboBox
                             HorizontalAlignment="Left"
-                            ItemsSource="{Binding Blacklist.RaceBins}"
-                            SelectedItem="{Binding Blacklist.RaceBin, Mode=TwoWay}" />
+                            ItemsSource="{Binding BlacklistConfig.RaceBins}"
+                            SelectedItem="{Binding BlacklistConfig.RaceBin, Mode=TwoWay}" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -80,7 +80,7 @@
                         Text="Boss Races" />
 
                     <Button
-                        Command="{Binding Blacklist.AddBossRaceCommand}"
+                        Command="{Binding BlacklistConfig.AddBossRaceCommand}"
                         Content="+ Add Boss Race"
                         DockPanel.Dock="Bottom"
                         Height="35"
@@ -88,7 +88,7 @@
                         Style="{StaticResource ButtonStyle}" />
 
                     <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Disabled">
-                        <ItemsControl ItemsSource="{Binding Blacklist.BossRaces}">
+                        <ItemsControl ItemsSource="{Binding BlacklistConfig.BossRaces}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -99,7 +99,7 @@
 
                                         <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <Button
-                                            Command="{Binding DataContext.Blacklist.RemoveBossRaceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            Command="{Binding DataContext.BlacklistConfig.RemoveBossRaceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
                                             Content="×"
                                             Grid.Column="1"
@@ -128,7 +128,7 @@
                         Text="Children" />
 
                     <Button
-                        Command="{Binding Blacklist.AddChildCommand}"
+                        Command="{Binding BlacklistConfig.AddChildCommand}"
                         Content="+ Add Child"
                         DockPanel.Dock="Bottom"
                         Height="35"
@@ -136,7 +136,7 @@
                         Style="{StaticResource ButtonStyle}" />
 
                     <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Disabled">
-                        <ItemsControl ItemsSource="{Binding Blacklist.Children}">
+                        <ItemsControl ItemsSource="{Binding BlacklistConfig.Children}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -147,7 +147,7 @@
 
                                         <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <Button
-                                            Command="{Binding DataContext.Blacklist.RemoveChildCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            Command="{Binding DataContext.BlacklistConfig.RemoveChildCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
                                             Content="×"
                                             Grid.Column="1"
@@ -175,14 +175,14 @@
                         Style="{StaticResource LabelStyle}"
                         Text="World Races" />
                     <Button
-                        Command="{Binding Blacklist.AddWorldRaceCommand}"
+                        Command="{Binding BlacklistConfig.AddWorldRaceCommand}"
                         Content="+ Add World Race"
                         DockPanel.Dock="Bottom"
                         Height="35"
                         Margin="0,10,0,0"
                         Style="{StaticResource ButtonStyle}" />
                     <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Disabled">
-                        <ItemsControl ItemsSource="{Binding Blacklist.WorldRaces}">
+                        <ItemsControl ItemsSource="{Binding BlacklistConfig.WorldRaces}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -192,7 +192,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <Button
-                                            Command="{Binding DataContext.Blacklist.RemoveWorldRaceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            Command="{Binding DataContext.BlacklistConfig.RemoveWorldRaceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
                                             Content="×"
                                             Grid.Column="1"
@@ -219,14 +219,14 @@
                         Style="{StaticResource LabelStyle}"
                         Text="Milestones" />
                     <Button
-                        Command="{Binding Blacklist.AddMilestoneCommand}"
+                        Command="{Binding BlacklistConfig.AddMilestoneCommand}"
                         Content="+ Add Milestones"
                         DockPanel.Dock="Bottom"
                         Height="35"
                         Margin="0,10,0,0"
                         Style="{StaticResource ButtonStyle}" />
                     <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Disabled">
-                        <ItemsControl ItemsSource="{Binding Blacklist.Milestones}">
+                        <ItemsControl ItemsSource="{Binding BlacklistConfig.Milestones}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -236,7 +236,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <Button
-                                            Command="{Binding DataContext.Blacklist.RemoveMilestoneCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            Command="{Binding DataContext.BlacklistConfig.RemoveMilestoneCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                             CommandParameter="{Binding .}"
                                             Content="×"
                                             Grid.Column="1"

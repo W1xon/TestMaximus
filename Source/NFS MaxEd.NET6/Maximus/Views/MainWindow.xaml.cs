@@ -269,5 +269,10 @@ public partial class MainWindow : Window
             MilestoneScriptParser parser = new(MainViewModel.MilestoneConfig);
             parser.Parse(content);
         }
+        else if (page is BlackListPage)
+        {
+            BlackListScriptParser parser = new(MainViewModel.BlacklistConfig);
+            parser.Parse(content);
+        }
     }
 }

@@ -19,14 +19,14 @@ public class MilestoneScriptParser
         
         var updateFields = doc.Instructions.Where(i => i.Type == InstructionType.UpdateField);
         foreach (var field in updateFields)
-            ParseUpdateField(field);
+            ParseScalarField(field);
         
         var addNodeField = doc.Instructions.FirstOrDefault(i => i.Type == InstructionType.AddNode);
         int index = addNodeField.Path.Split('/').Last().IndexOf("milestone", StringComparison.OrdinalIgnoreCase);
         _config.MilestoneType =  addNodeField.Path.Split('/').Last().Substring(index);
     }
     
-    private void ParseUpdateField(ScriptInstruction instruction)
+    private void ParseScalarField(ScriptInstruction instruction)
     {
        if (instruction.Value is null) return;
         

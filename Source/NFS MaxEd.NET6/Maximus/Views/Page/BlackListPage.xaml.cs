@@ -10,7 +10,7 @@ public partial class BlackListPage : Page, IGeneratable
 
     public CodeInfo GenerateCode() => new()
     {
-        Line = new BlacklistParser(MainViewModel.Instance.Blacklist, new BlacklistStore()).GenerateCode(),
+        Line = new BlacklistParser(MainViewModel.Instance.BlacklistConfig, new BlacklistStore()).GenerateCode(),
         Name = nameof(BlackListPage)
     };
 }

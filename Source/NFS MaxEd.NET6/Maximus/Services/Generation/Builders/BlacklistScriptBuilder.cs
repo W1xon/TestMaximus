@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Maximus.Services.IR;
+using Maximus.Services.IR.Renderers;
 
 namespace Maximus.Services;
 
@@ -10,6 +11,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     public BlacklistScriptBuilder(string raceBin)
     {
         _raceBin = raceBin;
+        Renderer = new BlacklistRenderer();
     }
 
     public BlacklistScriptBuilder AddRequiredBounty(int bounty)
@@ -64,7 +66,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
             InstructionType.UpdateField,
             path: _raceBin,
             subject: $"{field}[{index}]",
-            value: value);
+            value: $"{_raceBin}/{value}");
         //_commands.AppendLine($"update_field gameplay {_raceBin} {field}[{index}] {_raceBin}/{value}");
         return this;
     }
