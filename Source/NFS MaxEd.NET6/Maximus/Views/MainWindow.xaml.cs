@@ -240,7 +240,8 @@ public partial class MainWindow : Window
                 "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
-
+        
+        
         CodeInfo codeInfo = page.GenerateCode();
         FileService.SaveNFSMS(codeInfo.Line, codeInfo.Name);
     }
@@ -249,9 +250,24 @@ public partial class MainWindow : Window
         if(filePath is not null)
             content = File.ReadAllText(filePath);
         if (string.IsNullOrWhiteSpace(content)) return;
-        
-        ScriptParser parser = new();
-        parser.Parse(MainViewModel.Config, content);
-    }
 
+        var page = MainFrame.Content as Page;
+        if( page is not IGeneratable)
+        {
+            MessageBox.Show("Эта страница не поддерживает парсинг скрипта.",
+                "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        if (page is RacePage)
+        {
+            RaceScriptParser parser = new(MainViewModel.Config);
+            parser.Parse(content);
+        }
+        else if (page is MilestonesPage)
+        {
+            MilestoneScriptParser parser = new(MainViewModel.MilestoneConfig);
+            parser.Parse(content);
+        }
+    }
 }
