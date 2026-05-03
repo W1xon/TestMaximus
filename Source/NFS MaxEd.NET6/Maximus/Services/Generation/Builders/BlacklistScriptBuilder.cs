@@ -15,7 +15,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     public BlacklistScriptBuilder AddRequiredBounty(int bounty)
     {
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: _raceBin,
             subject: "RequiredBounty",
             value: bounty.ToString()
@@ -28,7 +28,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     public BlacklistScriptBuilder AddRequiredChallenges(int challenges)
     {
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: _raceBin,
             subject: "RequiredChallenges",
             value: challenges.ToString());
@@ -39,7 +39,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     public BlacklistScriptBuilder AddRequiredRaceWon(int races)
     {
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: _raceBin,
             subject: "RequiredRacesWon",
             value: races.ToString());
@@ -50,7 +50,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     public BlacklistScriptBuilder AddResizeField(string field, int newSize)
     {
         Doc.AddInstruction(
-            InstrucionType.ResizeField,
+            InstructionType.ResizeField,
             path: _raceBin,
             subject: field,
             value: newSize.ToString());
@@ -61,7 +61,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     public BlacklistScriptBuilder AddUpdateField(string field, int index, string value)
     {
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: _raceBin,
             subject: $"{field}[{index}]",
             value: value);
@@ -72,7 +72,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     {
         string bin = _raceBin.Replace("race_","");
         Doc.AddInstruction(
-            InstrucionType.ResizeField,
+            InstructionType.ResizeField,
             path: $"milestones/{bin}",
             subject: "Children",
             value: newSize.ToString());
@@ -85,7 +85,7 @@ public class BlacklistScriptBuilder : ScriptBuilder
     {
         string bin = _raceBin.Replace("race_","");
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: $"milestones/{bin}",
             subject: $"Children[{index}]",
             value: value);

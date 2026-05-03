@@ -2,9 +2,9 @@
 
 namespace Maximus.Services;
 
-public class CircuitParser : BaseParser
+public class CircuitCodeGenerator : BaseCodeGenerator
 {
-    public CircuitParser(RaceConfig config) : base(config) { }
+    public CircuitCodeGenerator(RaceConfig config) : base(config) { }
 
     protected override void ParseSpecificSettings()
     {

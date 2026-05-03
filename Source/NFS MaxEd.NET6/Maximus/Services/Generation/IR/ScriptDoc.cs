@@ -2,16 +2,16 @@ namespace Maximus.Services.IR;
 
 public class ScriptDoc
 {
-    private readonly List<ScriptInstrucion> _instructions;
-    public IReadOnlyList<ScriptInstrucion> Instructions => _instructions;
+    private readonly List<ScriptInstruction> _instructions;
+    public IReadOnlyList<ScriptInstruction> Instructions => _instructions;
     
     public ScriptDoc()
     {
-        _instructions = new List<ScriptInstrucion>();
+        _instructions = new List<ScriptInstruction>();
     }
-    public void AddInstruction(InstrucionType type, InstructionSection section = InstructionSection.NodeCreation, string? path = null, string? subject = null, string? subField = null, string? value = null)
+    public void AddInstruction(InstructionType type, InstructionSection section = InstructionSection.NodeCreation, string? path = null, string? subject = null, string? subField = null, string? value = null)
     {
-        var instruction = new ScriptInstrucion(type, section)
+        var instruction = new ScriptInstruction(type, section)
         {
             Path = path,
             Subject = subject,

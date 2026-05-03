@@ -2,9 +2,9 @@
 
 namespace Maximus.Services;
 
-public class TollboothRaceParser : BaseParser
+public class TollboothRaceCodeGenerator : BaseCodeGenerator
 {
-    public TollboothRaceParser(RaceConfig config) : base(config) { }
+    public TollboothRaceCodeGenerator(RaceConfig config) : base(config) { }
 
     protected override void ParseSpecificSettings()
     {

@@ -17,13 +17,13 @@ public class BlacklistRenderer : BaseRenderer
         return Sb.ToString();
     }
 
-    protected override string HandleInstruction(ScriptInstrucion i)
+    protected override string HandleInstruction(ScriptInstruction i)
     {
         return i.Type switch
         {
-            InstrucionType.Comment => $"// ---------- {i.Value.ToUpper()} ----------",
-            InstrucionType.ResizeField => $"resize_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
-            InstrucionType.UpdateField => $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}"
+            InstructionType.Comment => $"// ---------- {i.Value.ToUpper()} ----------",
+            InstructionType.ResizeField => $"resize_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
+            InstructionType.UpdateField => $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}"
         };
     }
 }

@@ -2,13 +2,13 @@ namespace Maximus.Services.IR.Renderers;
 
 public class MilestonesRenderer : BaseRenderer
 {
-    private readonly List<InstrucionType> _call;
+    private readonly List<InstructionType> _call;
     public MilestonesRenderer()
     {
         _call =  new ()
         {
-            InstrucionType.AddField,
-            InstrucionType.UpdateField
+            InstructionType.AddField,
+            InstructionType.UpdateField
         };
     }
     public override string Render(ScriptDoc doc)
@@ -27,14 +27,14 @@ public class MilestonesRenderer : BaseRenderer
         return Sb.ToString();
     }
 
-    protected override string HandleInstruction(ScriptInstrucion i)
+    protected override string HandleInstruction(ScriptInstruction i)
     {
         return i.Type switch
         {
-            InstrucionType.Comment => $"// ---------- {i.Value.ToUpper()} ----------",
-            InstrucionType.AddNode => $"add_node {i.Scope} {i.Subject} {i.Path}",
-            InstrucionType.AddField => $"add_field {i.Scope} {i.Path} {i.Subject}",
-            InstrucionType.UpdateField => $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}"
+            InstructionType.Comment => $"// ---------- {i.Value.ToUpper()} ----------",
+            InstructionType.AddNode => $"add_node {i.Scope} {i.Subject} {i.Path}",
+            InstructionType.AddField => $"add_field {i.Scope} {i.Path} {i.Subject}",
+            InstructionType.UpdateField => $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}"
         };
     }
 }

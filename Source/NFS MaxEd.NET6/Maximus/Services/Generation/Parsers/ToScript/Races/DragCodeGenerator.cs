@@ -2,9 +2,9 @@
 
 namespace Maximus.Services;
 
-public class DragParser : BaseParser
+public class DragCodeGenerator : BaseCodeGenerator
 {
-    public DragParser(RaceConfig config) : base(config) { }
+    public DragCodeGenerator(RaceConfig config) : base(config) { }
 
     protected override void ParseSpecificSettings()
     {

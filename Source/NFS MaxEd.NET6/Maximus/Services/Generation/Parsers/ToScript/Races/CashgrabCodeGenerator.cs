@@ -2,9 +2,9 @@
 
 namespace Maximus.Services;
 
-public class CashgrabParser : BaseParser
+public class CashgrabCodeGenerator : BaseCodeGenerator
 {
-    public CashgrabParser(RaceConfig config) : base(config) { }
+    public CashgrabCodeGenerator(RaceConfig config) : base(config) { }
 
     protected override void ParseSpecificSettings()
     {

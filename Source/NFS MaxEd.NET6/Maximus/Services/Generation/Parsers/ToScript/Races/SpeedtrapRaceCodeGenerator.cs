@@ -2,9 +2,9 @@
 
 namespace Maximus.Services;
 
-public class SpeedtrapRaceParser : BaseParser
+public class SpeedtrapRaceCodeGenerator : BaseCodeGenerator
 {
-    public SpeedtrapRaceParser(RaceConfig config) : base(config) { }
+    public SpeedtrapRaceCodeGenerator(RaceConfig config) : base(config) { }
 
     protected override void ParseSpecificSettings()
     {

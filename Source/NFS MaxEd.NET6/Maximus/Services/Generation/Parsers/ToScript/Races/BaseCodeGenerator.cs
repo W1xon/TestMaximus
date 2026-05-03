@@ -3,12 +3,12 @@ using Maximus.Models;
 
 namespace Maximus.Services;
 
-public abstract class BaseParser
+public abstract class BaseCodeGenerator
     {
         protected readonly RaceScriptBuilder builder;
         protected readonly RaceConfig config;
 
-        protected BaseParser(RaceConfig config)
+        protected BaseCodeGenerator(RaceConfig config)
         {
             this.config = config;
             this.builder = new RaceScriptBuilder(config.Path, config.NodeType)

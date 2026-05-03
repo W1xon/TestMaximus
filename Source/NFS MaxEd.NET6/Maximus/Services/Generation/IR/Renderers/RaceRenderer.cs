@@ -40,20 +40,20 @@ public class RaceRenderer : BaseRenderer
         return Sb.ToString();
     }
 
-    protected override string HandleInstruction(ScriptInstrucion i)
+    protected override string HandleInstruction(ScriptInstruction i)
     {
         return i.Type switch
         {
-            InstrucionType.Comment => $"// ---------- {i.Value.ToUpper()} ----------",
-            InstrucionType.AddNode => $"add_node {i.Scope} {i.Subject} {i.Path}",
-            InstrucionType.AddField => i.Value is null 
+            InstructionType.Comment => $"// ---------- {i.Value.ToUpper()} ----------",
+            InstructionType.AddNode => $"add_node {i.Scope} {i.Subject} {i.Path}",
+            InstructionType.AddField => i.Value is null 
                 ? $"add_field {i.Scope} {i.Path} {i.Subject}"
                 : $"add_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
-            InstrucionType.UpdateField => i.SubField is null
+            InstructionType.UpdateField => i.SubField is null
                 ? $"update_field {i.Scope} {i.Path} {i.Subject} {i.Value}"
                 : $"update_field {i.Scope} {i.Path} {i.Subject} {i.SubField} {i.Value}",
-            InstrucionType.ResizeField => $"resize_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
-            InstrucionType.ChangeVault => $"change_vault {i.Scope} {i.Path} {i.Subject}",
+            InstructionType.ResizeField => $"resize_field {i.Scope} {i.Path} {i.Subject} {i.Value}",
+            InstructionType.ChangeVault => $"change_vault {i.Scope} {i.Path} {i.Subject}",
         };
     }
 }

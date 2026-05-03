@@ -13,7 +13,7 @@ namespace Maximus.Services;
         private void AddMainNode(RaceType nodeType)
         {
             Doc.AddInstruction(
-                InstrucionType.AddNode,
+                InstructionType.AddNode,
                 InstructionSection.NodeCreation,
                 _path,
                 nodeType.ToString()
@@ -24,7 +24,7 @@ namespace Maximus.Services;
         public RaceScriptBuilder ChangeVault(string vault)
         {
             Doc.AddInstruction(
-                InstrucionType.ChangeVault,
+                InstructionType.ChangeVault,
                 InstructionSection.NodeCreation,
                 _path,
                 vault);

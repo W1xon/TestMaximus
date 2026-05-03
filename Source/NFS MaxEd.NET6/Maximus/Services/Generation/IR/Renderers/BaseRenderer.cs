@@ -6,5 +6,5 @@ public abstract class BaseRenderer
 {
     protected readonly StringBuilder Sb = new();
     public abstract string Render(ScriptDoc doc);
-    protected abstract string HandleInstruction(ScriptInstrucion i);
+    protected abstract string HandleInstruction(ScriptInstruction i);
 }

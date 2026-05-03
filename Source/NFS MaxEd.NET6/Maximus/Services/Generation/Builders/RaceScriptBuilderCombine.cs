@@ -17,7 +17,7 @@ public partial class RaceScriptBuilder
     public RaceScriptBuilder AddField(string fieldName, object? value = null)
     {
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             InstructionSection.FieldDeclaration,
             _path,
             fieldName,
@@ -33,7 +33,7 @@ public partial class RaceScriptBuilder
     public RaceScriptBuilder UpdateField<T>(string fieldName, T value)
     {
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ScalarUpdate,
             _path,
             fieldName,
@@ -44,7 +44,7 @@ public partial class RaceScriptBuilder
     public RaceScriptBuilder UpdateArrayItem(string arrayName, int index, string valuePath)
     {
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ArrayUpdate,
             _path,
             $"{arrayName}[{index}]",
@@ -56,7 +56,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{target}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ArrayUpdate,
             _path,
             $"{arrayName}[{index}]",
@@ -68,7 +68,7 @@ public partial class RaceScriptBuilder
     public RaceScriptBuilder ResizeArray(string arrayName, int count)
     {
         Doc.AddInstruction(
-            InstrucionType.ResizeField,
+            InstructionType.ResizeField,
             InstructionSection.ArrayResize,
             _path,
             arrayName,
@@ -80,7 +80,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             InstructionSection.ChildNode,
             childPath,
             fieldName,
@@ -95,7 +95,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ChildNode,
             childPath,
             fieldName,
@@ -107,7 +107,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ChildNode,
             childPath,
             fieldName,
@@ -120,7 +120,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ArrayUpdate,
             childPath,
             $"{arrayName}[{index}]",
@@ -133,7 +133,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ChildNode,
             childPath,
             fieldName,
@@ -145,7 +145,7 @@ public partial class RaceScriptBuilder
     private RaceScriptBuilder AddChildToChildren(string childPath, bool autoincrement = true)
     {
             Doc.AddInstruction(
-                InstrucionType.UpdateField,
+                InstructionType.UpdateField,
                 InstructionSection.ChildEntrie,
                 _path,
                 $"Children[{_childIndex}]",
@@ -160,7 +160,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{trafficTriggerName}/{childName}";
             Doc.AddInstruction(
-                InstrucionType.AddField,
+                InstructionType.AddField,
                 InstructionSection.ChildNode,
                 childPath,
                 fieldName,
@@ -176,7 +176,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{trafficTriggerName}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ChildNode,
             childPath,
             fieldName,
@@ -189,7 +189,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ChildNode,
             childPath,
             fieldName,
@@ -202,7 +202,7 @@ public partial class RaceScriptBuilder
     {
         var childPath = $"{_path}/{childName}";
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             InstructionSection.ChildNode,
             childPath,
             $"{arrayName}[{index}]",
@@ -215,7 +215,7 @@ public partial class RaceScriptBuilder
     {
         var displayName = prefix != null ? $"{prefix}: {nodeName}" : nodeName;
         Doc.AddInstruction(
-            InstrucionType.Comment,
+            InstructionType.Comment,
             InstructionSection.ChildNode,
             value: displayName);
         //_childNodes.Add($"// ---------- {displayName.ToUpper()} ----------");
@@ -224,7 +224,7 @@ public partial class RaceScriptBuilder
     public RaceScriptBuilder AddNode(string type, string nodePath)
     {
         Doc.AddInstruction(
-            InstrucionType.AddNode,
+            InstructionType.AddNode,
             InstructionSection.ChildNode,
             nodePath,
             type);
@@ -235,7 +235,7 @@ public partial class RaceScriptBuilder
     public RaceScriptBuilder ChangeVault(string nodePath, string vault)
     {
         Doc.AddInstruction(
-            InstrucionType.ChangeVault,
+            InstructionType.ChangeVault,
             InstructionSection.ChildNode,
             nodePath,
             vault);

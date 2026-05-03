@@ -15,7 +15,7 @@ public class ScriptParser
         var doc = parser.Parse(script);
         
         config.Reset();
-        var addNodes = doc.Instructions.Where(i => i.Type == InstrucionType.AddNode).ToList();
+        var addNodes = doc.Instructions.Where(i => i.Type == InstructionType.AddNode).ToList();
         SetRaceType(config, addNodes[0]);
         MainViewModel.Instance.UpdateVisibility();
         config.GameplayVault = addNodes[0].Path.Split('/')[1];
@@ -23,61 +23,61 @@ public class ScriptParser
         
         foreach (var instrucion in doc.Instructions)
         {
-            HandleScalarField(config, instrucion);
+            ParseScalarField(config, instrucion);
         }
         
-        var updateFields = doc.Instructions.Where(i => i.Type == InstrucionType.UpdateField).ToList();
-        HandleStartAndFinish(config, updateFields);
+        var updateFields = doc.Instructions.Where(i => i.Type == InstructionType.UpdateField).ToList();
+        ParseStartAndFinish(config, updateFields);
         
         var barrierFields = updateFields.Where(i => i.Subject.Contains("Barriers")).ToList();
         foreach (var field in barrierFields)
-            HandleBarrier(config, field);
+            ParseBarrier(config, field);
         
         var checkpointFields = updateFields.Where(i => i.Path.Contains("checkpoint")).ToList();
         foreach(var field in checkpointFields)
-            HandleCheckpoint(config, field);
+            ParseCheckpoint(config, field);
         
         var shortcutFields = updateFields.Where(i => i.Path.Contains("shortcut")).ToList();
         foreach(var field in shortcutFields)
-            HandleShortcut(config, field);
+            ParseShortcut(config, field);
         
         var wrongwayFields = updateFields.Where(i => i.Path.Contains("wrongway")).ToList();
         foreach(var field in wrongwayFields)
-            HandleWrongway(config, field);
+            ParseWrongway(config, field);
         
         var timeBonusCheckpointFields = updateFields.Where(i => i.Path.Contains("time_bonus_checkpoint")).ToList();
         foreach(var field in timeBonusCheckpointFields)
-            HandleTimeBonusCheckpoint(config, field);
+            ParseTimeBonusCheckpoint(config, field);
         
         var trafficSpawnTriggerFields = updateFields.Where(i => i.Path.Contains("trafficspawntrigger") && !i.Path.Contains("character")).ToList();
         foreach(var field in trafficSpawnTriggerFields)
-            HandleTrafficSpawnTrigger(config, field);
+            ParseTrafficSpawnTrigger(config, field);
         
         var trafficSpawnCharacterFields = updateFields.Where(i => i.Path.Contains("trafficspawntrigger") && i.Path.Contains("character")).ToList();
         foreach(var field in trafficSpawnCharacterFields)
-            HandleTrafficSpawnCharacter(config, field);
+            ParseTrafficSpawnCharacter(config, field);
         
         var startMarkerFields = updateFields.Where(i => i.Path.Contains("start_marker")).ToList();
         var finishMarkerFields = updateFields.Where(i => i.Path.Contains("finish_marker")).ToList();
         foreach(var field in startMarkerFields)
-            HandlePoint(config.StartMarker, field);
+            ParsePoint(config.StartMarker, field);
         foreach(var field in finishMarkerFields)
-            HandlePoint(config.FinishMarker, field);
+            ParsePoint(config.FinishMarker, field);
         
         var moneybagFields = updateFields.Where(i => i.Path.Contains("moneybag")).ToList();
         foreach (var field in moneybagFields)
         {
             if(field.Path.Contains("moneybag_small"))
-                HandleMoneybag(config, field, "moneybag_small");
+                ParseMoneybag(config, field, "moneybag_small");
             else if(field.Path.Contains("moneybag_middle"))
-                HandleMoneybag(config, field, "moneybag_middle");
+                ParseMoneybag(config, field, "moneybag_middle");
             else if(field.Path.Contains("moneybag_big"))
-                HandleMoneybag(config, field, "moneybag_big");
+                ParseMoneybag(config, field, "moneybag_big");
         }
         
         var speedtrapFields = updateFields.Where((i => i.Path.Contains("speedtrap"))).ToList();
         foreach(var field in speedtrapFields)
-            HandleSpeedtrap(config, field);
+            ParseSpeedtrap(config, field);
         SortCheckpoints(config);
     }
     
@@ -101,7 +101,7 @@ public class ScriptParser
         var digits = new string(name.Where(char.IsDigit).ToArray());
         return int.TryParse(digits, out var value) ? value : int.MaxValue;
     }
-    private void SetRaceType(RaceConfig config, ScriptInstrucion field)
+    private void SetRaceType(RaceConfig config, ScriptInstruction field)
     {
         config.NodeType = ParseRaceType(field.Subject);
 
@@ -125,16 +125,16 @@ public class ScriptParser
                 break;
         }
     }
-    private void HandleStartAndFinish(RaceConfig config, List<ScriptInstrucion> updateFields)
+    private void ParseStartAndFinish(RaceConfig config, List<ScriptInstruction> updateFields)
     {
         var startGridFields = updateFields.Where(i => i.Path.Contains("startgrid")).ToList();
         var finishLineFields = updateFields.Where(i => i.Path.Contains("finishline")).ToList();
         foreach (var t in startGridFields)
-            HandlePoint(config.StartGrid, t);
+            ParsePoint(config.StartGrid, t);
 
         foreach (var t in finishLineFields)
         {
-            HandlePoint(config.FinishLine, t);
+            ParsePoint(config.FinishLine, t);
             
             if (t.Subject == "Dimensions")
             {
@@ -148,7 +148,7 @@ public class ScriptParser
         }
     }
 
-    private void HandleSpeedtrap(RaceConfig config, ScriptInstrucion field)
+    private void ParseSpeedtrap(RaceConfig config, ScriptInstruction field)
     {
         string name = field.Path.Split("/").Last();
         int index = ParseInt(name.Substring("speedtrap".Length));
@@ -162,11 +162,11 @@ public class ScriptParser
         if(index == config.Speedtraps.Count)
         {
             speedtrapEntity = config.Speedtraps[index - 1];
-            HandlePoint(speedtrapEntity.Point, field);
+            ParsePoint(speedtrapEntity.Point, field);
         }
     }
 
-    private void HandleMoneybag(RaceConfig config, ScriptInstrucion field, string namePrefix)
+    private void ParseMoneybag(RaceConfig config, ScriptInstruction field, string namePrefix)
     {
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring(namePrefix.Length));
@@ -188,10 +188,10 @@ public class ScriptParser
         if(index == moneybags.Count)
         {
             moneybag = moneybags[index - 1];
-            HandlePoint(moneybag.Point, field);
+            ParsePoint(moneybag.Point, field);
         }
     }
-    private void HandleTrafficSpawnCharacter(RaceConfig config, ScriptInstrucion field)
+    private void ParseTrafficSpawnCharacter(RaceConfig config, ScriptInstruction field)
     {
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("character".Length));
@@ -210,7 +210,7 @@ public class ScriptParser
         if(field.Subject == "CarType")
             characterDrug.SelectedCarType = field.Value;
     }
-    private void HandleTrafficSpawnTrigger(RaceConfig config, ScriptInstrucion field)
+    private void ParseTrafficSpawnTrigger(RaceConfig config, ScriptInstruction field)
     {
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("trafficspawntrigger".Length));
@@ -224,7 +224,7 @@ public class ScriptParser
         if(index == config.TrafficSpawnTriggers.Count)
         {
             trafficSpawnTrigger = config.TrafficSpawnTriggers[index - 1];
-            HandlePoint(trafficSpawnTrigger.Point, field);
+            ParsePoint(trafficSpawnTrigger.Point, field);
         }
 
         if (trafficSpawnTrigger == null) return;
@@ -234,7 +234,7 @@ public class ScriptParser
         if(field.Subject == "Radius")
             trafficSpawnTrigger.Radius = ParseFloat(field.Value);
     }
-    private void HandleTimeBonusCheckpoint(RaceConfig config, ScriptInstrucion field)
+    private void ParseTimeBonusCheckpoint(RaceConfig config, ScriptInstruction field)
     {
         List<CheckpointEntity> timeBonusCheckpoints = config.Checkpoints.Where(c => c.EntityType == EntityType.timebonuscheckpoint).ToList();
         string name = field.Path.Split('/').Last().Split("_").Last();
@@ -249,7 +249,7 @@ public class ScriptParser
         if (index == timeBonusCheckpoints.Count)
         {
             timeBonusCheckpoint = timeBonusCheckpoints[index - 1];
-            HandlePoint(timeBonusCheckpoint.Point, field);
+            ParsePoint(timeBonusCheckpoint.Point, field);
         }
 
         if (timeBonusCheckpoint is null) return;
@@ -257,7 +257,7 @@ public class ScriptParser
                 timeBonusCheckpoint.TimeBonus = ParseInt(field.Value);
     }
     
-    private void HandleWrongway(RaceConfig config, ScriptInstrucion field)
+    private void ParseWrongway(RaceConfig config, ScriptInstruction field)
     {
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("wrongway".Length));
@@ -270,10 +270,10 @@ public class ScriptParser
         if(index == config.ResetPlayerTrigers.Count)
         {
             wrongway = config.ResetPlayerTrigers[index - 1];
-            HandlePoint(wrongway, field);
+            ParsePoint(wrongway, field);
         }
     }
-    private void HandleShortcut(RaceConfig config, ScriptInstrucion field)
+    private void ParseShortcut(RaceConfig config, ScriptInstruction field)
     {
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("shortcut".Length));
@@ -287,7 +287,7 @@ public class ScriptParser
         if (index == config.Shortcuts.Count)
         {
             shortcut = config.Shortcuts[index - 1];
-            HandlePoint(shortcut.Point, field);
+            ParsePoint(shortcut.Point, field);
         }
 
         if (shortcut is null) return;
@@ -297,7 +297,7 @@ public class ScriptParser
         else if(field.Subject == "ShortcutMinChance")
             shortcut.MinChance = ParseFloat(field.Value);
     }
-    private void HandleCheckpoint(RaceConfig config, ScriptInstrucion field)
+    private void ParseCheckpoint(RaceConfig config, ScriptInstruction field)
     {
         string name = field.Path.Split('/').Last();
         int index = ParseInt(name.Substring("checkpoint".Length));
@@ -311,14 +311,14 @@ public class ScriptParser
         if (index == config.Checkpoints.Count)
         {
             checkpoint = config.Checkpoints[index - 1];
-            HandlePoint(checkpoint.Point, field);
+            ParsePoint(checkpoint.Point, field);
         }
     }
-    private void HandleBarrier(RaceConfig config, ScriptInstrucion field)
+    private void ParseBarrier(RaceConfig config, ScriptInstruction field)
     {
         config.Barriers.Add(new Barrier(field.Value.Replace("BARRIER_SPLINE_","")));
     }
-    private void HandlePoint(PointEntity point, ScriptInstrucion field)
+    private void ParsePoint(PointEntity point, ScriptInstruction field)
     {
         if (field.Subject == "Position")
         {
@@ -336,7 +336,7 @@ public class ScriptParser
             point.RotationHEX = RotationConverter.DegreesToHex(ParseFloat(field.Value));
         }
     }
-    private void HandleScalarField(RaceConfig config, ScriptInstrucion i)
+    private void ParseScalarField(RaceConfig config, ScriptInstruction i)
     {
         if (i.Value is null) return;
         

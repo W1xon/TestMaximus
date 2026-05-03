@@ -2,9 +2,9 @@
 
 namespace Maximus.Services;
 
-public class LapknockoutParser : BaseParser
+public class LapknockoutCodeGenerator : BaseCodeGenerator
 {
-    public LapknockoutParser(RaceConfig config) : base(config) { }
+    public LapknockoutCodeGenerator(RaceConfig config) : base(config) { }
 
     protected override void ParseSpecificSettings()
     {

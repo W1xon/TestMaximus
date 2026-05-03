@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 namespace Maximus.Services.IR;
-public enum InstrucionType
+public enum InstructionType
 {
     Comment,
     AddNode,
@@ -38,9 +38,9 @@ public enum InstructionSection
     [Description("---------- Parent Container Updates ----------")]
     ParentUpdate
 }
-public class ScriptInstrucion
+public class ScriptInstruction
 {
-    public InstrucionType Type { get; }
+    public InstructionType Type { get; }
     public InstructionSection Section { get; }
     public string Scope { get; } = "gameplay";
     public string? Path { get; set; }
@@ -48,7 +48,7 @@ public class ScriptInstrucion
     public string? SubField { get; set; }
     public string? Value { get; set; }
     
-    public ScriptInstrucion(InstrucionType type, InstructionSection section = InstructionSection.NodeCreation)
+    public ScriptInstruction(InstructionType type, InstructionSection section = InstructionSection.NodeCreation)
     {
         Type = type;
         Section = section;

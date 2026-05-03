@@ -50,7 +50,7 @@ public class ScriptInstructionParser
         var field = parts[3];
         var newSize = parts[4];
         _doc.AddInstruction(
-            InstrucionType.ResizeField,
+            InstructionType.ResizeField,
             path: path,
             subject: field,
             value: newSize);
@@ -63,7 +63,7 @@ public class ScriptInstructionParser
         var path = parts[2];
         var vault = parts[3];
         _doc.AddInstruction(
-            InstrucionType.ChangeVault,
+            InstructionType.ChangeVault,
             path: path,
             subject: vault);
     }
@@ -77,7 +77,7 @@ public class ScriptInstructionParser
         var subField = parts.Length > 5 ? parts[4] : null;
         var value = parts.Length > 5 ? parts[5] : parts[4];
         _doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: path,
             subject: field,
             subField: subField,
@@ -92,7 +92,7 @@ public class ScriptInstructionParser
         var field = parts[3];
         var value = parts.Length > 4 ? parts[4] : null;
         _doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             path: path,
             subject: field,
             value: value);
@@ -105,7 +105,7 @@ public class ScriptInstructionParser
         var type = parts[2];
         var path = parts[3];
         _doc.AddInstruction(
-            InstrucionType.AddNode,
+            InstructionType.AddNode,
             subject: type,
             path: path);
     }

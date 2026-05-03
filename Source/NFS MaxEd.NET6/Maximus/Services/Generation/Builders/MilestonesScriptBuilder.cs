@@ -26,7 +26,7 @@ public class MilestonesScriptBuilder : ScriptBuilder
     public MilestonesScriptBuilder AddNode(string milestoneType)
     {
         Doc.AddInstruction(
-            InstrucionType.AddNode,
+            InstructionType.AddNode,
             subject: milestoneType,
             path: $"milestones/{_raceBin}/{_collectionName}");
         //_addCommands.Add($"add_node gameplay {milestoneType} milestones/{_raceBin}/{_collectionName}");
@@ -36,11 +36,11 @@ public class MilestonesScriptBuilder : ScriptBuilder
     public MilestonesScriptBuilder AddBinIndex()
     {
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "BinIndex");
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "BinIndex",
             value: _binIndex.ToString());
@@ -52,11 +52,11 @@ public class MilestonesScriptBuilder : ScriptBuilder
     public MilestonesScriptBuilder AddGoalAddPrevBest(int value)
     {
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "GoalAddPrevBest");
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "GoalAddPrevBest",
             value: value.ToString());
@@ -68,11 +68,11 @@ public class MilestonesScriptBuilder : ScriptBuilder
     public MilestonesScriptBuilder AddGoalEasy(int value)
     {
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "GoalEasy");
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "GoalEasy",
             value: value.ToString());
@@ -85,11 +85,11 @@ public class MilestonesScriptBuilder : ScriptBuilder
     public MilestonesScriptBuilder AddGoalHard(int value)
     {
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "GoalHard");
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "GoalHard",
             value: value.ToString());
@@ -102,7 +102,7 @@ public class MilestonesScriptBuilder : ScriptBuilder
     public MilestonesScriptBuilder AddTemplate()
     {
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "Template");
         //_addCommands.Add($"add_field gameplay milestones/{_raceBin}/{_collectionName} Template");
@@ -112,11 +112,11 @@ public class MilestonesScriptBuilder : ScriptBuilder
     public MilestonesScriptBuilder AddSpawnPoint(string spawnPoint)
     {
         Doc.AddInstruction(
-            InstrucionType.AddField,
+            InstructionType.AddField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "SpawnPoint");
         Doc.AddInstruction(
-            InstrucionType.UpdateField,
+            InstructionType.UpdateField,
             path: $"milestones/{_raceBin}/{_collectionName}",
             subject: "SpawnPoint",
             value: spawnPoint);
