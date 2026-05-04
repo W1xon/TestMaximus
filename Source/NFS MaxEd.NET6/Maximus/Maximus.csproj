@@ -49,7 +49,6 @@
 
     <ItemGroup>
       <Folder Include="Assets\" />
-      <Folder Include="Models\Entities\Engage\" />
     </ItemGroup>
 
     <ItemGroup>

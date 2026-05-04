@@ -213,13 +213,14 @@
                                     </StackPanel>
                                 </Button>
 
-                                <!--  Milestones Icon Button  -->
+                                <!--  Engage Icon Button  -->
                                 <Button
-                                    Click="OnMilestonesClick"
+                                    Click="OnEngageClick"
                                     Height="90"
                                     Margin="0,0,0,10"
                                     Style="{StaticResource NavButtonStyle}"
-                                    Width="90">
+                                    Width="90"
+                                    x:Name="EngageButton">
                                     <StackPanel>
                                         <Image
                                             Height="48"
@@ -231,7 +232,7 @@
                                             FontSize="11"
                                             FontWeight="SemiBold"
                                             HorizontalAlignment="Center"
-                                            Text="ENGAGE" />
+                                            Text="Engage" />
                                     </StackPanel>
                                 </Button>
 

@@ -29,6 +29,12 @@ public class MainViewModel : ObservableObject
        get => _milestoneConfig;
        set => Set(ref _milestoneConfig, value);
    }
+   private EngageConfig _engageConfig = new();
+   public EngageConfig EngageConfig
+   {
+       get => _engageConfig;
+       set => Set(ref _engageConfig, value);
+   }
    
    private static MainViewModel _instance;
    public static MainViewModel Instance

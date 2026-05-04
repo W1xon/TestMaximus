@@ -117,6 +117,13 @@ public partial class MainWindow : Window
         MainFrame.Navigate(new LeadersPage());
     }
     
+
+    private void OnEngageClick(object sender, RoutedEventArgs e)
+    {
+        ColoringButton("EngageButton");
+        SaveButton.IsEnabled = true;
+        MainFrame.Navigate(new EngagePage());
+    }
     private void OnGenerateClick(object sender, RoutedEventArgs e)
     {
         Generate();
@@ -124,7 +131,7 @@ public partial class MainWindow : Window
     
    private void ColoringButton(string buttonName)
    {
-       var names = new[] { "RacesButton", "MilestonesButton", "BlacklistButton", "LeadersButton" };
+       var names = new[] { "RacesButton", "MilestonesButton", "BlacklistButton", "LeadersButton","EngageButton" };
        var backgroundMedium = TryFindResource("BackgroundMedium") as Brush ?? Brushes.Transparent;
        var accent = TryFindResource("AccentColor") as Brush ?? Brushes.Transparent;
    
