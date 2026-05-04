@@ -18,6 +18,7 @@ public class MilestoneParser
         _builder.SetCollectionName(_milestoneConfig.MilestoneType)
             .AddNode(_milestoneConfig.MilestoneType)
             .AddBinIndex()
+            .AddBountry(_milestoneConfig.Bounty)
             .AddGoalEasy(_milestoneConfig.GoalEasy)
             .AddGoalAddPrevBest(_milestoneConfig.GoalAddPrevBest)
             .AddGoalHard(_milestoneConfig.GoalHard)

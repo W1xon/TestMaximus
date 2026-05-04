@@ -49,6 +49,20 @@ public class MilestonesScriptBuilder : ScriptBuilder
         return this;
     }
 
+    public MilestonesScriptBuilder AddBountry(int value)
+    {
+        Doc.AddInstruction(
+            InstructionType.AddField,
+            path: $"milestones/{_raceBin}/{_collectionName}",
+            subject: "Bounty");
+        Doc.AddInstruction(
+            InstructionType.UpdateField,
+            path: $"milestones/{_raceBin}/{_collectionName}",
+            subject: "Bounty",
+            value: value.ToString());
+        return this;
+    }
+
     public MilestonesScriptBuilder AddGoalAddPrevBest(int value)
     {
         Doc.AddInstruction(
