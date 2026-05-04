@@ -356,34 +356,6 @@
                                             VerticalAlignment="Center" />
                                     </StackPanel>
 
-                                    <!--  Подсказка Preview  -->
-                                    <StackPanel
-                                        HorizontalAlignment="Center"
-                                        Margin="0,4,0,0"
-                                        Orientation="Horizontal">
-                                        <TextBlock
-                                            FontSize="10"
-                                            Foreground="{StaticResource TextTertiary}"
-                                            Text="Press"
-                                            VerticalAlignment="Center" />
-                                        <Border
-                                            Background="{StaticResource BackgroundLight}"
-                                            CornerRadius="3"
-                                            Margin="4,0"
-                                            Padding="4,1"
-                                            VerticalAlignment="Center">
-                                            <TextBlock
-                                                FontSize="9"
-                                                FontWeight="Bold"
-                                                Foreground="{StaticResource AccentColor}"
-                                                Text="Ctrl + P" />
-                                        </Border>
-                                        <TextBlock
-                                            FontSize="10"
-                                            Foreground="{StaticResource TextTertiary}"
-                                            Text="to toggle focus mode"
-                                            VerticalAlignment="Center" />
-                                    </StackPanel>
                                     <!--  Подсказка Open  -->
                                     <StackPanel
                                         HorizontalAlignment="Center"
@@ -442,6 +414,34 @@
                                             VerticalAlignment="Center" />
                                     </StackPanel>
 
+                                    <!--  Подсказка Preview  -->
+                                    <StackPanel
+                                        HorizontalAlignment="Center"
+                                        Margin="0,4,0,0"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{StaticResource TextTertiary}"
+                                            Text="Press"
+                                            VerticalAlignment="Center" />
+                                        <Border
+                                            Background="{StaticResource BackgroundLight}"
+                                            CornerRadius="3"
+                                            Margin="4,0"
+                                            Padding="4,1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                FontSize="9"
+                                                FontWeight="Bold"
+                                                Foreground="{StaticResource AccentColor}"
+                                                Text="Ctrl + P" />
+                                        </Border>
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{StaticResource TextTertiary}"
+                                            Text="to preview"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
 
                                 </StackPanel>
                             </StackPanel>
